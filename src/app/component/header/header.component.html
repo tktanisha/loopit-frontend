@@ -1,0 +1,20 @@
+<header class="main-header">
+  <div *ngIf="isUserLoggedIn">
+    <i class="pi pi-bars"></i>
+  </div>
+
+  <div class="header-brand">Loopit</div>
+  <div class="header-signup" *ngIf="!isUserLoggedIn">
+    <button class="signup-btn" type="button" (click)="onClickedSignIn()">Sign In</button>
+  </div>
+
+  <app-login
+    *ngIf="isLoggedIn && !isUserLoggedIn"
+    (closeEvent)="handleLoginClose()"
+    [isLoggedIn]="isLoggedIn"
+  ></app-login>
+
+  <div *ngIf="isUserLoggedIn">
+    <i class="pi pi-user"></i>
+  </div>
+</header>

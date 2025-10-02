@@ -1,0 +1,40 @@
+<div class="div-login">
+  <app-loader *ngIf="isLoading"></app-loader>
+
+  <div *ngIf="!isLoading">
+    <div class="login title">Sign In</div>
+    <div class="close-div">
+      <i class="pi pi-times" (click)="onCloseAuthForm()"></i>
+    </div>
+    <form class="login-form" #authForm="ngForm" (ngSubmit)="onFormSubmitted(authForm)">
+      <div class="login-email">
+        <Label>Email *</Label>
+        <input
+          type="email"
+          placeholder="Email Address"
+          name="email"
+          [(ngModel)]="user.email"
+          required
+        />
+      </div>
+      <div class="login-password">
+        <Label>Password</Label>
+        <input
+          type="password"
+          placeholder="password"
+          name="password"
+          [(ngModel)]="user.password"
+          required
+          minlength="12"
+        />
+      </div>
+      <div class="div-btn">
+        <button class="login-btn" type="submit" [disabled]="authForm.invalid">Sign In</button>
+      </div>
+      <div class="login-para-btn">
+        <p class="login-para">Do not have an account yet?</p>
+        <button class="btn-signup">Sign up</button>
+      </div>
+    </form>
+  </div>
+</div>

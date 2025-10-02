@@ -1,0 +1,51 @@
+<main class="heropage">
+  <div class="main-intro">
+    <h1 class="main-heading">Use. Share. Loop it.</h1>
+    <p class="main-para">
+      Connect with your neighbors to borrow and lend items within your society. From power tools to
+      electronics, get what you need without the waste of buying. Building community trust, one item
+      at a time.
+    </p>
+    <button class="getstart-btn" (click)="onClickChangeToSignupModal()">Get Started</button>
+  </div>
+
+  <div class="feature-cards">
+    <div class="card card-cyan">
+      <div class="card-icon-wrapper">
+        <div class="card-icon">
+          <i class="pi pi-box"></i>
+        </div>
+      </div>
+      <h3 class="card-title">Neighborhood Items</h3>
+      <p class="card-description">
+        Browse items available within your society and nearby communities
+      </p>
+    </div>
+
+    <div class="card card-green">
+      <div class="card-icon-wrapper">
+        <div class="card-icon">
+          <i class="pi pi-shield"></i>
+        </div>
+      </div>
+      <h3 class="card-title">Trust & Security</h3>
+      <p class="card-description">
+        Society-based verification and secure deposits for peace of mind
+      </p>
+    </div>
+
+    <div class="card card-purple">
+      <div class="card-icon-wrapper">
+        <div class="card-icon">
+          <i class="pi pi-indian-rupee"></i>
+        </div>
+      </div>
+      <h3 class="card-title">Save Money</h3>
+      <p class="card-description">
+        Why buy when you can borrow? Reduce costs and environmental impact
+      </p>
+    </div>
+  </div>
+
+  <app-signup *ngIf="isSignedUp" (clickEvent)="handleOnClose()"></app-signup>
+</main>

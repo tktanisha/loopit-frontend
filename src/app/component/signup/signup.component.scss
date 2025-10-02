@@ -1,0 +1,143 @@
+@use 'mixin.scss';
+
+
+
+
+
+$color-card-background:#ffffff;
+$color-border: gray;
+$color-text-label:black;
+$color-neon-blue: #22d3ee;
+$color-neon-blue-hover: #00aacc; 
+
+
+
+
+.signup-comp{
+    display: flex;
+    flex-direction: column;
+    background-color:#ffffff;
+    min-width: 70%;
+    margin:auto;
+    min-height: 75%;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 4rem 2rem 4rem;
+    border-radius:1rem ;
+    position: relative;
+   
+}
+
+
+.signup-title {
+  font-size: large;
+  color:black;
+  font-weight: bold;
+  text-align: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.close-div {
+  cursor: pointer;
+  color: $color-text-label;
+  transition: all 0.2s ease;
+  position: absolute;
+  top:1.5rem;
+  right:1.7rem;
+
+  &:hover {
+    color: gray;
+  }
+
+  .pi.pi-times {
+    font-size: 1rem;
+  }
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; // A more modern way to handle space between form elements
+}
+
+// Container for each label/input pair
+.form-name,
+.form-email,
+.form-password,
+.form-phoneNo,
+.form-address {
+  display: flex;
+  flex-direction: column;
+  gap:0.5rem;
+}
+
+label {
+  font-size: small;
+  color: $color-text-label;
+}
+
+input {
+  background-color: white;
+  border: 1px solid $color-border;
+  border-radius: 0.3rem;
+  color: black;
+  padding: 0.7rem;
+  font-size: medium;
+  outline: none;
+  width: 20rem;
+
+
+  &:focus {
+    border-color: $color-neon-blue;
+    box-shadow: 0 0 0 2px rgba($color-neon-blue, 0.5);
+  }
+}
+
+.signup-btn {
+  background-color: $color-neon-blue;
+  color: black;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.6rem 4rem 0.6rem 4rem;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    @include mixin.transition-hover-scale(300ms,ease-in-out,1.05);
+    background-color: #22d3ee;
+    
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 1;
+  }
+}
+
+.signup-para-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: small;
+  margin-top: 0.5rem;
+}
+
+.signup-para {
+  color: $color-text-label;
+}
+
+.btn-signin {
+  color:$color-neon-blue-hover;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: text-decoration 0.2s ease-in-out;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

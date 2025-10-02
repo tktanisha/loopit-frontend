@@ -1,0 +1,29 @@
+
+$loader-size: 100px;
+$border-width: 13px;
+$border-color-light: #f3f3f3;
+$border-color-blue: cyan;
+$animation-duration: 2s;
+
+@mixin spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  border: $border-width solid $border-color-light;
+  border-radius: 50%;
+  border-top: $border-width solid $border-color-blue;
+  border-bottom: $border-width solid $border-color-blue;
+  width: $loader-size;
+  height: $loader-size;
+  animation: spin $animation-duration linear infinite;
+
+  @keyframes spin {
+    @include spin;
+  }
+}
