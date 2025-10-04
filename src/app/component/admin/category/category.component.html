@@ -1,0 +1,82 @@
+<div class="categoryComp">
+  @if (isLoading) {
+    <div class="loading-overlay">
+      <app-loader [isLoading]="isLoading"></app-loader>
+    </div>
+  }
+
+  <div class="card-section">
+    <div class="icon-container">
+      <i class="pi pi-plus"></i>
+    </div>
+    <h2 class="heading">Create New Category</h2>
+    <p class="description">Add a new product category to the rental system</p>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title"><i class="pi pi-plus"></i> Category Details</h2>
+    </div>
+    <div class="card-content">
+      <form
+        class="form-container"
+        #categoryForm="ngForm"
+        (ngSubmit)="onSubmitCategory(categoryForm)"
+      >
+        <div class="form-group">
+          <label for="name" class="label">Category Name *</label>
+          <input
+            id="name"
+            type="text"
+            placeholder="e.g., Electronics, Tools, Sports Equipment"
+            class="input"
+            name="name"
+            [(ngModel)]="category.name"
+            required
+          />
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="price" class="label with-icon">
+              <i class="pi pi-indian-rupee icon cyan"></i>Price (₹) *
+            </label>
+            <input
+              id="price"
+              name="price"
+              type="number"
+              placeholder="30"
+              class="input"
+              min="0"
+              step="5"
+              required
+              [(ngModel)]="category.price"
+            />
+            <p class="hint-text">rental price for items in this category</p>
+          </div>
+          <div class="form-group">
+            <label for="securityAmount" class="label with-icon">
+              <i class="pi pi-shield icon green"></i> Security Amount (₹) *
+            </label>
+            <input
+              id="securityAmount"
+              type="number"
+              name="security"
+              placeholder="60"
+              class="input"
+              min="0"
+              step="5"
+              required
+              [(ngModel)]="category.security"
+            />
+            <p class="hint-text">Security deposit amount for items in this category</p>
+          </div>
+        </div>
+        <div class="button-group">
+          <button type="submit" class="button primary">
+            <i class="pi pi-plus icon"></i> Create Category
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

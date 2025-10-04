@@ -3,6 +3,7 @@
         transition: all $duration $style;
         transform: scale($scale)
     }
+    
 }
 
 @mixin card-hover-shadow($color) {

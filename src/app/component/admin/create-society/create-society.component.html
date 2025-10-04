@@ -1,0 +1,68 @@
+<div class="categoryComp">
+  @if (isLoading) {
+    <div class="loading-overlay">
+      <app-loader [isLoading]="isLoading"></app-loader>
+    </div>
+  }
+
+  <div class="card-section">
+    <div class="icon-container">
+      <i class="pi pi-building"></i>
+    </div>
+    <h2 class="heading">Create New Society</h2>
+    <p class="description">Add a new society to the rental system</p>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title"><i class="pi pi-building"></i> Society Details</h2>
+    </div>
+    <div class="card-content">
+      <form class="form-container" #societyForm="ngForm" (ngSubmit)="onSubmitSociety(societyForm)">
+        <div class="form-group">
+          <label for="name" class="label">Society Name *</label>
+          <input
+            id="name"
+            type="text"
+            placeholder="e.g., Green Valley Apartments"
+            class="input"
+            name="name"
+            [(ngModel)]="society.name"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="location" class="label">Location *</label>
+          <input
+            id="location"
+            type="text"
+            placeholder="e.g., City, State"
+            class="input"
+            name="location"
+            [(ngModel)]="society.location"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="pincode" class="label">Pincode *</label>
+          <input
+            id="pincode"
+            type="text"
+            placeholder="e.g., 110001"
+            class="input"
+            name="pincode"
+            [(ngModel)]="society.pincode"
+            required
+            pattern="[0-9]{6}"
+          />
+        </div>
+
+        <div class="button-group">
+          <button type="submit" class="button primary">
+            <i class="pi pi-plus icon"></i> Create Society
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

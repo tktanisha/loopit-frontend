@@ -7,10 +7,25 @@ $color-text-label: black;
 $color-neon-blue: #22d3ee;
 $color-neon-blue-hover: #00aacc;
 
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+}
+
 .div-login {
   display: flex;
   flex-direction: column;
-  background-color: $color-card-background;
+  background-color: white;
   min-width: 70%;
   margin: auto;
   min-height: 75%;
@@ -77,10 +92,35 @@ $color-neon-blue-hover: #00aacc;
   font-size: medium;
   outline: none;
   width: 20rem;
+  outline: none;
 
   &:focus {
     border-color: $color-neon-blue;
     box-shadow: 0 0 0 2px rgba($color-neon-blue, 0.5);
+  }
+}
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  input {
+    width: 100%;
+    padding-right: 2.5rem; // space for the icon
+  }
+
+  .pi {
+    position: absolute;
+    right: 0.75rem;
+    cursor: pointer;
+    color: gray;
+    font-size: 1.2rem;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $color-neon-blue-hover;
+    }
   }
 }
 
@@ -97,7 +137,7 @@ $color-neon-blue-hover: #00aacc;
   border: none;
   border-radius: 0.3rem;
   cursor: pointer;
-  width: 20rem; // Make button match input width
+  width: 20rem; 
 
   &:hover:not(:disabled) {
     @include mixin.transition-hover-scale(300ms, ease-in-out, 1.05);

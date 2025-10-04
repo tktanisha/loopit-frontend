@@ -10,3 +10,5 @@ export interface GetCategoryResponse{
     price:number
     security:number
 }
+
+

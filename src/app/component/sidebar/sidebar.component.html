@@ -1,0 +1,26 @@
+<div class="admin-dashboard" *ngIf="isOpen">
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <div class="pi pi-user"></div>
+        <div>
+          <h2>Admin Dashboard</h2>
+        </div>
+        <div class="close-logo pi pi-angle-left" (click)="closeSidebar()"></div>
+      </div>
+    </div>
+
+    <ul class="sidebar-menu">
+      <li *ngFor="let item of menuItemsUser">
+        <a [routerLink]="item.route" routerLinkActive="active" class="menu-link">
+          <i [class]="item.icon"></i> {{ item.label }}
+          <span *ngIf="item.badge" class="badge">{{ item.badge }}</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <button class="logout" (click)="handleLogout()"><i class="pi pi-sign-out"></i> Logout</button>
+    </div>
+  </nav>
+</div>

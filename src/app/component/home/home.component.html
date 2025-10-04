@@ -1,3 +1,5 @@
+<app-header></app-header>
+
 <main class="heropage">
   <div class="main-intro">
     <h1 class="main-heading">Use. Share. Loop it.</h1>
@@ -6,7 +8,9 @@
       electronics, get what you need without the waste of buying. Building community trust, one item
       at a time.
     </p>
-    <button class="getstart-btn" (click)="onClickChangeToSignupModal()">Get Started</button>
+    <button class="getstart-btn" *ngIf="!isUserLoggedIn" (click)="onClickChangeToSignupModal()">
+      Get Started
+    </button>
   </div>
 
   <div class="feature-cards">
@@ -47,5 +51,7 @@
     </div>
   </div>
 
-  <app-signup *ngIf="isSignedUp" (clickEvent)="handleOnClose()"></app-signup>
+  <div class="login-modal" *ngIf="isSignedUp">
+    <app-signup (clickEvent)="handleOnClose()"></app-signup>
+  </div>
 </main>

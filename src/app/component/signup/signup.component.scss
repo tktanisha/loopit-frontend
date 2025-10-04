@@ -70,6 +70,7 @@ $color-neon-blue-hover: #00aacc;
   display: flex;
   flex-direction: column;
   gap:0.5rem;
+
 }
 
 label {
@@ -92,6 +93,13 @@ input {
     border-color: $color-neon-blue;
     box-shadow: 0 0 0 2px rgba($color-neon-blue, 0.5);
   }
+}
+
+.email{
+  outline: none;
+}
+.password {
+  outline:none;
 }
 
 .signup-btn {

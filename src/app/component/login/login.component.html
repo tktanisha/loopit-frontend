@@ -1,5 +1,9 @@
 <div class="div-login">
-  <app-loader *ngIf="isLoading"></app-loader>
+  @if (isLoading) {
+    <div class="loading-overlay">
+      <app-loader [isLoading]="isLoading"></app-loader>
+    </div>
+  }
 
   <div *ngIf="!isLoading">
     <div class="login title">Sign In</div>
@@ -19,14 +23,22 @@
       </div>
       <div class="login-password">
         <Label>Password</Label>
-        <input
-          type="password"
-          placeholder="password"
-          name="password"
-          [(ngModel)]="user.password"
-          required
-          minlength="12"
-        />
+        <div class="password-wrapper">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="password"
+            name="password"
+            [(ngModel)]="user.password"
+            required
+            minlength="12"
+          />
+
+          <i
+            class="pi"
+            [ngClass]="showPassword ? 'pi-eye-slash' : 'pi-eye'"
+            (click)="togglePasswordVisibility()"
+          ></i>
+        </div>
       </div>
       <div class="div-btn">
         <button class="login-btn" type="submit" [disabled]="authForm.invalid">Sign In</button>

@@ -1,0 +1,59 @@
+<div class="get-society-comp">
+  @if (isLoading) {
+    <div class="loading-overlay">
+      <app-loader [isLoading]="isLoading"></app-loader>
+    </div>
+  }
+
+  <div class="societies-header-comp">
+    <div class="societies-info">
+      <h1 class="societies-title">Societies</h1>
+      <p class="societies-subtitle">Manage residential societies in the rental network</p>
+    </div>
+    <span class="societies-count-badge">
+      <span>{{ GetAllSocieties.length }}</span> Societies
+    </span>
+  </div>
+
+  <div class="societies-card">
+    <div class="card" *ngFor="let society of GetAllSocieties">
+      <div class="card-header">
+        <div class="flex-container-header">
+          <div class="flex-item-start">
+            <i class="pi pi-building"></i>
+            <h3 class="card-title">{{ society.name }}</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-content">
+        <div class="grid-container">
+          <div class="grid-item">
+            <div class="grid-item-header-green">
+              <i class="pi pi-map-marker"></i>
+              <span>Loaction</span>
+            </div>
+            <p class="location">{{ society.location }}</p>
+          </div>
+
+          <div class="grid-item">
+            <div class="grid-item-header-green">
+              <i class="pi pi-hashtag"></i>
+              <span>pincode</span>
+            </div>
+            <p class="pincode">{{ society.pincode }}</p>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button class="button edit">
+            <i class="pi pi-pen-to-square"></i>
+          </button>
+          <button class="button delete">
+            <i class="pi pi-trash"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

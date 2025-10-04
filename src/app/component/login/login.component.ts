@@ -3,14 +3,15 @@ import { LoginRequest } from '../../models/login';
 import { NgForm,FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../service/user.service';
+import { UserService } from '../../service/auth.service';
 import { SignupComponent } from '../signup/signup.component';
 import { LoaderComponent } from '../loader/loader';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-login',
   standalone:true,
-  imports: [FormsModule ,CommonModule,LoaderComponent],
+  imports: [FormsModule ,CommonModule,LoaderComponent,DialogModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -31,6 +32,12 @@ export class LoginComponent {
   }
 
  
+showPassword: boolean = false;
+
+togglePasswordVisibility() {
+  this.showPassword = !this.showPassword;
+}
+
 
   onFormSubmitted(form:NgForm) {
     console.log(form)
@@ -39,7 +46,7 @@ export class LoginComponent {
       this.callLoginService()
       this.closeEvent.emit()
     }
-    
+     form.reset();
   }
 
   onCloseAuthForm() {
@@ -56,6 +63,7 @@ export class LoginComponent {
             this.userService.handleAuthSuccess(data)
             this.isLoading=false
             this.router.navigate(['/dashboard'])
+            
             
           },
             error:(err) =>{

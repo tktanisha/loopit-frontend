@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output,inject } from '@angular/core';
 import { FormsModule,NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from '../../service/user.service';
+import { UserService } from '../../service/auth.service';
 import { SignUpRequest } from '../../models/signup';
 import { LoaderComponent } from '../loader/loader';
 import { CommonModule } from '@angular/common';

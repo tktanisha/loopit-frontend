@@ -1,18 +1,17 @@
 <header class="main-header">
   <div *ngIf="isUserLoggedIn">
-    <i class="pi pi-bars"></i>
+    <i class="pi pi-bars" *ngIf="!isSidebarOpen" (click)="toggelSidebar()"></i>
   </div>
 
   <div class="header-brand">Loopit</div>
+
   <div class="header-signup" *ngIf="!isUserLoggedIn">
     <button class="signup-btn" type="button" (click)="onClickedSignIn()">Sign In</button>
   </div>
 
-  <app-login
-    *ngIf="isLoggedIn && !isUserLoggedIn"
-    (closeEvent)="handleLoginClose()"
-    [isLoggedIn]="isLoggedIn"
-  ></app-login>
+  <div class="login-modal" *ngIf="isLoggedIn && !isUserLoggedIn">
+    <app-login (closeEvent)="handleLoginClose()" [isLoggedIn]="isLoggedIn"></app-login>
+  </div>
 
   <div *ngIf="isUserLoggedIn">
     <i class="pi pi-user"></i>

@@ -1,21 +1,23 @@
-import { Component,inject, OnInit } from '@angular/core';
-import { UserService } from '../../service/user.service';
-import { User } from '../../models/user';
+import { BootstrapOptions, Component } from '@angular/core';
+import { HeaderComponent } from '../header/header.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
-  templateUrl: './dashboard.component.html',
+  imports: [HeaderComponent, SidebarComponent, CommonModule,RouterOutlet],
+  templateUrl:'./dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
+  isSidebarOpen:boolean = true;
 
-  user!: User | null 
+  handleToggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
 
-private userService= inject(UserService)
-
-ngOnInit(): void {
-  this.user= this.userService.getUser()
-}
-
+  handleCloseSidebar() {
+    this.isSidebarOpen = false;
+  }
 }

@@ -1,1 +1,22 @@
-<p>admin-dashboard works!</p>
+<!--header-->
+<div class="main-dashboard">
+  <app-sidebar
+    *ngIf="isSidebarOpen"
+    (closeEvent)="handleCloseSidebar()"
+    [isOpen]="isSidebarOpen"
+  ></app-sidebar>
+
+  <!--main content-->
+
+  <main class="main-content-container">
+    <div class="main-header">
+      <app-header
+        [isSidebarOpen]="isSidebarOpen"
+        (toggleSidebar)="handleToggleSidebar()"
+      ></app-header>
+    </div>
+    <div class="get-category-comp">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>
