@@ -55,3 +55,9 @@
     <app-signup (clickEvent)="handleOnClose()"></app-signup>
   </div>
 </main>
+
+@if (isLoading) {
+  <div class="loading-overlay">
+    <app-loader [isLoading]="isLoading"></app-loader>
+  </div>
+}

@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './error-page.component.scss'
 })
 export class ErrorPageComponent {
-
+  
 }

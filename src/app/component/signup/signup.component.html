@@ -1,6 +1,5 @@
 <div class="signup-comp">
   <app-login *ngIf="isLoggedIn"></app-login>
-  <app-loader *ngIf="isLoading"></app-loader>
 
   <div *ngIf="!isLoggedIn && !isLoading">
     <div class="signup-title">Sign Up</div>
@@ -61,3 +60,8 @@
     </form>
   </div>
 </div>
+@if (isLoading) {
+  <div class="loading-overlay">
+    <app-loader [isLoading]="isLoading"></app-loader>
+  </div>
+}

@@ -1,0 +1,195 @@
+// SCSS variables for the dark card theme
+$card-background-dark: #1f2937; // A dark gray color
+$text-color-light: #f9fafb; // A light color for the text
+$text-color-muted: #d1d5db; // A slightly darker light color for muted text
+$badge-background: #4b5563; // A medium gray for the badge
+$accent-color: #39ff14; // The bright green accent color
+$card-padding: 1.5rem;
+$card-border-radius: 0.5rem;
+$neon-green: #39ff14;
+$cyan-shadow: #00ffff;
+
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; 
+}
+
+
+.catgories-header-comp {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+
+.catgories-title {
+  font-size: 1.5rem;
+  font-weight: 600; 
+  color: white; 
+}
+
+.catgories-subtitle {
+  color: #d1d5db; ;  
+}
+
+.catgories-count-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #34d399; 
+  background-color: rgba(#10b981, 0.2); 
+  border: 1px solid rgba(#10b981, 0.3); 
+  border-radius: 9999px; 
+
+  span {
+    font-weight: 600;
+    margin-right: 0.25rem;
+  }
+}
+
+
+.no-buy-request{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: larger;
+    font-weight: bolder;
+    margin-top: 11rem;
+}
+
+.catgories-header-comp {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+
+.catgories-title {
+  font-size: 1.5rem;
+  font-weight: 600; 
+  color: white; 
+}
+
+.catgories-subtitle {
+  color: #d1d5db; ;  
+}
+
+.catgories-count-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #34d399; 
+  background-color: rgba(#10b981, 0.2); 
+  border: 1px solid rgba(#10b981, 0.3); 
+  border-radius: 9999px; 
+
+  span {
+    font-weight: 600;
+    margin-right: 0.25rem;
+  }
+}
+
+.card {
+  flex: 1 1 250px; 
+  background-color: $card-background-dark;
+  color: $text-color-light;
+  padding: $card-padding;
+  border-radius: $card-border-radius;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+  
+ 
+   &:hover {
+    border-color: rgba(6, 182, 212, 0.3);
+    box-shadow: 0 10px 15px -3px rgba(6, 182, 212, 0.2), 0 4px 6px -2px rgba(6, 182, 212, 0.2);
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.item-info {
+  .item-name {
+    font-weight: 600;
+    font-size: 1.3rem;
+  }
+  
+  .item-description {
+    font-size: 0.875rem;
+    color: $text-color-muted;
+    opacity: 0.7; 
+  }
+
+  .item-category,
+  .item-duration {
+    font-size: 0.875rem;
+    color: $text-color-muted;
+  }
+  
+  
+  .item-duration {
+    color: $neon-green;
+  }
+}
+
+.badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.badge.pending {
+  background-color: $badge-background;
+  color: $text-color-light;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  .request-date {
+    font-size: 0.875rem;
+    color:  #d1d5db;
+    opacity: 0.6;
+    
+  }
+}
+
+.no-buy-request{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: larger;
+    font-weight: bolder;
+    margin-top: 11rem;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+}

@@ -1,17 +1,19 @@
-<div class="admin-dashboard" *ngIf="isOpen">
+<div class="sidebar-dashboard" *ngIf="isOpen">
   <nav class="sidebar">
     <div class="sidebar-header">
       <div class="logo">
         <div class="pi pi-user"></div>
-        <div>
-          <h2>Admin Dashboard</h2>
+        <div [ngSwitch]="loggedInUserRole">
+          <span *ngSwitchCase="'admin'">Admin Dashboard</span>
+          <span *ngSwitchCase="'lender'">Lender Dashboard</span>
+          <span *ngSwitchDefault>User Dashboard</span>
         </div>
         <div class="close-logo pi pi-angle-left" (click)="closeSidebar()"></div>
       </div>
     </div>
 
     <ul class="sidebar-menu">
-      <li *ngFor="let item of menuItemsUser">
+      <li *ngFor="let item of currentMenuItems">
         <a [routerLink]="item.route" routerLinkActive="active" class="menu-link">
           <i [class]="item.icon"></i> {{ item.label }}
           <span *ngIf="item.badge" class="badge">{{ item.badge }}</span>
@@ -19,8 +21,20 @@
       </li>
     </ul>
 
+    <div class="become-lender-div" *ngIf="loggedInUserRole == 'user'">
+      <button class="become-lender-btn" (click)="handleBecomeLender()">
+        <i class="pi pi-user"></i> Become Lender
+      </button>
+    </div>
+
     <div class="sidebar-footer">
       <button class="logout" (click)="handleLogout()"><i class="pi pi-sign-out"></i> Logout</button>
     </div>
   </nav>
 </div>
+
+@if (isLoading) {
+  <div class="loading-overlay">
+    <app-loader [isLoading]="isLoading"></app-loader>
+  </div>
+}

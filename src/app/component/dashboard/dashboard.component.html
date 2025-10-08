@@ -1,12 +1,9 @@
-<!--header-->
 <div class="main-dashboard">
   <app-sidebar
     *ngIf="isSidebarOpen"
     (closeEvent)="handleCloseSidebar()"
     [isOpen]="isSidebarOpen"
   ></app-sidebar>
-
-  <!--main content-->
 
   <main class="main-content-container">
     <div class="main-header">

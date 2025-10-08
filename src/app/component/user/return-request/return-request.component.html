@@ -1,1 +1,35 @@
-<p>return-request works!</p>
+<div class="catgories-header-comp">
+  <div class="catgories-info">
+    <h1 class="catgories-title">Pending Buy Requests</h1>
+    <p class="catgories-subtitle">All pending buy request for all items</p>
+  </div>
+  <span class="catgories-count-badge">
+    <span>{{ allReturnRequests.length }}</span> Request
+  </span>
+</div>
+
+@if (allReturnRequests.length == 0) {
+  <div class="no-buy-request">
+    <h1>No Pending Request yet</h1>
+  </div>
+}
+
+<div class="card-container">
+  <div class="card" *ngFor="let req of allReturnRequests">
+    <div class="badge pending">{{ req.status | returnStatus }}</div>
+    <div class="card-footer">
+      <span class="request-date">Requested on {{ req.created_at.split('T')[0] }}</span>
+
+      <div class="Buttons-group">
+        <Button (click)="handleAccept(req.id)" class="accept-btn"> Approve Request </Button>
+        <Button (click)="handleReject(req.id)" className="reject-btn"> Reject Request </Button>
+      </div>
+    </div>
+
+    @if (isLoading) {
+      <div class="loading-overlay">
+        <app-loader [isLoading]="isLoading"></app-loader>
+      </div>
+    }
+  </div>
+</div>

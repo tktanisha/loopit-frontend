@@ -1,0 +1,16 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UserService {
+  private ApiUrl = 'http://localhost:8080';
+  http: HttpClient = inject(HttpClient);
+  router: Router = inject(Router);
+
+  BecomeLender() {
+    return this.http.patch(`${this.ApiUrl}/users/become-lender`, {});
+  }
+}

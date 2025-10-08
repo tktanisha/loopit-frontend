@@ -1,5 +1,5 @@
-.admin-dashboard {
-  min-height: 100vh;
+.sidebar-dashboard {
+  max-height: 100vh;
   background: #000;
   position: sticky;
   top: 0;
@@ -16,9 +16,10 @@
     border-right: 1px solid #1f2937;
     display: flex;
     flex-direction: column;
-    align-items: first baseline;
+    align-items:normal;
     transition: all 0.3s ease;
     backdrop-filter: blur(8px);
+    height: 100vh;
 
     &.open {
       transform: translateX(0);
@@ -102,7 +103,8 @@
 
     .sidebar-footer {
       border-bottom: 1px solid #1f2937;
-      padding-top: 17.7rem;
+      
+      
 
       .logout {
         width: 15rem;
@@ -118,7 +120,8 @@
         align-items: center;
         gap: 10px;
         border-radius: 8px;
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
+       
 
         &:hover {
           background: rgba(239, 68, 68, 0.1);
@@ -126,6 +129,39 @@
         }
       }
     }
+
+    
+  .become-lender-div{
+  
+      
+
+      .become-lender-btn {
+        width: 14rem;
+        background: transparent;
+        border: none;
+        color: white;
+        text-align: left;
+        font-size: 1rem;
+        cursor: pointer;
+        padding: 0.8rem 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-radius: 8px;
+        margin-bottom: 17rem;
+        margin-left: 1rem;
+
+        &:hover {
+          background: linear-gradient(90deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.2));
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: #06b6d4;
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+            transition: all 0.3s linear;
+        }
+      }
+    }
+  
+  
   }
 
   .main {
@@ -195,4 +231,20 @@
       background: #000;
     }
   }
+}
+
+.loading-overlay{
+   
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px); 
+
 }

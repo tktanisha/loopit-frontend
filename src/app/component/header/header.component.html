@@ -17,3 +17,9 @@
     <i class="pi pi-user"></i>
   </div>
 </header>
+
+@if (isLoading) {
+  <div class="loading-overlay">
+    <app-loader [isLoading]="isLoading"></app-loader>
+  </div>
+}

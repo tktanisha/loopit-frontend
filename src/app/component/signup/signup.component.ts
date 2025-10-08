@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output,inject } from '@angular/core';
 import { FormsModule,NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from '../../service/auth.service';
+import { AuthService } from '../../service/auth.service';
 import { SignUpRequest } from '../../models/signup';
 import { LoaderComponent } from '../loader/loader';
 import { CommonModule } from '@angular/common';
@@ -19,7 +19,7 @@ export class SignupComponent {
   private router= inject(Router)
 
   @Output() clickEvent =new EventEmitter<void>()
-   userService= inject(UserService)
+   AuthService= inject(AuthService)
 
    isLoading:boolean=false;
    isLoggedIn:boolean=false;
@@ -50,11 +50,11 @@ export class SignupComponent {
 
   sumbitSignUpForm(){
     this.isLoading=true;
-    this.userService.signup(this.user)
+    this.AuthService.signup(this.user)
     .subscribe(
       {
         next:(data) =>{
-          this.userService.handleAuthSuccess(data)
+          this.AuthService.handleAuthSuccess(data)
           this.isLoading=false;
           this.router.navigate(['/dashboard']) 
         },

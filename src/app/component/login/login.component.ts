@@ -3,7 +3,7 @@ import { LoginRequest } from '../../models/login';
 import { NgForm,FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../service/auth.service';
+import { AuthService } from '../../service/auth.service';
 import { SignupComponent } from '../signup/signup.component';
 import { LoaderComponent } from '../loader/loader';
 import { DialogModule } from 'primeng/dialog';
@@ -19,7 +19,7 @@ export class LoginComponent {
 
    private router=inject(Router);
    @Output() closeEvent=new EventEmitter<void>();
-   private userService = inject(UserService)
+   private AuthService = inject(AuthService)
    @Input() isLoggedIn!:boolean
 
   
@@ -56,11 +56,11 @@ togglePasswordVisibility() {
 
   callLoginService() {
     this.isLoading=true
-    this.userService.login(this.user)
+    this.AuthService.login(this.user)
     .subscribe(
             {         
             next:(data) =>{
-            this.userService.handleAuthSuccess(data)
+            this.AuthService.handleAuthSuccess(data)
             this.isLoading=false
             this.router.navigate(['/dashboard'])
             

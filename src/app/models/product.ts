@@ -2,15 +2,15 @@ import { GetCategoryResponse } from "./category";
 import { User } from "./user";
 
 export interface ProductResponse {
-	product:GetProduct  
+	product:Product  
 	category:GetCategoryResponse
 	user:User   
 }
 
-export interface GetProduct{
-  id: number;
-  lender_id: number;
-  category_id: number;
+export interface Product{
+  id: number | null;
+  lender_id: number | null;
+  category_id: number |null;
   name: string;
   description: string;
   duration: number; 

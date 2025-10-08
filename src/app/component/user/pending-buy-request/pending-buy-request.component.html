@@ -1,0 +1,46 @@
+<div class="catgories-header-comp">
+  <div class="catgories-info">
+    <h1 class="catgories-title">Pending Buy Requests</h1>
+    <p class="catgories-subtitle">All pending buy request for all items</p>
+  </div>
+  <span class="catgories-count-badge">
+    <span>{{ BuyRequestOfUser.length }}</span> Request
+  </span>
+</div>
+
+@if (BuyRequestOfUser.length == 0) {
+  <div class="no-buy-request">
+    <h1>No Pending Request yet</h1>
+  </div>
+}
+
+<div class="card-container">
+  <div class="card" *ngFor="let req of BuyRequestOfUser">
+    <div class="card-header">
+      <div class="item-info">
+        <h1 class="item-name">{{ req.product.product.name }}</h1>
+        <p class="item-description">{{ req.product.product.description }}</p>
+        <p class="item-duration">Duration: {{ req.product.product.duration }} days</p>
+      </div>
+      <div class="badge pending">{{ req.buy_request.status | buyStatus }}</div>
+    </div>
+    <div class="card-footer">
+      <span class="request-date">Requested on {{ req.buy_request.created_at.split('T')[0] }}</span>
+
+      <div class="Buttons-group">
+        <Button (click)="handleAccept(req.buy_request.id)" class="accept-btn">
+          Approve Request
+        </Button>
+        <Button (click)="handleReject(req.buy_request.id)" class="accept-btn">
+          Reject Request
+        </Button>
+      </div>
+    </div>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading-overlay">
+      <app-loader [isLoading]="isLoading"></app-loader>
+    </div>
+  }
+</div>

@@ -13,7 +13,7 @@ interface DecodedToken {
 }
 
 @Injectable({ providedIn: 'root' })
-export class UserService {
+export class AuthService {
 
   private ApiUrl = 'http://localhost:8080';
   private jwtKey = 'auth_token';
@@ -64,7 +64,21 @@ export class UserService {
 
   getUser(): LoggedInUser | null {
     const jsonUser = localStorage.getItem(this.userkey);
-    return jsonUser ? JSON.parse(jsonUser) : null;
+    if (jsonUser) {
+      const storedUser = JSON.parse(jsonUser);
+      const token = this.getToken();
+       if (token && !this.isTokenExpired(token)) {
+        return new LoggedInUser(storedUser.Name, storedUser.ID, storedUser.Role, new Date());
+       }
+    }
+
+    return null;
+   
   }
 
+
+ isTokenExpired(token: string): boolean {
+     const decodedToken = jwtDecode<DecodedToken>(token);
+    return decodedToken.exp ? decodedToken.exp < Date.now() / 1000 : true;
+   }
 }

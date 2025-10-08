@@ -1,0 +1,73 @@
+<div class="catgories-header-comp">
+  <div class="catgories-info">
+    <h1 class="catgories-title">Approved Awaiting Orders</h1>
+    <p class="catgories-subtitle">All pending orders to mark as return</p>
+  </div>
+</div>
+
+@if (AllOrders.length == 0) {
+  <div class="no-buy-request">
+    <h1>No Awaiting Orders</h1>
+  </div>
+}
+
+@if (isLoading) {
+  <div class="loading-overlay">
+    <app-loader [isLoading]="isLoading"></app-loader>
+  </div>
+}
+
+<div *ngFor="let order of AllOrders">
+  <div class="orders-container">
+    <div class="order-card">
+      <div class="order-card-content">
+        <div class="product-image-container">
+          <img
+            src="https://tse2.mm.bing.net/th/id/OIP.Yu0XkK0uGjoZ_1oQ7zZnsQHaFl?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3"
+            alt="Product Name"
+            class="product-image"
+          />
+        </div>
+        <div class="product-details">
+          <div class="product-header">
+            <div>
+              <h3 class="product-title">{{ order.product.product.name }}</h3>
+              <span class="product-category-badge">{{ order.product.category.name }}</span>
+            </div>
+
+            {{ order.order.status | orderStatus }}
+          </div>
+
+          <p class="product-description">
+            {{ order.product.product.description }}
+          </p>
+
+          <div class="order-info-grid">
+            <div class="order-info-item">
+              <i class="pi pi-calendar"></i>
+              <span>Start: {{ order.order.start_date.split('T')[0] }}</span>
+            </div>
+            <div class="order-info-item">
+              <i class="pi pi-calendar"></i>
+              <span>End: {{ order.order.end_date.split('T')[0] }}</span>
+            </div>
+            <div class="order-info-item">
+              <i class="pi pi-users"></i>
+              <span>Tenant: {{ order.product.user.full_name }}</span>
+            </div>
+            <div class="order-info-item">
+              <i class="pi pi-indian-rupee"></i>
+              <span>Total: ₹{{ order.order.total_amount }}/day</span>
+            </div>
+          </div>
+
+          <div class="action-button-container">
+            <button class="return-request-button" (click)="markOrderAsReturn(order.order.id)">
+              <span> Mark as Returned</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

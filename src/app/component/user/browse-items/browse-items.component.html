@@ -1,0 +1,55 @@
+@if (isOpenModal) {
+  <div class="product-modal-overlay">
+    <app-product-modal
+      (closeEvent)="handleOnClose()"
+      [product]="selectedProduct"
+    ></app-product-modal>
+  </div>
+}
+
+<div class="catgories-header-comp">
+  <div class="catgories-info">
+    <h1 class="catgories-title">Browse Products</h1>
+    <p class="catgories-subtitle">All products listed in the society</p>
+  </div>
+</div>
+
+<div class="browse-items">
+  @if (isLoading) {
+    <div class="loading-overlay">
+      <app-loader [isLoading]="isLoading"></app-loader>
+    </div>
+  }
+
+  @for (prod of allProduct; track prod.product.id) {
+    <div class="product-card" (click)="handleOpenModal(prod)">
+      <div class="product-image-container">
+        <img
+          src="https://tse2.mm.bing.net/th/id/OIP.Yu0XkK0uGjoZ_1oQ7zZnsQHaFl?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3"
+          alt="[product name]"
+          class="product-image"
+        />
+
+        <div class="not-available-overlay" *ngIf="!prod.product.is_available">
+          <span class="availability-badge destructive">Not Available</span>
+        </div>
+      </div>
+
+      <div class="product-info">
+        <div class="product-header">
+          <h3 class="product-name">{{ prod.product.name }}</h3>
+          <span class="category-badge secondary">{{ prod.category.name }}</span>
+        </div>
+
+        <p class="product-description">
+          {{ prod.product.description }}
+        </p>
+
+        <div class="product-details-row">
+          <span class="product-price">₹{{ prod.category.price }}/day</span>
+          <span class="product-availability available">Available</span>
+        </div>
+      </div>
+    </div>
+  }
+</div>

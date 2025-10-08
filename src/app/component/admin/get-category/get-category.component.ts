@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { UserService } from '../../../service/auth.service';
+import { AuthService } from '../../../service/auth.service';
 import { Router } from '@angular/router';
 import { GetCategoryResponse } from '../../../models/category';
 import { CategoryService } from '../../../service/category.service';
