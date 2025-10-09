@@ -10,14 +10,11 @@ $focus-border-color: #06b6d4; // Cyan from the image
 $button-gradient-start: #06b6d4; // Cyan from the image
 $button-gradient-end: #3b82f6; // Blue from the image
 $button-text-color: #ffffff;
-$disabled-color:#0891b2;
+$disabled-color: #0891b2;
 $button-hover-gradient-start: #0891b2;
 $button-hover-gradient-end: #2563eb;
 
-
-
-.loading-overlay{
-   
+.loading-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -29,18 +26,18 @@ $button-hover-gradient-end: #2563eb;
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(5px); /*  Adds a blur effect */
-
 }
-
 
 .product-form {
   max-width: 600px;
   margin: auto;
   padding: 1.5rem;
-  background-color:var(--bg-semi-transparent);
+  background-color: var(--bg-semi-transparent);
   border: 1px solid $card-border-color;
   border-radius: 0.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .form-title {
@@ -71,15 +68,15 @@ $button-hover-gradient-end: #2563eb;
     color: $text-color-light;
     margin-bottom: 0.25rem;
   }
-  input{
+  input {
     background-color: rgba(31, 41, 55, 0.5);
     border: 1px solid #374151;
   }
-  select{
+  select {
     background-color: rgba(31, 41, 55, 0.5);
     border: 1px solid #374151;
   }
-  textarea{
+  textarea {
     background-color: rgba(31, 41, 55, 0.5);
     border: 1px solid #374151;
   }
@@ -96,7 +93,7 @@ $button-hover-gradient-end: #2563eb;
   transition: border-color 0.2s;
 
   &::placeholder {
-     color: #9ca3af;;
+    color: #9ca3af;
   }
 
   &:focus {
@@ -105,7 +102,7 @@ $button-hover-gradient-end: #2563eb;
   }
 }
 
-.options{
+.options {
   background-color: rgba(31, 41, 55, 0.5);
   border: 1px solid #374151;
 }
@@ -113,7 +110,7 @@ $button-hover-gradient-end: #2563eb;
 .form-group-flex {
   display: flex;
   gap: 1rem;
-  
+
   .form-group {
     flex: 1;
     margin-bottom: 0;
@@ -139,11 +136,11 @@ $button-hover-gradient-end: #2563eb;
   color: $button-text-color;
   box-shadow: 0 4px 6px rgba(6, 182, 212, 0.2);
   transition: all 0.2s ease-in-out;
-  
+
   &:hover {
     background: linear-gradient(to right, $button-hover-gradient-start, $button-hover-gradient-end);
   }
-  
+
   &:disabled {
     background: $disabled-color;
     cursor: not-allowed;
@@ -151,4 +148,24 @@ $button-hover-gradient-end: #2563eb;
   }
 }
 
+.control-error {
+  color: red;
+  font-weight: bold;
+  margin-block-start: 0px;
+  margin-block-end: 1px;
+  align-self: flex-start;
+}
+input.ng-invalid.ng-touched {
+  background-color: #fbdcd6;
+  border-color: red;
+}
 
+select.ng-invalid.ng-touched {
+  background-color: #fbdcd6;
+  border-color: red;
+}
+
+textarea.ng-invalid.ng-touched {
+  background-color: #fbdcd6;
+  border-color: red;
+}

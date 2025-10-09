@@ -1,5 +1,7 @@
+<p-toast />
+
 <div class="div-login">
-  <div *ngIf="!isLoading">
+  <div>
     <div class="login title">Sign In</div>
     <div class="close-div">
       <i class="pi pi-times" (click)="onCloseAuthForm()"></i>
@@ -13,7 +15,12 @@
           name="email"
           [(ngModel)]="user.email"
           required
+          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
+          #femail="ngModel"
         />
+        @if (femail.touched && femail.invalid) {
+          <small class="control-error">* Email is a Required Field</small>
+        }
       </div>
       <div class="login-password">
         <Label>Password</Label>
@@ -25,21 +32,27 @@
             [(ngModel)]="user.password"
             required
             minlength="12"
+            #fpassword="ngModel"
           />
-
           <i
             class="pi"
             [ngClass]="showPassword ? 'pi-eye-slash' : 'pi-eye'"
             (click)="togglePasswordVisibility()"
           ></i>
         </div>
+        @if (fpassword.touched && fpassword.invalid) {
+          <small class="control-error">* Password is required</small>
+        }
       </div>
+
       <div class="div-btn">
-        <button class="login-btn" type="submit" [disabled]="authForm.invalid">Sign In</button>
+        <button class="login-btn" type="submit" [disabled]="authForm.invalid && isLoading">
+          Sign In
+        </button>
       </div>
       <div class="login-para-btn">
         <p class="login-para">Do not have an account yet?</p>
-        <button class="btn-signup">Sign up</button>
+        <button class="btn-signup" (click)="onSwitchToSignup()">Sign up</button>
       </div>
     </form>
   </div>
@@ -47,5 +60,11 @@
 @if (isLoading) {
   <div class="loading-overlay">
     <app-loader [isLoading]="isLoading"></app-loader>
+  </div>
+}
+
+@if (!isLoggedIn) {
+  <div class="signup-overlay">
+    <app-signup></app-signup>
   </div>
 }

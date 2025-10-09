@@ -1,3 +1,4 @@
+<p-toast />
 <div class="catgories-header-comp">
   <div class="catgories-info">
     <h1 class="catgories-title">My Orders</h1>
@@ -5,16 +6,13 @@
   </div>
 </div>
 
-@if (AllOrders.length == 0) {
-  <div class="no-buy-request">
-    <h1>No order history yet</h1>
-  </div>
-}
-@if (isLoading) {
-  <div class="loading-overlay">
-    <app-loader [isLoading]="isLoading"></app-loader>
-  </div>
-}
+<div *ngIf="AllOrders.length === 0" class="no-buy-request">
+  <h1>No order history yet</h1>
+</div>
+
+<div *ngIf="isLoading" class="loading-overlay">
+  <app-loader [isLoading]="isLoading"></app-loader>
+</div>
 
 <div *ngFor="let order of AllOrders">
   <div class="orders-container">
@@ -26,44 +24,80 @@
             alt="Product Name"
             class="product-image"
           />
+          <div>
+            <h3 class="product-title">{{ order.product.product.name }}</h3>
+            <span class="product-category-badge">{{ order.product.category.name }}</span>
+          </div>
+
+          <span>{{ order.order.status | orderStatus }}</span>
         </div>
-        <div class="product-details">
-          <div class="product-header">
-            <div>
-              <h3 class="product-title">{{ order.product.product.name }}</h3>
-              <span class="product-category-badge">{{ order.product.category.name }}</span>
-            </div>
 
-            <span>
-              {{ order.order.status | orderStatus }}
-              <span>
-                <p class="product-description">
-                  {{ order.product.product.description }}
-                </p>
+        <p class="product-description">
+          {{ order.product.product.description }}
+        </p>
 
-                <div class="order-info-grid">
-                  <div class="order-info-item">
-                    <i class="pi pi-calendar"></i>
-                    <span>Start: {{ order.order.start_date.split('T')[0] }}</span>
-                  </div>
-                  <div class="order-info-item">
-                    <i class="pi pi-calendar"></i>
-                    <span>End: {{ order.order.end_date.split('T')[0] }}</span>
-                  </div>
-                  <div class="order-info-item">
-                    <i class="pi pi-users"></i>
-                    <span>Tenant: {{ order.product.user.full_name }}</span>
-                  </div>
-                  <div class="order-info-item">
-                    <i class="pi pi-indian-rupee"></i>
-                    <span>Total: ₹{{ order.order.total_amount }}/day</span>
-                  </div>
-                </div>
-              </span></span
-            >
+        <div class="order-info-grid">
+          <div class="order-info-item">
+            <i class="pi pi-calendar"></i>
+            <span>Start: {{ order.order.start_date.split('T')[0] }}</span>
+          </div>
+          <div class="order-info-item">
+            <i class="pi pi-calendar"></i>
+            <span>End: {{ order.order.end_date.split('T')[0] }}</span>
+          </div>
+          <div class="order-info-item">
+            <i class="pi pi-users"></i>
+            <span>Tenant: {{ order.product.user.full_name }}</span>
+          </div>
+          <div class="order-info-item">
+            <i class="pi pi-indian-rupee"></i>
+            <span>Total: ₹{{ order.order.total_amount }}/day</span>
           </div>
         </div>
+      </div>
+      <div class="action-buttons">
+        <button
+          *ngIf="loggedInUser?.role === 'user' && order.order.status === 2"
+          class="feedback-btn"
+          (click)="showFeedbackDialog(order.order.id)"
+        >
+          Give Feedback
+        </button>
       </div>
     </div>
   </div>
 </div>
+
+<!-- PrimeNG Feedback Dialog -->
+<p-dialog
+  header="Give Feedback"
+  [(visible)]="displayFeedbackDialog"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <form (ngSubmit)="submitFeedback()" class="flex flex-col gap-4">
+    <div class="flex flex-col items-center gap-2">
+      <label class="font-bold">Rating</label>
+      <p-rating [(ngModel)]="feedbackData.rating" required name="ratingValue" />
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label class="font-bold">Description</label>
+      <textarea
+        [(ngModel)]="feedbackData.description"
+        name="description"
+        rows="5"
+        [maxlength]="150"
+        pTextarea
+        [autoResize]="true"
+      ></textarea>
+      <small class="text-right">{{ feedbackData.description.length || 0 }}/150</small>
+    </div>
+
+    <div class="flex justify-content-end gap-2">
+      <p-button label="Cancel" severity="secondary" (onClick)="displayFeedbackDialog = false" />
+      <p-button label="Submit" type="submit" />
+    </div>
+  </form>
+</p-dialog>

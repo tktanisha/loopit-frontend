@@ -1,3 +1,5 @@
+<p-toast />
+
 <div class="categoryComp">
   @if (isLoading) {
     <div class="loading-overlay">
@@ -29,7 +31,11 @@
             name="name"
             [(ngModel)]="society.name"
             required
+            #fname="ngModel"
           />
+          @if (fname.touched && fname.invalid) {
+            <small class="control-error">* Society name is a Required Field</small>
+          }
         </div>
         <div class="form-group">
           <label for="location" class="label">Location *</label>
@@ -41,7 +47,11 @@
             name="location"
             [(ngModel)]="society.location"
             required
+            #flocation="ngModel"
           />
+          @if (flocation.touched && flocation.invalid) {
+            <small class="control-error">* Society Location is a Required Field</small>
+          }
         </div>
         <div class="form-group">
           <label for="pincode" class="label">Pincode *</label>
@@ -54,7 +64,11 @@
             [(ngModel)]="society.pincode"
             required
             pattern="[0-9]{6}"
+            #fpincode="ngModel"
           />
+          @if (fpincode.invalid && fpincode.dirty) {
+            <small class="control-error">* Society Pincode is Invalid</small>
+          }
         </div>
 
         <div class="button-group">

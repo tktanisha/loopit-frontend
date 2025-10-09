@@ -7,7 +7,19 @@ $color-text-label: black;
 $color-neon-blue: #22d3ee;
 $color-neon-blue-hover: #00aacc;
 
-
+.signup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+}
 .loading-overlay {
   position: fixed;
   top: 0;
@@ -107,12 +119,26 @@ $color-neon-blue-hover: #00aacc;
 
   input {
     width: 100%;
-    padding-right: 2.5rem; // space for the icon
+
+    background-color: white;
+    border: 1px solid $color-border;
+    border-radius: 0.3rem;
+    color: black;
+    padding: 0.7rem;
+    font-size: medium;
+    outline: none;
+
+    &:focus {
+      border-color: $color-neon-blue;
+      box-shadow: 0 0 0 2px rgba($color-neon-blue, 0.5);
+    }
   }
 
-  .pi {
+  .eye-icon {
     position: absolute;
+    top: 50%;
     right: 0.75rem;
+    transform: translateY(-50%);
     cursor: pointer;
     color: gray;
     font-size: 1.2rem;
@@ -137,17 +163,7 @@ $color-neon-blue-hover: #00aacc;
   border: none;
   border-radius: 0.3rem;
   cursor: pointer;
-  width: 20rem; 
-
-  &:hover:not(:disabled) {
-    @include mixin.transition-hover-scale(300ms, ease-in-out, 1.05);
-    background-color: $color-neon-blue-hover;
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 1;
-  }
+  width: 20rem;
 }
 
 .login-para-btn {
@@ -174,4 +190,21 @@ $color-neon-blue-hover: #00aacc;
   &:hover {
     text-decoration: underline;
   }
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.control-error {
+  color: red;
+  font-weight: bold;
+  margin-block-start: 0px;
+  margin-block-end: 1px;
+  align-self: flex-start;
+}
+input.ng-invalid.ng-touched {
+  background-color: #fbdcd6;
+  border-color: red;
 }

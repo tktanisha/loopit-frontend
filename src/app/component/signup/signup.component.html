@@ -1,3 +1,4 @@
+<p-toast />
 <div class="signup-comp">
   <app-login *ngIf="isLoggedIn"></app-login>
 
@@ -51,7 +52,9 @@
         <input id="address" name="address" required [(ngModel)]="user.address" />
       </div>
 
-      <button type="submit" class="signup-btn" [disabled]="!signupForm.valid">Sign Up</button>
+      <button type="submit" class="signup-btn" [disabled]="!signupForm.valid && isLoading">
+        Sign Up
+      </button>
 
       <div class="signup-para-btn">
         <p class="signup-para">Do not have an account yet?</p>

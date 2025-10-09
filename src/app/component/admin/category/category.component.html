@@ -1,3 +1,5 @@
+<p-toast />
+
 <div class="categoryComp">
   @if (isLoading) {
     <div class="loading-overlay">
@@ -33,7 +35,11 @@
             name="name"
             [(ngModel)]="category.name"
             required
+            #fname="ngModel"
           />
+          @if (fname.touched && fname.invalid) {
+            <small class="control-error">* Category Name is a Required Field</small>
+          }
         </div>
         <div class="form-grid">
           <div class="form-group">
@@ -50,8 +56,11 @@
               step="5"
               required
               [(ngModel)]="category.price"
+              #fprice="ngModel"
             />
-            <p class="hint-text">rental price for items in this category</p>
+            @if (fprice.touched && fprice.invalid) {
+              <small class="control-error">* Category Price is a Required Field</small>
+            }
           </div>
           <div class="form-group">
             <label for="securityAmount" class="label with-icon">
@@ -67,8 +76,11 @@
               step="5"
               required
               [(ngModel)]="category.security"
+              #fsecurity="ngModel"
             />
-            <p class="hint-text">Security deposit amount for items in this category</p>
+            @if (fsecurity.touched && fsecurity.invalid) {
+              <small class="control-error">* Security Price is a Required Field</small>
+            }
           </div>
         </div>
         <div class="button-group">

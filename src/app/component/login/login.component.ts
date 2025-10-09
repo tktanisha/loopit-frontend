@@ -1,82 +1,89 @@
-import { Component,inject, Output,EventEmitter,Input } from '@angular/core';
-import { LoginRequest } from '../../models/login';
-import { NgForm,FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Component, inject, Output, EventEmitter, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgForm, FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { DialogModule } from 'primeng/dialog';
+import { Toast } from 'primeng/toast';
+
+import { LoginRequest } from '../../models/login';
+
 import { AuthService } from '../../service/auth.service';
 import { SignupComponent } from '../signup/signup.component';
 import { LoaderComponent } from '../loader/loader';
-import { DialogModule } from 'primeng/dialog';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
-  standalone:true,
-  imports: [FormsModule ,CommonModule,LoaderComponent,DialogModule],
+  standalone: true,
+  imports: [FormsModule, CommonModule, LoaderComponent, DialogModule, SignupComponent, Toast],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
 })
 export class LoginComponent {
+  private router = inject(Router);
+  private AuthService = inject(AuthService);
+  private messageService = inject(MessageService);
 
-   private router=inject(Router);
-   @Output() closeEvent=new EventEmitter<void>();
-   private AuthService = inject(AuthService)
-   @Input() isLoggedIn!:boolean
+  @Output() switchToSignup = new EventEmitter<void>();
+  @Output() closeEvent = new EventEmitter<void>();
+  @Input() isLoggedIn!: boolean;
 
-  
-   isLoading:boolean=false
-  
+  isLoading: boolean = false;
+  showPassword: boolean = false;
 
-  user: LoginRequest ={
-    email:'',
-    password:''
+  user: LoginRequest = {
+    email: '',
+    password: '',
+  };
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
- 
-showPassword: boolean = false;
+  onFormSubmitted(form: NgForm) {
+    console.log(form);
 
-togglePasswordVisibility() {
-  this.showPassword = !this.showPassword;
-}
-
-
-  onFormSubmitted(form:NgForm) {
-    console.log(form)
-
-    if(form.valid){
-      this.callLoginService()
-      this.closeEvent.emit()
+    if (form.valid) {
+      this.callLoginService();
+      this.closeEvent.emit();
     }
-     form.reset();
+    form.reset();
   }
 
   onCloseAuthForm() {
-    this.closeEvent.emit()
-    this.router.navigate(['/'])//back to home
+    this.closeEvent.emit();
+    this.router.navigate(['/']);
   }
 
   callLoginService() {
-    this.isLoading=true
-    this.AuthService.login(this.user)
-    .subscribe(
-            {         
-            next:(data) =>{
-            this.AuthService.handleAuthSuccess(data)
-            this.isLoading=false
-            this.router.navigate(['/dashboard'])
-            
-            
-          },
-            error:(err) =>{
-            console.log(err)
-            this.isLoading=false
-            }
-            
-           
-        })
+    this.isLoading = true;
+    this.AuthService.login(this.user).subscribe({
+      next: data => {
+        this.AuthService.handleAuthSuccess(data);
+        this.isLoading = false;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: ' Logged In successfully  ',
+          life: 3000,
+        });
+        this.router.navigate(['/dashboard']);
+      },
+      error: err => {
+        console.log(err);
+        this.isLoading = false;
+        this.messageService.add({
+          severity: 'danger',
+          summary: 'Error',
+          detail: 'Logged in failed ',
+          life: 3000,
+        });
+      },
+    });
   }
 
-  
-
-
-
+  onSwitchToSignup() {
+    this.switchToSignup.emit();
+  }
 }

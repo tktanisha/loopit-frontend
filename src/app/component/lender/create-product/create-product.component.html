@@ -1,3 +1,5 @@
+<p-toast />
+
 @if (isLoading) {
   <div class="loading-overlay">
     <app-loader [isLoading]="isLoading"></app-loader>
@@ -17,7 +19,11 @@
       required
       class="form-control"
       placeholder="Enter product name"
+      #fName="ngModel"
     />
+    @if (fName.touched && fName.invalid) {
+      <small class="control-error">* Product Name is a Required Field</small>
+    }
   </div>
 
   <!-- Category Dropdown -->
@@ -31,12 +37,16 @@
       class="form-control"
       placeholder="Select a category"
       (change)="onCategoryChange($event)"
+      #fCategory="ngModel"
     >
       <option value="" disabled selected class="options">select a category</option>
       <option *ngFor="let category of allCategory" [value]="category.id">
         {{ category.name }}
       </option>
     </select>
+    @if (fCategory.touched && fCategory.invalid) {
+      <small class="control-error">* Product Category is a Required Field</small>
+    }
   </div>
 
   <!-- Description -->
@@ -49,7 +59,11 @@
       required
       class="form-control"
       placeholder="Enter product description"
+      #fdescription="ngModel"
     ></textarea>
+    @if (fdescription.touched && fdescription.invalid) {
+      <small class="control-error">* Product Description is a Required Field</small>
+    }
   </div>
 
   @if (imageUploadTrue) {
@@ -98,7 +112,11 @@
       required
       class="form-control"
       min="1"
+      #fduration="ngModel"
     />
+    @if (fduration.touched && fduration.invalid) {
+      <small class="control-error">* Product Duration is a Required Field</small>
+    }
   </div>
 
   <div class="form-actions">

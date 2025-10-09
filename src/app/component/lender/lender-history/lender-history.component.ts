@@ -1,36 +1,45 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { OrderService } from '../../../service/orders.service';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../service/auth.service';
+
+import { MessageService } from 'primeng/api';
+import { Toast } from 'primeng/toast';
+
+import { OrderStatusPipe } from '../../../custom-pipes/order-status-pipe';
+
 import { LoggedInUser } from '../../../models/logged-in-user';
 import { OrderResponse } from '../../../models/orders';
-import { CommonModule } from '@angular/common';
-import { OrderStatusPipe } from '../../../custom-pipes/order-status-pipe';
 import { LoaderComponent } from '../../loader/loader';
+
 import { ReturnRequestService } from '../../../service/return-request';
+import { OrderService } from '../../../service/orders.service';
+import { AuthService } from '../../../service/auth.service';
 import { ReturnRequestPayload } from '../../../models/return-request';
 
 @Component({
   selector: 'app-lender-history',
-  imports: [CommonModule, OrderStatusPipe, LoaderComponent],
+  imports: [CommonModule, OrderStatusPipe, LoaderComponent, Toast],
   templateUrl: './lender-history.component.html',
-  styleUrl: './lender-history.component.scss'
+  styleUrl: './lender-history.component.scss',
 })
 export class LenderHistoryComponent implements OnInit {
-  
   orderService = inject(OrderService);
   returnRequestService = inject(ReturnRequestService);
-  router = inject(Router);
+  messageService = inject(MessageService);
   authService = inject(AuthService);
-  loggesInUser!: LoggedInUser | null;
+
+  router = inject(Router);
+
   AllOrders: OrderResponse[] = [];
   isLoading: boolean = false;
+
+  loggesInUser!: LoggedInUser | null;
 
   ngOnInit(): void {
     this.loggesInUser = this.authService.getUser();
     this.GetOrders();
   }
-  
+
   GetOrders(): void {
     this.isLoading = true;
     this.orderService.GetLenderOrders().subscribe({
@@ -41,11 +50,23 @@ export class LenderHistoryComponent implements OnInit {
           this.AllOrders = [];
         }
         this.isLoading = false;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Successfully fetched all lending order history   ',
+          life: 3000,
+        });
       },
-      error: (err) => {
+      error: err => {
         console.error('Error fetching lender orders:', err);
         this.isLoading = false;
-      }
+        this.messageService.add({
+          severity: 'danger',
+          summary: 'Error',
+          detail: 'Failed to fetch lending orders history ',
+          life: 3000,
+        });
+      },
     });
   }
 
@@ -56,11 +77,23 @@ export class LenderHistoryComponent implements OnInit {
       next: (data: any) => {
         console.log('Return request created successfully:', data);
         this.isLoading = false;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'return request created successfully ',
+          life: 3000,
+        });
       },
-      error: (err) => {
+      error: err => {
         console.error('Error creating return request:', err);
         this.isLoading = false;
-      }
+        this.messageService.add({
+          severity: 'danger',
+          summary: 'Error',
+          detail: 'Failed to create return request ',
+          life: 3000,
+        });
+      },
     });
   }
 }

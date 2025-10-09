@@ -1,49 +1,72 @@
-import { Component ,inject} from '@angular/core';
-import { BuyRequestService } from '../../../service/buy-request.service';
-import { BuyRequestResponse } from '../../../models/buy-request';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoaderComponent } from '../../loader/loader';
+
+import { Toast } from 'primeng/toast';
+
 import { BuyStatusPipe } from '../../../custom-pipes/buy-request-status.pipe';
-import { AuthService } from '../../../service/auth.service';
-import { User } from '../../../models/user';
+
+import { BuyRequestResponse } from '../../../models/buy-request';
 import { LoggedInUser } from '../../../models/logged-in-user';
-import { retry } from 'rxjs';
+
+import { AuthService } from '../../../service/auth.service';
+import { BuyRequestService } from '../../../service/buy-request.service';
+import { LoaderComponent } from '../../loader/loader';
+import { MessageService } from 'primeng/api';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-buy-request',
-  imports: [CommonModule,LoaderComponent,BuyStatusPipe],
+  imports: [CommonModule, LoaderComponent, BuyStatusPipe, Toast],
   templateUrl: './buy-request.component.html',
-  styleUrl: './buy-request.component.scss'
+  styleUrl: './buy-request.component.scss',
 })
 export class GetAllBuyRequestComponent {
-  
-  BuyRequestService:BuyRequestService = inject(BuyRequestService)
-  AuthService : AuthService = inject(AuthService)
+  BuyRequestService = inject(BuyRequestService);
+  messageService = inject(MessageService);
+  AuthService = inject(AuthService);
 
-  loggedInUser!:LoggedInUser | null
-  isLoading:boolean = false
-  allBuyRequests:BuyRequestResponse[]=[]
-  BuyRequestOfUser:BuyRequestResponse[]=[]
- 
-ngOnInit(): void {
-  this.loggedInUser =this.AuthService.getUser()
-  this.isLoading = true;
-  this.BuyRequestService.GetAllRequest().subscribe({
-    next: (res: any) => {
-      this.allBuyRequests = res.requests;
-      if (this.loggedInUser) {
-        this.BuyRequestOfUser = this.allBuyRequests.filter((request: any) => {
-          return request.buy_request.requested_by === this.loggedInUser?.user_id;
+  requestSubject!: Subscription;
+
+  isLoading: boolean = false;
+
+  allBuyRequests: BuyRequestResponse[] = [];
+  BuyRequestOfUser: BuyRequestResponse[] = [];
+
+  loggedInUser!: LoggedInUser | null;
+
+  ngOnInit(): void {
+    this.loggedInUser = this.AuthService.getUser();
+    this.isLoading = true;
+    this.requestSubject = this.BuyRequestService.GetAllRequest().subscribe({
+      next: (res: any) => {
+        this.allBuyRequests = res.requests;
+        if (this.loggedInUser) {
+          this.BuyRequestOfUser = this.allBuyRequests.filter((request: any) => {
+            return request.buy_request.requested_by === this.loggedInUser?.user_id;
+          });
+        }
+        this.isLoading = false;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Successfully fetched all Buy Request ',
+          life: 3000,
         });
-      }
-      this.isLoading = false;
-    },
-    error: (err) => {
-      console.log(err);
-      this.isLoading = false;
-    }
-  });
-}
+      },
+      error: err => {
+        console.log(err);
+        this.isLoading = false;
+        this.messageService.add({
+          severity: 'danger',
+          summary: 'Error',
+          detail: 'Failed to fetch buy request ',
+          life: 3000,
+        });
+      },
+    });
+  }
 
-  
+  ngOnDestroy(): void {
+    this.requestSubject.unsubscribe();
+  }
 }

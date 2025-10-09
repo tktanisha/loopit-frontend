@@ -1,17 +1,15 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-
+import { Toast } from 'primeng/toast';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule,FormsModule,RouterModule,ButtonModule],
+  imports: [CommonModule, FormsModule, RouterModule, ButtonModule, Toast],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
-export class AppComponent {
- 
-}
+export class AppComponent {}

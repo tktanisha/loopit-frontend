@@ -1,32 +1,37 @@
-import { Component,inject, OnInit } from '@angular/core';
-import { ProductService } from '../../../service/product.service';
-import { Product, ProductResponse } from '../../../models/product';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { FormsModule, NgForm } from '@angular/forms';
-import { CategoryService } from '../../../service/category.service';
-import { GetCategoryResponse } from '../../../models/category';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { FormsModule, NgForm } from '@angular/forms';
+
+import { MessageService } from 'primeng/api';
+import { Subscription } from 'rxjs';
+import { Toast } from 'primeng/toast';
+
+import { GetCategoryResponse } from '../../../models/category';
+import { Product } from '../../../models/product';
+
+import { CategoryService } from '../../../service/category.service';
+import { ProductService } from '../../../service/product.service';
 import { LoaderComponent } from '../../loader/loader';
 
 @Component({
   selector: 'app-create-product',
-  imports: [FormsModule,CommonModule,LoaderComponent],
+  imports: [FormsModule, CommonModule, LoaderComponent, Toast],
   templateUrl: './create-product.component.html',
-  styleUrl: './create-product.component.scss'
+  styleUrl: './create-product.component.scss',
 })
-
 export class CreateProductComponent implements OnInit {
-
-  imageUploadTrue:boolean=false
-  router: Router = inject(Router);
   productService: ProductService = inject(ProductService);
   categoryService: CategoryService = inject(CategoryService);
+  messageService: MessageService = inject(MessageService);
 
+  router: Router = inject(Router);
   categorySubject!: Subscription;
   productSubject!: Subscription;
 
+  imageUploadTrue: boolean = false;
   isLoading: boolean = false;
+
   allCategory: GetCategoryResponse[] = [];
 
   productData: Product = {
@@ -35,26 +40,29 @@ export class CreateProductComponent implements OnInit {
     category_id: null,
     name: '',
     description: '',
-    duration: 0,
+    duration: null,
     is_available: true,
-    created_at: null
+    created_at: null,
   };
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.categorySubject = this.categoryService.getAllCategory().subscribe({
       next: (data: any) => {
         this.allCategory = data.categories;
+        this.isLoading = false;
       },
-      error: (err) => {
+      error: err => {
         console.log(err);
-      }
+        this.isLoading = false;
+      },
     });
   }
 
   onCategoryChange(event: Event) {
     const selectedValue = (event.target as HTMLSelectElement).value;
-    this.productData.category_id = Number(selectedValue); 
-}
+    this.productData.category_id = Number(selectedValue);
+  }
 
   onClickCreate(form: NgForm) {
     if (form.valid) {
@@ -65,16 +73,28 @@ export class CreateProductComponent implements OnInit {
 
   CreateProduct(product: Product) {
     this.isLoading = true;
-    this.productService.CreateProduct(product).subscribe({
+    this.productSubject = this.productService.CreateProduct(product).subscribe({
       next: (product: any) => {
         console.log(product);
         this.productData = product;
         this.isLoading = false;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Successfully created the product  ',
+          life: 3000,
+        });
       },
-      error: (err) => {
+      error: err => {
         console.log(err);
         this.isLoading = false;
-      }
+        this.messageService.add({
+          severity: 'danger',
+          summary: 'Error',
+          detail: 'Failed to create orders ',
+          life: 3000,
+        });
+      },
     });
   }
 
@@ -83,4 +103,3 @@ export class CreateProductComponent implements OnInit {
     this.productSubject?.unsubscribe();
   }
 }
-

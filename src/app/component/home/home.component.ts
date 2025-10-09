@@ -1,51 +1,54 @@
-import { Component,inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { SignupComponent } from '../signup/signup.component';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from '../header/header.component';
-import { AuthService } from '../../service/auth.service';
-import { Subscription } from 'rxjs';
-import { LoggedInUser } from '../../models/logged-in-user';
-import { LoaderComponent } from '../loader/loader';
+import { Router } from '@angular/router';
 
+import { Subscription } from 'rxjs';
+import { Toast } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+
+import { LoggedInUser } from '../../models/logged-in-user';
+
+import { AuthService } from '../../service/auth.service';
+import { HeaderComponent } from '../header/header.component';
+import { LoaderComponent } from '../loader/loader';
+import { SignupComponent } from '../signup/signup.component';
 
 @Component({
   selector: 'app-home',
-  imports: [SignupComponent,CommonModule,HeaderComponent,LoaderComponent],
+  imports: [SignupComponent, CommonModule, HeaderComponent, LoaderComponent, Toast],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
+  AuthService = inject(AuthService);
+  messageService = inject(MessageService);
 
-    private router=inject(Router)
-    AuthService=inject(AuthService)
-    userSubject!:Subscription
-    isLoading:boolean=false
-    isSignedUp!:boolean
+  userSubject!: Subscription;
+  private router = inject(Router);
 
-    isUserLoggedIn:boolean=false
+  isLoading: boolean = false;
+  isSignedUp!: boolean;
+  isUserLoggedIn: boolean = false;
 
   ngOnInit(): void {
-    this.isLoading=true
-    this.userSubject= this.AuthService.user.subscribe((user:LoggedInUser | null)=>{
-      this.isUserLoggedIn=user ? true : false;
-    })
-    this.isLoading=false
-  }  
-
-  handleOnClose() {
-    this.isSignedUp=false
-    this.router.navigate(['/'])
-  }  
-
-  onClickChangeToSignupModal(){
-    console.log("clciked on get started")
-    this.isSignedUp=true
-    ;
-
+    this.isLoading = true;
+    this.userSubject = this.AuthService.user.subscribe((user: LoggedInUser | null) => {
+      this.isUserLoggedIn = user ? true : false;
+    });
+    this.isLoading = false;
   }
 
-  ngOnDestroy(){
-    this.userSubject.unsubscribe()
+  handleOnClose() {
+    this.isSignedUp = false;
+    this.router.navigate(['/']);
+  }
+
+  onClickChangeToSignupModal() {
+    console.log('clciked on get started');
+    this.isSignedUp = true;
+  }
+
+  ngOnDestroy() {
+    this.userSubject.unsubscribe();
   }
 }
