@@ -44,7 +44,6 @@ export class HomeComponent implements OnInit {
   }
 
   onClickChangeToSignupModal() {
-    console.log('clciked on get started');
     this.isSignedUp = true;
   }
 

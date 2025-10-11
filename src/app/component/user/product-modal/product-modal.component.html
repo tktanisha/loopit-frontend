@@ -1,84 +1,67 @@
-<div class="product-details-dialog-content">
-  <div class="dialog-header">
-    <h2 class="dialog-title">{{ product.product.name }}</h2>
-    <i class="pi pi-times" (click)="handleOnClose()"></i>
-  </div>
-
-  <div class="product-grid">
-    <div class="product-image-section">
+<p-toast />
+<div class="product-dialog">
+  <div class="dialog-body">
+    <div class="image-section">
       <img
-        src="https://tse2.mm.bing.net/th/id/OIP.Yu0XkK0uGjoZ_1oQ7zZnsQHaFl?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3"
-        alt="Power Drill Set"
-        class="product-image"
+        src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-madebymath-90946.jpg&fm=jpg"
+        alt="{{ product.product.name }}"
       />
     </div>
 
-    <div class="product-details-section">
-      <div class="product-info-group">
-        <span class="category-badge">{{ product.category.name }}</span>
-        <p class="product-description">
-          {{ product.product.description }}
-        </p>
+    <div class="details-section">
+      <div class="details-header">
+        <h2 class="product-title">{{ product.product.name }}</h2>
+        <i class="pi pi-times close-icon" (click)="handleOnClose()"></i>
       </div>
 
-      <div class="product-attributes-list">
-        <div class="attribute-item">
-          <div class="icon-container cyan">
-            <i class="pi pi-calendar"></i>
-          </div>
-          <div>
-            <p class="attribute-label">Duration</p>
-            <p class="attribute-value">Available for {{ product.product.duration }} days</p>
-          </div>
+      <p class="product-description">
+        {{ product.product.description }}
+      </p>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <p class="label">Duration</p>
+          <p class="value">{{ product.product.duration }} days</p>
         </div>
 
-        <div class="attribute-item">
-          <div class="icon-container green">
-            <span class="rupee-icon">₹</span>
-          </div>
-          <div>
-            <p class="attribute-label">Price per day</p>
-            <p class="attribute-value green">₹{{ product.category.price }}</p>
-          </div>
+        <div class="info-item">
+          <p class="label">Price per day</p>
+          <p class="value">₹{{ product.category.price }}</p>
         </div>
 
-        <div class="attribute-item">
-          <div class="icon-container magenta">
-            <i class="pi pi-shield"></i>
-          </div>
-          <div>
-            <p class="attribute-label">Security Deposit</p>
-            <p class="attribute-value magenta">₹{{ product.category.security }}</p>
-          </div>
-        </div>
-
-        <div class="attribute-item">
-          <div class="icon-container cyan">
-            <i class="pi pi-user"></i>
-          </div>
-          <div>
-            <p class="attribute-label">Lender</p>
-            <p class="attribute-value">{{ product.user.full_name }}</p>
-          </div>
-        </div>
-
-        <div class="attribute-item">
-          <div class="icon-container green">
-            <i class="pi pi-phone"></i>
-          </div>
-          <div>
-            <p class="attribute-label">Contact</p>
-            <p class="attribute-value">{{ product.user.phone_number }}</p>
-          </div>
+        <div class="info-item">
+          <p class="label">Security</p>
+          <p class="value">₹{{ product.category.security }}</p>
         </div>
       </div>
 
-      <button class="action-button blue" (click)="handleBuyRequest(product.product.id)">
+      <div class="contact-lender">
+        <!-- <h3 class="section-title">Contact Lender</h3> -->
+
+        <div class="lender-card">
+          <div class="lender-info">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+              alt="Lender Avatar"
+              class="lender-avatar"
+            />
+            <div class="lender-details">
+              <p class="lender-name">{{ product.user.full_name }}</p>
+              <p class="lender-phone">{{ product.user.phone_number }}</p>
+            </div>
+          </div>
+
+          <i class="pi pi-phone call-icon"></i>
+        </div>
+      </div>
+
+      <button class="buy-btn" (click)="handleBuyRequest(product.product.id)">
         Create Buy Request
       </button>
     </div>
   </div>
 </div>
+
 @if (isLoading) {
   <div class="loading-overlay">
     <app-loader [isLoading]="isLoading"></app-loader>

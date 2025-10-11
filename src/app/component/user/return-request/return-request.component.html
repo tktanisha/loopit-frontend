@@ -1,35 +1,86 @@
-<div class="catgories-header-comp">
-  <div class="catgories-info">
-    <h1 class="catgories-title">Pending Buy Requests</h1>
-    <p class="catgories-subtitle">All pending buy request for all items</p>
+<p-toast/>
+<div class="card-container">
+  <div class="category-header">
+    <div class="header-left">
+      <h1 class="title">Return Requests</h1>
+      <p class="subtitle">Return requests received on all active orders.</p>
+    </div>
+    <span class="count-badge">  
+      <span>{{ allReturnRequests.length }}</span> Request
+    </span>
   </div>
-  <span class="catgories-count-badge">
-    <span>{{ allReturnRequests.length }}</span> Request
-  </span>
-</div>
-
 @if (allReturnRequests.length == 0) {
   <div class="no-buy-request">
-    <h1>No Pending Request yet</h1>
+    <img src="https://media.geeksforgeeks.org/auth-dashboard-uploads/not_found_mentor.svg" alt="No Buy Request">
+    <p>No pending requests.</p>
   </div>
-}
-
-<div class="card-container">
-  <div class="card" *ngFor="let req of allReturnRequests">
+} @else {
+  <!-- <div class="card" *ngFor="let req of allReturnRequests">
     <div class="badge pending">{{ req.status | returnStatus }}</div>
     <div class="card-footer">
       <span class="request-date">Requested on {{ req.created_at.split('T')[0] }}</span>
 
-      <div class="Buttons-group">
-        <Button (click)="handleAccept(req.id)" class="accept-btn"> Approve Request </Button>
-        <Button (click)="handleReject(req.id)" className="reject-btn"> Reject Request </Button>
-      </div>
+        <ng-template pTemplate="body" let-req>
+          <tr>
+            <td>{{ req.id }}</td>
+            <td>{{ req.order_id }}</td>
+            <td>{{ req.status | returnStatus }}</td>
+            <td>{{ req.created_at.split("T")[0] }}</td>
+            <td>
+              <button
+                pButton
+                icon="pi pi-check"
+                class="p-button-text p-button-sm p-button-success"
+                (click)="handleAccept(req.id)"
+              >
+                Approve
+              </button>
+              <button
+                pButton
+                icon="pi pi-times"
+                class="p-button-text p-button-sm p-button-danger"
+                (click)="handleReject(req.id)"
+              >
+                Reject
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
+  </div> -->
 
-    @if (isLoading) {
-      <div class="loading-overlay">
-        <app-loader [isLoading]="isLoading"></app-loader>
-      </div>
-    }
+  <!-- use prime ng table -->
+  <div class="table-section">
+    <p-table [value]="allReturnRequests" stripedRows [responsiveLayout]="'scroll'" dataKey="id">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Product Name</th>
+          <th>Order ID</th>
+          <th>Request Status</th>
+          <th>Requested On</th>
+          <th>Approve/Reject</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-req>
+        <tr>
+          <td>{{ req.order.product.name }}</td>
+          <td>{{ req.order.id }}</td>
+          <td>{{ req.status | returnStatus }}</td>
+          <td>{{ req.created_at.split('T')[0] }}</td>
+          <td>
+            <button pButton icon="pi pi-check" class="p-button-text p-button-sm p-button-success" (click)="handleAccept(req.id)">Approve</button>
+            <button pButton icon="pi pi-times" class="p-button-text p-button-sm p-button-danger" (click)="handleReject(req.id)">Reject</button>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
+}
 </div>
+
+@if (isLoading) {
+  <div class="loading-overlay">
+    <app-loader [isLoading]="isLoading"></app-loader>
+  </div>
+}

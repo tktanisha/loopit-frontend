@@ -41,18 +41,12 @@ export class DashboardHomeComponent {
       next: (res: any) => {
         this.GetAllSocieties = res.societies;
         this.isLoading = false;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Successfully fetched society ',
-          life: 3000,
-        });
       },
       error: err => {
         console.log(err);
         this.isLoading = false;
         this.messageService.add({
-          severity: 'danger',
+          severity: 'error',
           summary: 'Error',
           detail: 'Failed to fetch society ',
           life: 3000,
@@ -67,18 +61,12 @@ export class DashboardHomeComponent {
       next: (res: any) => {
         this.GetAllCategories = res.categories;
         this.isLoading = false;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Successfully fetched category ',
-          life: 3000,
-        });
       },
       error: err => {
         console.log(err);
         this.isLoading = false;
         this.messageService.add({
-          severity: 'danger',
+          severity: 'error',
           summary: 'Error',
           detail: 'Failed to fetch category ',
           life: 3000,

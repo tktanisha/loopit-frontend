@@ -8,26 +8,28 @@
     </div>
     <form class="login-form" #authForm="ngForm" (ngSubmit)="onFormSubmitted(authForm)">
       <div class="login-email">
-        <Label>Email *</Label>
+        <Label>Email <span>*</span></Label>
         <input
           type="email"
-          placeholder="Email Address"
+          placeholder="Eg. user@example.com"
           name="email"
           [(ngModel)]="user.email"
           required
           pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
           #femail="ngModel"
         />
+        <small class="control-error">
         @if (femail.touched && femail.invalid) {
-          <small class="control-error">* Email is a Required Field</small>
-        }
+            * Email is a Required Field
+          }
+        </small>
       </div>
       <div class="login-password">
-        <Label>Password</Label>
+        <Label>Password <span>*</span></Label>
         <div class="password-wrapper">
           <input
             [type]="showPassword ? 'text' : 'password'"
-            placeholder="password"
+            placeholder="Eg. ********"
             name="password"
             [(ngModel)]="user.password"
             required
@@ -35,14 +37,16 @@
             #fpassword="ngModel"
           />
           <i
-            class="pi"
+            class="pi eye-icon"
             [ngClass]="showPassword ? 'pi-eye-slash' : 'pi-eye'"
             (click)="togglePasswordVisibility()"
           ></i>
         </div>
+        <small class="control-error">
         @if (fpassword.touched && fpassword.invalid) {
-          <small class="control-error">* Password is required</small>
-        }
+            * Password is required
+          }
+        </small>
       </div>
 
       <div class="div-btn">
@@ -51,8 +55,8 @@
         </button>
       </div>
       <div class="login-para-btn">
-        <p class="login-para">Do not have an account yet?</p>
-        <button class="btn-signup" (click)="onSwitchToSignup()">Sign up</button>
+        <p class="login-para">Don't have an account yet?</p>
+        <span class="btn-signup" (click)="onSwitchToSignup()">Sign up</span>
       </div>
     </form>
   </div>

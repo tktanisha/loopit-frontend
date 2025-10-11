@@ -89,7 +89,7 @@ export class CreateProductComponent implements OnInit {
         console.log(err);
         this.isLoading = false;
         this.messageService.add({
-          severity: 'danger',
+          severity: 'error',
           summary: 'Error',
           detail: 'Failed to create orders ',
           life: 3000,

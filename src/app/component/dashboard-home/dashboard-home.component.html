@@ -1,50 +1,49 @@
 <p-toast />
 
-<main class="heropage">
-  <div class="main-intro">
-    <h1 class="main-heading">Use. Share. Loop it.</h1>
-    <p class="main-para">
-      Connect with your neighbors to borrow and lend items within your society. From power tools to
-      electronics, get what you need without the waste of buying. Building community trust, one item
-      at a time.
-    </p>
-  </div>
-
-  <div class="feature-cards">
-    <div class="card card-cyan">
-      <div class="card-icon-wrapper">
-        <div class="card-icon">
-          <i class="pi pi-box"></i>
-        </div>
+<div class="dashboard-cards">
+  <div class="card card-users">
+    <div class="card-content">
+      <div class="left">
+        <h3 class="card-heading">Total Users</h3>
+        <span class="card-count">85</span>
       </div>
-      <h3 class="card-title">Neighborhood Items</h3>
-      <p class="card-description">
-        Browse items available within your society and nearby communities
-      </p>
-    </div>
-
-    <div class="card card-green">
-      <div class="card-icon-wrapper">
-        <div class="card-icon">
-          <i class="pi pi-shield"></i>
-        </div>
+      <div class="right">
+        <i class="pi pi-users"></i>
       </div>
-      <h3 class="card-title">Trust & Security</h3>
-      <p class="card-description">
-        Society-based verification and secure deposits for peace of mind
-      </p>
-    </div>
-
-    <div class="card card-purple">
-      <div class="card-icon-wrapper">
-        <div class="card-icon">
-          <i class="pi pi-indian-rupee"></i>
-        </div>
-      </div>
-      <h3 class="card-title">Save Money</h3>
-      <p class="card-description">
-        Why buy when you can borrow? Reduce costs and environmental impact
-      </p>
     </div>
   </div>
-</main>
+  <div class="card card-categories">
+    <div class="card-content">
+      <div class="left">
+        <h3 class="card-heading">Categories</h3>
+        <span class="card-count">{{ GetAllCategories.length }}</span>
+      </div>
+      <div class="right">
+        <i class="pi pi-list-check"></i>
+      </div>
+    </div>
+  </div>
+  <div class="card card-societies">
+    <div class="card-content">
+      <div class="left">
+        <h3 class="card-heading">Societies</h3>
+        <span class="card-count">{{ GetAllSocieties.length }}</span>
+      </div>
+      <div class="right">
+        <i class="pi pi-globe"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-lenders">
+    <div class="card-content">
+      <div class="left">
+        <h3 class="card-heading">Lenders</h3>
+        <span class="card-count">4</span>
+      </div>
+      <div class="right">
+        <i class="pi pi-users"></i>
+      </div>
+    </div>
+  </div>
+</div>

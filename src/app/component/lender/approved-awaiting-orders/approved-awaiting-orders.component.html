@@ -1,25 +1,59 @@
 <p-toast />
-
-<div class="catgories-header-comp">
-  <div class="catgories-info">
-    <h1 class="catgories-title">Approved Awaiting Orders</h1>
-    <p class="catgories-subtitle">All pending orders to mark as return</p>
-  </div>
-</div>
-
-@if (AllOrders.length == 0) {
-  <div class="no-buy-request">
-    <h1>No Awaiting Orders</h1>
-  </div>
-}
-
 @if (isLoading) {
   <div class="loading-overlay">
     <app-loader [isLoading]="isLoading"></app-loader>
   </div>
 }
 
-<div *ngFor="let order of AllOrders">
+<div class="card-container">
+  <div class="category-header">
+  <div class="header-left">
+    <h1 class="title">Mark order as Returned</h1>
+    <p class="subtitle">All pending orders to mark as return</p>
+    </div>
+  </div>
+
+@if (AllOrders.length == 0) {
+  <div class="no-buy-request">
+  <img src="https://media.geeksforgeeks.org/auth-dashboard-uploads/not_found_mentor.svg" alt="No Buy Request">
+  <h1>No Awaiting Orders</h1>
+  </div>
+}
+@else {
+  <div class="table-section">
+    <p-table [value]="AllOrders" stripedRows [responsiveLayout]="'scroll'" dataKey="id">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Product Name</th>
+          <th>Category</th>
+          <th>Tenant Name</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Total Amount</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-order>
+        <tr>
+          <td>{{ order.product.product.name }}</td>
+          <td>{{ order.product.category.name }}</td>
+          <td>{{ order.product.user.full_name }}</td>
+          <td>{{ order.order.start_date.split('T')[0] }}</td>
+          <td>{{ order.order.end_date.split('T')[0] }}</td>
+          <td>₹{{ order.order.total_amount }}/day</td>
+          <td>{{ order.order.status | orderStatus }}</td>
+          <td>
+            <button pButton class="p-button-sm" (click)="markOrderAsReturn(order.order.id)">Mark Returned</button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+}
+
+<!-- <div *ngFor="let order of AllOrders">
   <div class="orders-container">
     <div class="order-card">
       <div class="order-card-content">
@@ -72,4 +106,5 @@
       </div>
     </div>
   </div>
+</div> -->
 </div>

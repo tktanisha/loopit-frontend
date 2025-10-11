@@ -66,7 +66,7 @@ export class SignupComponent {
         console.log(err.error.details);
         this.errorMessage = err.error.details;
         this.messageService.add({
-          severity: 'danger',
+          severity: 'error',
           summary: 'Error',
           detail: 'Failed to sign up, do again! ',
           life: 3000,

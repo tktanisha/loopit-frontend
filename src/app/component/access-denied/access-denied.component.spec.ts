@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GetSocietyComponent } from './get-society.component';
+import { AccessDeniedComponent } from './access-denied.component';
 
-describe('GetSocietyComponent', () => {
-  let component: GetSocietyComponent;
-  let fixture: ComponentFixture<GetSocietyComponent>;
+describe('AccessDeniedComponent', () => {
+  let component: AccessDeniedComponent;
+  let fixture: ComponentFixture<AccessDeniedComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GetSocietyComponent]
+      imports: [AccessDeniedComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(GetSocietyComponent);
+    fixture = TestBed.createComponent(AccessDeniedComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

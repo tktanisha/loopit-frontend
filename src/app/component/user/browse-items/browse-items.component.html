@@ -8,39 +8,43 @@
     ></app-product-modal>
   </div>
 }
-
-<div class="catgories-header-comp">
-  <div class="catgories-info">
-    <h1 class="catgories-title">Browse Products</h1>
-    <p class="catgories-subtitle">All products listed in the society</p>
-  </div>
-</div>
-
-<div class="browse-items">
   @if (isLoading) {
     <div class="loading-overlay">
       <app-loader [isLoading]="isLoading"></app-loader>
     </div>
   }
+  
+
+<div class="browse-items">
+ 
+  <div class="category-header">
+    <div class="header-left">
+      <h1 class="title">Browse Products</h1>
+      <p class="subtitle">All products listed in the society</p>
+    </div>
+  </div>
+
+  <div class="products-grid">
 
   @for (prod of allProduct; track prod.product.id) {
     <div class="product-card" (click)="handleOpenModal(prod)">
       <div class="product-image-container">
         <img
-          src="https://tse2.mm.bing.net/th/id/OIP.Yu0XkK0uGjoZ_1oQ7zZnsQHaFl?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3"
+          src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-madebymath-90946.jpg&fm=jpg"
           alt="[product name]"
           class="product-image"
-        />
+          loading="lazy"
+          />
+          <span class="category-badge secondary">{{ prod.category.name }}</span>
 
-        <div class="not-available-overlay" *ngIf="!prod.product.is_available">
+        <!-- <div class="not-available-overlay" *ngIf="!prod.product.is_available">
           <span class="availability-badge destructive">Not Available</span>
-        </div>
+        </div> -->
       </div>
 
       <div class="product-info">
         <div class="product-header">
           <h3 class="product-name">{{ prod.product.name }}</h3>
-          <span class="category-badge secondary">{{ prod.category.name }}</span>
         </div>
 
         <p class="product-description">
@@ -48,10 +52,12 @@
         </p>
 
         <div class="product-details-row">
-          <span class="product-price">₹{{ prod.category.price }}/day</span>
-          <span class="product-availability available">Available</span>
+          <p class="product-price">₹{{ prod.category.price }}<span>/day</span></p>
+          <!-- <span class="product-availability available">Available</span> -->
+          <button type="button" label="View" class="view-btn">View</button>
         </div>
       </div>
     </div>
   }
+  </div>
 </div>

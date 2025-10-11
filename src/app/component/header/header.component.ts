@@ -1,23 +1,31 @@
-import { Component, OnInit, inject, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  OnInit,
+  inject,
+  Input,
+  Output,
+  EventEmitter,
+} from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { Router } from "@angular/router";
 
-import { MessageService } from 'primeng/api';
-import { Subscription } from 'rxjs';
-import { Toast } from 'primeng/toast';
+import { MessageService } from "primeng/api";
+import { Subscription } from "rxjs";
+import { Toast } from "primeng/toast";
 
-import { LoggedInUser } from '../../models/logged-in-user';
+import { LoggedInUser } from "../../models/logged-in-user";
 
-import { AuthService } from '../../service/auth.service';
+import { AuthService } from "../../service/auth.service";
 
-import { LoginComponent } from '../login/login.component';
-import { LoaderComponent } from '../loader/loader';
+import { LoginComponent } from "../login/login.component";
+import { LoaderComponent } from "../loader/loader";
 
 @Component({
-  selector: 'app-header',
+  selector: "app-header",
   standalone: true,
   imports: [LoginComponent, CommonModule, LoaderComponent, Toast],
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+  templateUrl: "./header.component.html",
+  styleUrls: ["./header.component.scss"],
 })
 export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = false;
@@ -29,14 +37,20 @@ export class HeaderComponent implements OnInit {
 
   AuthService: AuthService = inject(AuthService);
   messageService: MessageService = inject(MessageService);
+  router: Router = inject(Router);
 
   private userSubject!: Subscription;
 
+  user!: LoggedInUser | null;
+
   ngOnInit(): void {
     this.isLoading = true;
-    this.userSubject = this.AuthService.user.subscribe((user: LoggedInUser | null) => {
-      this.isUserLoggedIn = user ? true : false;
-    });
+    this.userSubject = this.AuthService.user.subscribe(
+      (user: LoggedInUser | null) => {
+        this.isUserLoggedIn = user ? true : false;
+        this.user = user;
+      }
+    );
     this.isLoading = false;
   }
 
@@ -50,6 +64,19 @@ export class HeaderComponent implements OnInit {
 
   toggelSidebar() {
     this.toggleSidebar.emit();
+  }
+
+  handleLogout() {
+    this.AuthService.logout().subscribe({
+      next: () => {
+        this.AuthService.handleLogout();
+        this.router.navigate(["/"]);
+      },
+      error: (err) => {
+        console.error("Logout failed", err);
+        this.router.navigate(["/"]);
+      },
+    });
   }
 
   ngOnDestroy() {

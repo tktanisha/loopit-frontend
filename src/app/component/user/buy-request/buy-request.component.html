@@ -1,35 +1,46 @@
 <p-toast />
-<div class="catgories-header-comp">
-  <div class="catgories-info">
-    <h1 class="catgories-title">My Requests</h1>
-    <p class="catgories-subtitle">All request you have made for products</p>
+
+<div class="card-container">
+
+  <div class="category-header">
+  <div class="header-left">
+    <h1 class="title">My Buy Requests</h1>
+    <p class="subtitle">All request you have made for products</p>
   </div>
-  <span class="catgories-count-badge">
-    <span>{{ BuyRequestOfUser.length }}</span> Request
-  </span>
+  <p class="count-badge">
+    {{ BuyRequestOfUser.length }} Requests
+  </p>
 </div>
 
 @if (BuyRequestOfUser.length == 0) {
   <div class="no-buy-request">
-    <h1>No Buy Request yet</h1>
+    <img src="https://media.geeksforgeeks.org/auth-dashboard-uploads/not_found_mentor.svg" alt="No Buy Request">
+    <p>No pending requests.</p>
   </div>
 }
+@else {
+  <div class="table-section">
+    <p-table [value]="BuyRequestOfUser" stripedRows [responsiveLayout]="'scroll'" dataKey="id">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Name</th>
+          <th>Request Status</th>
+          <th>Requested On</th>
+        </tr>
+      </ng-template>
 
-<div class="card-container">
-  <div class="card" *ngFor="let req of BuyRequestOfUser">
-    <div class="card-header">
-      <div class="item-info">
-        <h1 class="item-name">{{ req.product.product.name }}</h1>
-        <p class="item-description">{{ req.product.product.description }}</p>
-        <p class="item-duration">Duration: {{ req.product.product.duration }} days</p>
-      </div>
-      <div class="badge pending">{{ req.buy_request.status | buyStatus }}</div>
-    </div>
-    <div class="card-footer">
-      <span class="request-date">Requested on {{ req.buy_request.created_at.split('T')[0] }}</span>
-    </div>
+      <ng-template pTemplate="body" let-req>
+        <tr>
+          <td>{{ req.product.product.name }}</td>
+          <td>{{ req.buy_request.status | buyStatus }}</td>
+          <td>{{ req.buy_request.created_at.split('T')[0] }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
+}
 </div>
+
 @if (isLoading) {
   <div class="loading-overlay">
     <app-loader [isLoading]="isLoading"></app-loader>

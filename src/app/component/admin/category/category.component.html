@@ -1,94 +1,129 @@
 <p-toast />
-
-<div class="categoryComp">
-  @if (isLoading) {
-    <div class="loading-overlay">
-      <app-loader [isLoading]="isLoading"></app-loader>
+<div class="category-page">
+  <div class="category-header">
+    <div class="header-left">
+      <h2 class="title">Product Categories</h2>
+      <p class="subtitle">Add or view product categories from here.</p>
     </div>
-  }
 
-  <div class="card-section">
-    <div class="icon-container">
-      <i class="pi pi-plus"></i>
+    <div class="header-actions">
+      <button
+        pButton
+        type="button"
+        icon="pi pi-plus"
+        label="Add Category"
+        class="add-btn"
+        (click)="toggleModal(true)"
+      ></button>
     </div>
-    <h2 class="heading">Create New Category</h2>
-    <p class="description">Add a new product category to the rental system</p>
   </div>
 
-  <div class="card">
-    <div class="card-header">
-      <h2 class="card-title"><i class="pi pi-plus"></i> Category Details</h2>
-    </div>
-    <div class="card-content">
-      <form
-        class="form-container"
-        #categoryForm="ngForm"
-        (ngSubmit)="onSubmitCategory(categoryForm)"
-      >
-        <div class="form-group">
-          <label for="name" class="label">Category Name *</label>
+  <div class="table-section">
+    <p-table [value]="categories" stripedRows [responsiveLayout]="'scroll'" dataKey="id">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Security</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-category>
+        <tr>
+          <td>{{ category.name }}</td>
+          <td>₹{{ category.price }}</td>
+          <td>₹{{ category.security }}</td>
+          <td class="actions">
+            <button pButton icon="pi pi-pencil" class="p-button-text p-button-sm">Edit</button>
+            <button pButton icon="pi pi-trash" class="p-button-text p-button-danger p-button-sm">Delete</button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <div class="loading-overlay" *ngIf="showModal">
+    <div class="create-category-comp">
+      <div class="close-div" (click)="toggleModal(false)">
+        <i class="pi pi-times"></i>
+      </div>
+
+      <div class="create-category-title">Create Category</div>
+
+      <form #categoryForm="ngForm" (ngSubmit)="onSubmitCategory(categoryForm)" class="create-category-form">
+        <div class="form-item">
+          <label for="name">Category Name <span>*</span></label>
           <input
-            id="name"
             type="text"
-            placeholder="e.g., Electronics, Tools, Sports Equipment"
-            class="input"
+            id="name"
             name="name"
-            [(ngModel)]="category.name"
             required
+            [(ngModel)]="category.name"
+            placeholder="Enter category name"
             #fname="ngModel"
           />
+          <small class="control-error">
           @if (fname.touched && fname.invalid) {
-            <small class="control-error">* Category Name is a Required Field</small>
-          }
-        </div>
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="price" class="label with-icon">
-              <i class="pi pi-indian-rupee icon cyan"></i>Price (₹) *
-            </label>
-            <input
-              id="price"
-              name="price"
-              type="number"
-              placeholder="30"
-              class="input"
-              min="0"
-              step="5"
-              required
-              [(ngModel)]="category.price"
-              #fprice="ngModel"
-            />
-            @if (fprice.touched && fprice.invalid) {
-              <small class="control-error">* Category Price is a Required Field</small>
+              * Category Name is a Required Field
             }
-          </div>
-          <div class="form-group">
-            <label for="securityAmount" class="label with-icon">
-              <i class="pi pi-shield icon green"></i> Security Amount (₹) *
-            </label>
-            <input
-              id="securityAmount"
-              type="number"
-              name="security"
-              placeholder="60"
-              class="input"
-              min="0"
-              step="5"
-              required
-              [(ngModel)]="category.security"
-              #fsecurity="ngModel"
-            />
-            @if (fsecurity.touched && fsecurity.invalid) {
-              <small class="control-error">* Security Price is a Required Field</small>
-            }
-          </div>
+          </small>
         </div>
-        <div class="button-group">
-          <button type="submit" class="button primary" [disabled]="!categoryForm.valid">
-            <i class="pi pi-plus icon"></i> Create Category
-          </button>
+
+        <div class="form-item">
+          <label for="price">Price (₹) <span>*</span></label>
+          <input
+            type="number"
+            id="price"
+            name="price"
+            required
+            min="0"
+            step="5"
+            [(ngModel)]="category.price"
+            placeholder="Enter price"
+            #fprice="ngModel"
+          />
+          <small class="control-error">
+          @if (fprice.touched && fprice.invalid) {
+                * Category Price is a Required Field
+              }
+            </small>
         </div>
+
+        <div class="form-item">
+          <label for="security">Security (₹) <span>*</span></label>
+          <input
+            type="number"
+            id="security"
+            name="security"
+            required
+            min="0"
+            step="5"
+            [(ngModel)]="category.security"
+            placeholder="Enter security deposit"
+            #fsecurity="ngModel"
+          />
+          <small class="control-error">
+          @if (fsecurity.touched && fsecurity.invalid) {
+                * Security Price is a Required Field
+              }
+            </small>
+        </div>
+
+        <button
+          type="submit"
+          class="create-category-btn"
+          [disabled]="categoryForm.invalid || isLoading"
+        >
+          {{ isLoading ? 'Creating...' : 'Create Category' }}
+        </button>
       </form>
     </div>
   </div>
 </div>
+
+@if(isLoading){
+<div class="loader-overlay">
+<app-loader [isLoading]="isLoading"></app-loader>
+</div>
+}

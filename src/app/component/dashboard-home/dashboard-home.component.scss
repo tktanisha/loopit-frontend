@@ -1,194 +1,48 @@
-@use 'mixin.scss';
-
-
-$green-400: #48bb78;
-$cyan-400: #4fd1c5;
-$slate-300: #cbd5e1;
-$cyan-500: #06b6d4;
-$green-500: #22c55e;
-$cyan-600: #0891b2;
-$green-600: #16a34a;
-$slate-900: #0f172a;
-
-
-
-
-
-.heropage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 5rem 1.5rem;
-  background-color: $slate-900;
-}
-
-.main-intro {
-  text-align: center;
-  max-width: 56rem; 
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 4rem;
-
-  .main-heading {
-    font-size: 3rem;
-    margin-bottom: 1.5rem;
-    background: linear-gradient(to right, $green-400, $cyan-400);
-    background-clip: text;
-    color: transparent;
-  }
-
-  .main-para {
-    font-size: 1.125rem;
-    color: $slate-300;
-    margin-bottom: 2rem;
-    line-height: 1.75; 
-  }
-
-  .getstart-btn {
-    background-image: linear-gradient(to right, $cyan-500, $green-500);
-    color: white;
-    padding: 0.75rem 2rem;
-    border-radius: 0.75rem;
-    cursor: pointer;
-    border: none;
-    &:hover {
-      background-image: linear-gradient(to right, $cyan-600, $green-600);
-    }
-    @include mixin.transition-hover-scale(300ms,ease,1.05);
-    @include mixin.card-hover-shadow($green-500)
-
-  }
-}
-
-
-//...........................feature section..............
-
-
-$color-cyan-400: #4fd1c5;
-$color-cyan-500: #06b6d4;
-$color-cyan-600: #0891b2;
-
-$color-green-400: #48bb78;
-$color-green-500: #22c55e;
-$color-green-600: #16a34a;
-
-$color-purple-400: #a78bfa; 
-$color-purple-500: #a855f7;
-$color-pink-500: #ec4899;
-
-$color-slate-300: #cbd5e1;
-$color-slate-700-50: rgba(#4a5568, 0.5);
-$color-slate-800-50: rgba(#2d3748, 0.5);
-
-
-
-
-.feature-cards {
-   display: grid;
-  grid-template-rows: auto;
-  grid-template-columns: auto auto auto;
-  grid-auto-flow: column;
-  gap: 2rem;
-  max-width: 80rem;
-  margin:auto;
-  
-
-  @media (max-width: 568px) {
-    grid-template-columns: repeat(1, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-  }
+@use 'mixin.scss' as *;
+.dashboard-cards {
+  @include flex($justify: space-between, $gap: 20px);
+  flex-wrap: wrap;
+  padding: 20px;
+  min-height: calc(100vh - var(--header-height));
 }
 
 .card {
-  background-color: $color-slate-800-50;
-  border-radius: 1rem;
-  padding: 2rem;
-  border: 1px solid $color-slate-700-50;
-  @include mixin.transition-hover-scale(300ms,ease-in-out,1.05);
+  min-width: 320px;
+  flex: 1 1 500px;
+  width: 100%;
+  padding: 20px;
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  max-height: 200px;
 
-
-  &-icon-wrapper {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1.5rem;
+  .card-content {
+    @include flex($justify: space-between, $align: center, $gap: 15px);
   }
-
-  &-icon {
-    padding: 1rem;
-    border-radius: 1rem;
-  }
-
-  &-title {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-
-  &-description {
-    color: $color-slate-300;
-    text-align: center;
-    line-height: 1.625;
-  }
-
-
-  //the class have different class name too
-  &.card-cyan {
-    @include mixin.card-hover-shadow($color-cyan-500);
-
-    .card-icon {
-      background: linear-gradient(to bottom right, $color-cyan-500, $color-cyan-600);
+  
+  .left {
+    @include flex($direction: column, $gap: 20px);
+    .card-heading {
+      @include typography(var(--font-primary), 14px, 400, 100%);
+      color: var(--text-secondary);
     }
-    .card-title {
-      color: $color-cyan-400;
-    }
-     .pi{
-      color: white;
-      font-weight: bold;
-    }
-  }
-
-  &.card-green {
-    @include mixin.card-hover-shadow($color-green-500);
-
-    .card-icon {
-      background: linear-gradient(to bottom right, $color-green-500, $color-green-600);
-    }
-    .card-title {
-      color: $color-green-400;
-    }
-     .pi{
-      color: white;
-      font-weight: bold;
-    }
-  }
-
-  &.card-purple {
-    @include mixin.card-hover-shadow($color-purple-500);
-
-    .card-icon {
-      background: linear-gradient(to bottom right, $color-purple-500, $color-pink-500);
-    }
-    .card-title {
-      color: $color-purple-400;
-    }
-    .pi{
-      color: white;
-      font-weight: bold;
+    
+    .card-count {
+      @include typography(var(--font-primary), 44px, 700, 100%);
+      color: var(--accent-color);
     }
   }
 }
 
-.login-modal{
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(5px);
+
+.right {
+  i {
+    width: 100px;
+    height: 100px;
+    border-radius: 12px;
+    color: var(--accent-color);
+    background-color: var(--icon-bg);
+    @include flex($justify: center, $align: center);
+    font-size: 48px;
+  }
 }

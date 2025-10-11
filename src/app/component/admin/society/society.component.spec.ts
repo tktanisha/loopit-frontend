@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GetCategoryComponent } from './get-category.component';
+import { SocietyComponent } from './society.component';
 
-describe('GetCategoryComponent', () => {
-  let component: GetCategoryComponent;
-  let fixture: ComponentFixture<GetCategoryComponent>;
+describe('CreateSocietyComponent', () => {
+  let component: SocietyComponent;
+  let fixture: ComponentFixture<SocietyComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GetCategoryComponent]
+      imports: [SocietyComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(GetCategoryComponent);
+    fixture = TestBed.createComponent(SocietyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

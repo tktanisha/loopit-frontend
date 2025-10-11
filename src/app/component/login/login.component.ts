@@ -62,19 +62,14 @@ export class LoginComponent {
       next: data => {
         this.AuthService.handleAuthSuccess(data);
         this.isLoading = false;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: ' Logged In successfully  ',
-          life: 3000,
-        });
+       
         this.router.navigate(['/dashboard']);
       },
       error: err => {
         console.log(err);
         this.isLoading = false;
         this.messageService.add({
-          severity: 'danger',
+          severity: 'error',
           summary: 'Error',
           detail: 'Logged in failed ',
           life: 3000,

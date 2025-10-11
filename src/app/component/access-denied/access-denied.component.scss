@@ -1,0 +1,49 @@
+$primary-green: #3cb371;
+$darker-green: #2e8b57;
+$background-color: #f0f8f0;
+$card-background: #ffffff;
+$text-color: #333333;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  background-color: $card-background;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+}
+
+.container h1 {
+  color: $darker-green;
+  margin-bottom: 10px;
+}
+
+.container p {
+  color: $text-color;
+  font-size: 1.1em;
+  margin-bottom: 25px;
+}
+
+.container button {
+  background-color: $primary-green;
+  color: $card-background;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $darker-green;
+  }
+}

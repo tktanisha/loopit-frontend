@@ -1,24 +1,21 @@
-
-@use 'mixin.scss';
-
-
+@use 'mixin.scss' as *;
 
 $cyan-400: #22d3ee;
 $slate-900: #0f172a;
 $transition-speed: 300ms;
 
 .loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(5px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
 }
 
 
@@ -37,41 +34,63 @@ $transition-speed: 300ms;
 }
 
 .main-header {
-  display: flex;
-  justify-content:space-between;
-  align-items: center;
-  padding: 1.5rem; 
-  background-color:$slate-900;
-  position: sticky;
+  @include flex(row, center, space-between);
+  padding: 12px 20px;
+  position: fixed;
   top: 0;
-  z-index: 1000; 
+  width: 100%;
+  border-bottom: 1px solid var(--border-color);
+  max-height: var(--header-height);
+  background-color: var(--layout-bg-color);
+  z-index: 1000;
 
   .header-brand {
-    font-size: 1.5rem; 
-    font-weight: bold;
-    color: $cyan-400;
-  }
-  .pi-bars{
+    @include typography(var(--font-primary), 24px, 700, 100%, normal);
+    color: var(--accent-color);
     cursor: pointer;
   }
-  .pi-user{
+
+  .pi-bars {
     cursor: pointer;
+  }
+
+  .pi-user {
+    cursor: pointer;
+  }
+
+  .header-right {
+    @include flex($align: center, $gap: 10px);
   }
 
   .signup-btn {
-    border: 1px solid $cyan-400;
-    color: $cyan-400;
-    background-color: transparent;
-    padding: 0.5rem 1rem;
-    border-radius: 0.3rem;
-    cursor: pointer;
-     @include mixin.transition-hover-scale(300ms,linear,1.15);
+    @include typography(var(--font-primary), 14px, 500, 100%, normal);
+    @include buttonStyle(transparent, var(--accent-color), 8px 16px, 8px);
+    border: 1px solid var(--accent-border-color);
 
     &:hover {
-      background-color: $cyan-400;
-      color: $slate-900;  
+      background-color: var(--accent-hover-color);
+      color: var(--layout-bg-color);
     }
+  }
 
+  .user {
+    @include flex(row, center, center, 4px);
+    cursor: pointer;
+    padding: 8px 16px;
+    background-color: var(--icon-bg);
+    border-radius: 8px;
+  }
+
+  .logout-div {
+    .logout {
+      @include typography(var(--font-primary), 14px, 500, 100%, normal);
+      @include buttonStyle(transparent, var(--text-secondary), 8px 16px, 8px);
+      background-color: var(--danger-bg-color);
+      color: #fff;
+      transition: all 0.2s ease-in-out;
+      &:hover {
+        background-color: var(--danger-bg-color-darker);
+      }
+    }
   }
 }
-

@@ -13,10 +13,11 @@ import { BuyRequestService } from '../../../service/buy-request.service';
 import { LoaderComponent } from '../../loader/loader';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-buy-request',
-  imports: [CommonModule, LoaderComponent, BuyStatusPipe, Toast],
+  imports: [CommonModule, LoaderComponent, BuyStatusPipe, Toast, TableModule],
   templateUrl: './buy-request.component.html',
   styleUrl: './buy-request.component.scss',
 })
@@ -46,18 +47,13 @@ export class GetAllBuyRequestComponent {
           });
         }
         this.isLoading = false;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Successfully fetched all Buy Request ',
-          life: 3000,
-        });
+       
       },
       error: err => {
         console.log(err);
         this.isLoading = false;
         this.messageService.add({
-          severity: 'danger',
+          severity: 'error',
           summary: 'Error',
           detail: 'Failed to fetch buy request ',
           life: 3000,

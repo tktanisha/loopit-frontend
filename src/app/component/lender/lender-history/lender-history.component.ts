@@ -15,10 +15,12 @@ import { ReturnRequestService } from '../../../service/return-request';
 import { OrderService } from '../../../service/orders.service';
 import { AuthService } from '../../../service/auth.service';
 import { ReturnRequestPayload } from '../../../models/return-request';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-lender-history',
-  imports: [CommonModule, OrderStatusPipe, LoaderComponent, Toast],
+  imports: [CommonModule, OrderStatusPipe, LoaderComponent, Toast, TableModule, ButtonModule],
   templateUrl: './lender-history.component.html',
   styleUrl: './lender-history.component.scss',
 })
@@ -50,18 +52,13 @@ export class LenderHistoryComponent implements OnInit {
           this.AllOrders = [];
         }
         this.isLoading = false;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Successfully fetched all lending order history   ',
-          life: 3000,
-        });
+       
       },
       error: err => {
         console.error('Error fetching lender orders:', err);
         this.isLoading = false;
         this.messageService.add({
-          severity: 'danger',
+          severity: 'error',
           summary: 'Error',
           detail: 'Failed to fetch lending orders history ',
           life: 3000,
@@ -88,7 +85,7 @@ export class LenderHistoryComponent implements OnInit {
         console.error('Error creating return request:', err);
         this.isLoading = false;
         this.messageService.add({
-          severity: 'danger',
+          severity: 'error',
           summary: 'Error',
           detail: 'Failed to create return request ',
           life: 3000,

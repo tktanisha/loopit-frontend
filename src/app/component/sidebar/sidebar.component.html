@@ -10,28 +10,25 @@
           <span *ngSwitchCase="'lender'">Lender Dashboard</span>
           <span *ngSwitchDefault>User Dashboard</span>
         </div>
-        <div class="close-logo pi pi-angle-left" (click)="closeSidebar()"></div>
+       <!-- <div class="close-logo pi pi-angle-left" (click)="closeSidebar()"></div>-->
       </div>
     </div>
 
     <ul class="sidebar-menu">
       <li *ngFor="let item of currentMenuItems">
-        <a [routerLink]="item.route" routerLinkActive="active" class="menu-link">
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="active"
+          class="menu-link"
+        >
           <i [class]="item.icon"></i> {{ item.label }}
           <span *ngIf="item.badge" class="badge">{{ item.badge }}</span>
         </a>
       </li>
     </ul>
-
-    <div class="become-lender-div" *ngIf="loggedInUserRole == 'user'">
-      <button class="become-lender-btn" (click)="handleBecomeLender()">
-        <i class="pi pi-user"></i> Become Lender
-      </button>
-    </div>
-
-    <div class="sidebar-footer">
-      <button class="logout" (click)="handleLogout()"><i class="pi pi-sign-out"></i> Logout</button>
-    </div>
+    <button class="become-lender-btn" (click)="handleBecomeLender()" *ngIf="loggedInUserRole == 'user'">
+      <i class="pi pi-user-plus"></i> Join as a Lender
+    </button>
   </nav>
 </div>
 

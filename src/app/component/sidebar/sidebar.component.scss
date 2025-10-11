@@ -1,92 +1,83 @@
+@use "mixin.scss" as *;
+
 .sidebar-dashboard {
-  max-height: 100vh;
-  background: #000;
-  position: sticky;
-  top: 0;
+  position: fixed;
+  top: var(--header-height);
   left: 0;
-  bottom: 0;
   z-index: 1000;
-  background-color: #1a202c;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+  background: none;
   transition: transform 0.3s ease-in-out;
 
   .sidebar {
-    width: 250px;
-    background: rgba(17, 24, 39, 0.95);
-    border-right: 1px solid #1f2937;
-    display: flex;
-    flex-direction: column;
-    align-items:normal;
+    min-height: calc(100vh - var(--header-height) - 20px);
+    box-shadow: 0px 0 10px rgba(0, 0, 0, 0.1);
+    width: var(--expanded-sidebar-width);
+    background-color: var(--layout-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 0 12px 12px 0;
+    border-left: none;
+    @include flex(column, center, 0px);
     transition: all 0.3s ease;
-    backdrop-filter: blur(8px);
-    height: 100vh;
+    // padding: 12px;
 
     &.open {
       transform: translateX(0);
     }
 
     .sidebar-header {
-      padding: 1.5rem;
-      border-bottom: 1px solid #1f2937;
+      padding: 12px;
+      border-bottom: 1px solid var(--border-color);
+      width: 100%;
 
       .logo {
-        display: flex;
-        align-items: center;
-        gap: 10px;
+        @include flex($direction: row, $align: center, $gap: 10px);
 
         .pi-user {
           width: 32px;
           height: 32px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: linear-gradient(135deg, #06b6d4, #3b82f6);
+          @include flex($align: center, $justify: center);
+          background: var(--active-border-color);
           border-radius: 8px;
-          font-size: 1.25rem;
-          color: white;
-        }
-
-        h2 {
-          font-size: 1rem;
-          font-weight: 600;
           color: #fff;
+          font-weight: 700;
         }
 
-        p {
-          font-size: 0.8rem;
-          color: #9ca3af;
+        span {
+          @include typography(var(--font-primary), 16px, 600, 100%, normal);
+          color: var(--text-primary);
         }
       }
     }
 
     .sidebar-menu {
-      flex: 1;
-      padding: 1rem;
+      width: 100%;
+      padding: 10px;
 
       li {
         list-style: none;
 
         .menu-link {
-          padding: 0.75rem 1rem;
-          display: flex;
-          align-items: center;
-          gap: 10px;
+          width: 100%;
+          padding: 16px;
+          margin-bottom: 2px;
+          @include flex($align: center, $gap: 12px);
           border-radius: 8px;
-          color: #d1d5db;
+          color: var(--text-secondary);
+          @include typography(var(--font-primary), 14px, 500, 100%, normal);
           cursor: pointer;
           transition: 0.2s;
           text-decoration: none;
 
           &:hover {
-            background: rgba(31, 41, 55, 0.5);
-            color: #fff;
+            background: var(--left-bar-hover-color);
           }
 
           &.active {
-            background: linear-gradient(90deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.2));
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            color: #06b6d4;
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+            border-left: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            background-color: var(--left-bar-hover-color);
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
           }
 
           .badge {
@@ -102,9 +93,7 @@
     }
 
     .sidebar-footer {
-      border-bottom: 1px solid #1f2937;
-      
-      
+      // border-bottom: 1px solid #1f2937;
 
       .logout {
         width: 15rem;
@@ -121,7 +110,6 @@
         gap: 10px;
         border-radius: 8px;
         margin-bottom: 2rem;
-       
 
         &:hover {
           background: rgba(239, 68, 68, 0.1);
@@ -130,38 +118,32 @@
       }
     }
 
-    
-  .become-lender-div{
-  
-      
 
-      .become-lender-btn {
-        width: 14rem;
-        background: transparent;
-        border: none;
-        color: white;
-        text-align: left;
-        font-size: 1rem;
-        cursor: pointer;
-        padding: 0.8rem 0.5rem;
-        display: flex;
-        align-items: center;
-        gap: 10px;
+
+    .become-lender-btn {
+      margin-inline: 10px;
+      background-color: var(--icon-bg);
+      color: var(--accent-color);
+      border-radius: 12px;
+      padding: 10px 16px;
+      @include typography(var(--font-primary), 14px, 600, 100%, normal);
+      cursor: pointer;
+      @include flex ($align: center, $gap: 8px);
+      border: none;
+      width: calc(100% - 20px);
+
+      i {
+        width: 44px;
+        height: 44px;
+        background-color: var(--icon-bg);
+        color: var(--accent-color);
         border-radius: 8px;
-        margin-bottom: 17rem;
-        margin-left: 1rem;
-
-        &:hover {
-          background: linear-gradient(90deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.2));
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            color: #06b6d4;
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
-            transition: all 0.3s linear;
-        }
+        @include flex($align: center, $justify: center);
       }
     }
-  
-  
+
+
+
   }
 
   .main {
@@ -233,18 +215,17 @@
   }
 }
 
-.loading-overlay{
-   
+.loading-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); 
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(5px); 
+  backdrop-filter: blur(5px);
 
 }

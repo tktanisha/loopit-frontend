@@ -1,21 +1,25 @@
 <p-toast />
 <header class="main-header">
-  <div *ngIf="isUserLoggedIn">
-    <i class="pi pi-bars" *ngIf="!isSidebarOpen" (click)="toggelSidebar()"></i>
-  </div>
+  <div class="header-brand">Loopit.</div>
 
-  <div class="header-brand">Loopit</div>
+  <div class="header-right">
+    <div class="header-signup" *ngIf="!isUserLoggedIn">
+      <button class="signup-btn" type="button" (click)="onClickedSignIn()">Sign In</button>
+    </div>
 
-  <div class="header-signup" *ngIf="!isUserLoggedIn">
-    <button class="signup-btn" type="button" (click)="onClickedSignIn()">Sign In</button>
-  </div>
+    <div class="login-modal" *ngIf="isLoggedIn && !isUserLoggedIn">
+      <app-login (closeEvent)="handleLoginClose()" [isLoggedIn]="isLoggedIn"></app-login>
+    </div>
 
-  <div class="login-modal" *ngIf="isLoggedIn && !isUserLoggedIn">
-    <app-login (closeEvent)="handleLoginClose()" [isLoggedIn]="isLoggedIn"></app-login>
-  </div>
+    <div class="user" *ngIf="isUserLoggedIn">
+      <i class="pi pi-user"></i>
+      <div class="user-name">{{ user?.name }}</div>
+    </div>
 
-  <div *ngIf="isUserLoggedIn">
-    <i class="pi pi-user"></i>
+    <div class="logout-div" *ngIf="isUserLoggedIn">
+      <button class="logout" (click)="handleLogout()"><i class="pi pi-sign-out"></i> Logout</button>
+    </div>
+
   </div>
 </header>
 

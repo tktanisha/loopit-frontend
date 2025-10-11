@@ -1,23 +1,28 @@
 import { Component, inject } from '@angular/core';
-import { OrderService } from '../../../service/orders.service';
-import { Router } from '@angular/router';
-import { AuthService } from '../../../service/auth.service';
-import { OrderResponse } from '../../../models/orders';
 import { CommonModule } from '@angular/common';
-import { LoaderComponent } from '../../loader/loader';
-import { OrderStatusPipe } from '../../../custom-pipes/order-status-pipe';
-import { LoggedInUser } from '../../../models/logged-in-user';
-import { FeedbackService } from '../../../service/feedback.service';
-import { FeedbackRequest } from '../../../models/feedback';
 import { FormsModule } from '@angular/forms';
-import { DialogModule } from 'primeng/dialog';
-import { RatingModule } from 'primeng/rating';
-import { TextareaModule } from 'primeng/textarea';
+import { Router } from '@angular/router';
+
 import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
 import { MessageModule } from 'primeng/message';
-import { Toast } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { RatingModule } from 'primeng/rating';
 import { Subscription } from 'rxjs';
+import { TextareaModule } from 'primeng/textarea';
+import { Toast } from 'primeng/toast';
+
+import { FeedbackRequest } from '../../../models/feedback';
+import { LoggedInUser } from '../../../models/logged-in-user';
+import { OrderResponse } from '../../../models/orders';
+
+import { OrderStatusPipe } from '../../../custom-pipes/order-status-pipe';
+
+import { OrderService } from '../../../service/orders.service';
+import { AuthService } from '../../../service/auth.service';
+import { LoaderComponent } from '../../loader/loader';
+import { FeedbackService } from '../../../service/feedback.service';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-orders',
@@ -32,6 +37,8 @@ import { Subscription } from 'rxjs';
     ButtonModule,
     MessageModule,
     Toast,
+    TableModule,
+    ButtonModule,
   ],
   templateUrl: './orders.component.html',
   styleUrl: './orders.component.scss',
@@ -130,7 +137,7 @@ export class OrdersComponent {
   }
 
   ngOnDestroy(): void {
-    this.orderSubject.unsubscribe();
-    this.feedbackSubject.unsubscribe();
+    if (this.orderSubject) this.orderSubject.unsubscribe();
+    if (this.feedbackSubject) this.feedbackSubject.unsubscribe();
   }
 }

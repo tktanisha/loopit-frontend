@@ -7,12 +7,12 @@ import { MessageService } from 'primeng/api';
 import { Toast } from 'primeng/toast';
 
 import { AuthService } from '../../service/auth.service';
-import { HeaderComponent } from '../header/header.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [HeaderComponent, SidebarComponent, CommonModule, RouterOutlet, Toast],
+  imports: [SidebarComponent, CommonModule, RouterOutlet, Toast, HeaderComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })

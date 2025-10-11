@@ -1,0 +1,85 @@
+@use 'mixin.scss' as *;
+
+.card-container {
+    min-height: calc(100vh - var(--header-height) - 20px);
+    @include flex($direction: column, $gap: 12px);
+    padding: 16px 20px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    border-radius: 12px;
+    margin: 10px;
+}
+
+
+.category-header {
+    @include flex(row, center, space-between);
+    flex-wrap: wrap;
+
+
+    .header-left {
+        @include flex(column, flex-start, flex-start, 0.25rem);
+
+        .title {
+            @include typography(var(--font-primary), 1.5rem, 600, 1.2);
+            color: var(--accent-color);
+        }
+
+        .subtitle {
+            @include typography(var(--font-secondary), 0.9rem, 400, 1.3);
+            color: var(--text-secondary);
+        }
+    }
+
+    .count-badge {
+        padding: 8px 12px;
+        @include typography(var(--font-secondary), 12px, 500, 100%);
+        color: var(--accent-color);
+        background: var(--icon-bg);
+        border-radius: 30px;
+    }
+}
+
+.no-buy-request {
+    @include flex(column, center, center, 12px);
+    margin-top: 50px;
+
+    img {
+        width: 150px;
+        height: auto;
+    }
+
+    h1 {
+        @include typography(var(--font-primary), 14px, 500, 100%);
+        color: var(--text-secondary);
+    }
+}
+
+.table-section {
+    margin-top: 16px;
+    border: 1px solid var(--border-color);
+
+    .table-loading {
+        height: 250px;
+        border-radius: 6px;
+        @include shimmer-effect;
+    }
+
+    th,
+    td {
+        text-align: center;
+    }
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+}

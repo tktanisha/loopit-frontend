@@ -1,76 +1,64 @@
 <p-toast />
-<div class="catgories-header-comp">
-  <div class="catgories-info">
-    <h1 class="catgories-title">My Requests</h1>
-    <p class="catgories-subtitle">All request you have made for products</p>
-  </div>
-</div>
-
-@if (AllOrders.length == 0) {
-  <div class="no-buy-request">
-    <h1>No Buy Request yet</h1>
-  </div>
-}
-
 @if (isLoading) {
   <div class="loading-overlay">
     <app-loader [isLoading]="isLoading"></app-loader>
   </div>
 }
 
-<div *ngFor="let order of AllOrders">
-  <div class="orders-container">
-    <div class="order-card">
-      <div class="order-card-content">
-        <div class="product-image-container">
-          <img
-            src="https://tse2.mm.bing.net/th/id/OIP.Yu0XkK0uGjoZ_1oQ7zZnsQHaFl?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3"
-            alt="Product Name"
-            class="product-image"
-          />
-        </div>
-        <div class="product-details">
-          <div class="product-header">
-            <div>
-              <h3 class="product-title">{{ order.product.product.name }}</h3>
-              <span class="product-category-badge">{{ order.product.category.name }}</span>
-            </div>
-            <!-- The class and text for the status badge would need dynamic logic based on the `order.status` value. -->
-            <!-- Using a ternary operator for demonstration purposes -->
-            {{ order.order.status | orderStatus }}
-          </div>
-
-          <p class="product-description">
-            {{ order.product.product.description }}
-          </p>
-
-          <div class="order-info-grid">
-            <div class="order-info-item">
-              <i class="pi pi-calendar"></i>
-              <span>Start: {{ order.order.start_date.split('T')[0] }}</span>
-            </div>
-            <div class="order-info-item">
-              <i class="pi pi-calendar"></i>
-              <span>End: {{ order.order.end_date.split('T')[0] }}</span>
-            </div>
-            <div class="order-info-item">
-              <i class="pi pi-users"></i>
-              <span>Tenant: {{ order.product.user.full_name }}</span>
-            </div>
-            <div class="order-info-item">
-              <i class="pi pi-indian-rupee"></i>
-              <span>Total: ₹{{ order.order.total_amount }}/day</span>
-            </div>
-          </div>
-
-          <!-- This button is only shown if the order status is 'In Use' -->
-          <div class="action-button-container" *ngIf="order.order.status == 0">
-            <button class="return-request-button" (click)="handleCreateReturnRequest(order)">
-              <span> create Return Request</span>
-            </button>
-          </div>
-        </div>
-      </div>
+<div class="card-container">
+  <div class="category-header">
+    <div class="header-left">
+      <h1 class="title">Orders Received</h1>
+      <p class="subtitle">All orders you have received for products</p>
     </div>
   </div>
+
+  @if (AllOrders.length == 0) {
+    <div class="no-buy-request">
+      <img
+        src="https://media.geeksforgeeks.org/auth-dashboard-uploads/not_found_mentor.svg"
+        alt="No Buy Request"
+      />
+      <h1>No orders received yet</h1>
+    </div>
+  } @else {
+    <div class="table-section">
+      <p-table [value]="AllOrders" stripedRows [responsiveLayout]="'scroll'" dataKey="id">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Product Name</th>
+            <th>Category</th>
+            <th>Tenant</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Total Amount</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-order>
+          <tr>
+            <td>{{ order.product.product.name }}</td>
+            <td>{{ order.product.category.name }}</td>
+            <td>{{ order.product.user.full_name }}</td>
+            <td>{{ order.order.start_date.split('T')[0] }}</td>
+            <td>{{ order.order.end_date.split('T')[0] }}</td>
+            <td>₹{{ order.order.total_amount }}/day</td>
+            <td>{{ order.order.status | orderStatus }}</td>
+            <td>
+              <button
+                pButton
+                class="p-button-sm"
+                (click)="handleCreateReturnRequest(order)"
+                [disabled]="order.order.status != 0"
+              >
+                Request Return
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  }
 </div>

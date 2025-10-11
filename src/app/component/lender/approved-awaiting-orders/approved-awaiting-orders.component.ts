@@ -9,10 +9,12 @@ import { OrderStatusPipe } from '../../../custom-pipes/order-status-pipe';
 
 import { LoaderComponent } from '../../loader/loader';
 import { OrderResponse } from '../../../models/orders';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-approved-awaiting-orders',
-  imports: [OrderStatusPipe, LoaderComponent, CommonModule, Toast],
+  imports: [OrderStatusPipe, LoaderComponent, CommonModule, Toast, TableModule, ButtonModule],
   templateUrl: './approved-awaiting-orders.component.html',
   styleUrl: './approved-awaiting-orders.component.scss',
 })
@@ -42,18 +44,13 @@ export class ApprovedAwaitingOrdersComponent {
           this.AllOrders = [];
         }
         this.isLoading = false;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Successfully fetched all orders to mark as return  ',
-          life: 3000,
-        });
+      
       },
       error: err => {
         console.log(err);
         this.isLoading = false;
         this.messageService.add({
-          severity: 'danger',
+          severity: 'error',
           summary: 'Error',
           detail: 'Failed to fetch orders ',
           life: 3000,
@@ -83,7 +80,7 @@ export class ApprovedAwaitingOrdersComponent {
         console.log(err);
         this.isLoading = false;
         this.messageService.add({
-          severity: 'danger',
+          severity: 'error',
           summary: 'Error',
           detail: 'Failed to return orders ',
           life: 3000,

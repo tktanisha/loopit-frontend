@@ -1,0 +1,133 @@
+<p-toast />
+<div class="society-page">
+  <div class="society-header">
+    <div class="header-left">
+      <h2 class="title">Societies</h2>
+      <p class="subtitle">Add or view societies from here.</p>
+    </div>
+
+    <div class="header-actions">
+      <button
+        pButton
+        type="button"
+        icon="pi pi-plus"
+        label="Add society"
+        class="add-btn"
+        (click)="toggleModal(true)"
+      ></button>
+    </div>
+  </div>
+
+  <div class="table-section">
+    <p-table [value]="societies" stripedRows [responsiveLayout]="'scroll'" dataKey="id">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Society</th>
+          <th>Location</th>
+          <th>Pincode</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-society>
+        <tr>
+          <td>{{ society.name }}</td>
+          <td>{{ society.location }}</td>
+          <td>{{ society.pincode }}</td>
+          <td class="actions">
+            <button pButton icon="pi pi-pencil" class="p-button-text p-button-sm">Edit</button>
+            <button pButton icon="pi pi-trash" class="p-button-text p-button-danger p-button-sm">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <div class="loading-overlay" *ngIf="showModal">
+    <div class="create-society-comp">
+      <div class="close-div" (click)="toggleModal(false)">
+        <i class="pi pi-times"></i>
+      </div>
+
+      <div class="create-society-title">Create society</div>
+
+      <form
+        #societyForm="ngForm"
+        (ngSubmit)="onSubmitSociety(societyForm)"
+        class="create-society-form"
+      >
+        <div class="form-item">
+          <label for="name">Society Name <span>*</span></label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            [(ngModel)]="society.name"
+            placeholder="Enter society name"
+            #fname="ngModel"
+          />
+          <small class="control-error">
+            @if (fname.touched && fname.invalid) {
+              * Society name is a Required Field
+            }
+          </small>
+        </div>
+
+        <div class="form-item">
+          <label for="location">Location <span>*</span></label>
+          <input
+            type="text"
+            id="location"
+            name="location"
+            required
+            [(ngModel)]="society.location"
+            placeholder="Enter location"
+            #flocation="ngModel"
+          />
+          <small class="control-error">
+            @if (flocation.touched && flocation.invalid) {
+              * Location is a Required Field
+            }
+          </small>
+        </div>
+
+        <div class="form-item">
+          <label for="pincode">Pincode <span>*</span></label>
+          <input
+            type="number"
+            id="pincode"
+            name="pincode"
+            required
+            min="100000"
+            max="999999"
+            [(ngModel)]="society.pincode"
+            placeholder="Enter pincode"
+            #fpincode="ngModel"
+          />
+          <small class="control-error">
+            @if (fpincode.touched && fpincode.invalid) {
+              * Pincode is a Required Field
+            }
+          </small>
+        </div>
+
+        <button
+          type="submit"
+          class="create-society-btn"
+          [disabled]="societyForm.invalid || isLoading"
+        >
+          {{ isLoading ? 'Creating...' : 'Create society' }}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+@if (isLoading) {
+  <div class="loader-overlay">
+    <app-loader [isLoading]="isLoading"></app-loader>
+  </div>
+}

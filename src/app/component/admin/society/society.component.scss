@@ -1,9 +1,22 @@
 @use 'mixin.scss' as *;
 
-.category-page {
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+}
+
+.society-page {
     background: var(--bg-color);
     margin-top: var(--header-height);
-    min-height: calc(100vh - var(--header-height) - 1rem);
     @include flex($direction: column, $gap: 12px);
     padding: 16px 20px;
     border: 1px solid var(--border-color);
@@ -12,7 +25,7 @@
     margin: 10px;
 }
 
-.category-header {
+.society-header {
     @include flex(row, center, space-between);
     flex-wrap: wrap;
 
@@ -74,7 +87,7 @@
     backdrop-filter: blur(5px);
 }
 
-.create-category-comp {
+.create-society-comp {
     background-color: var(--layout-bg-color);
     border-radius: 12px;
     min-width: 400px;
@@ -82,7 +95,7 @@
     animation: fadeIn 0.3s ease-in-out;
 }
 
-.create-category-title {
+.create-society-title {
     @include typography(var(--font-primary), 24px, 600, 100%, normal);
     color: var(--text-primary);
     text-align: center;
@@ -107,7 +120,7 @@
     }
 }
 
-.create-category-form {
+.create-society-form {
     @include flex($direction: column);
     max-height: 450px;
     overflow: auto;
@@ -142,7 +155,7 @@ input {
     }
 }
 
-.create-category-btn {
+.create-society-btn {
     @include buttonStyle(var(--accent-color), #fff, 12px 24px, 30px);
     width: 100%;
     margin-top: 1rem;
@@ -178,18 +191,4 @@ input {
 
 input.ng-invalid.ng-touched {
     border: 1.5px solid var(--danger-bg-color); 
-}
-
-.loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(5px); /*  Adds a blur effect */
 }

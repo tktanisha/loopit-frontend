@@ -1,48 +1,52 @@
 <p-toast />
 
-<div class="catgories-header-comp">
-  <div class="catgories-info">
-    <h1 class="catgories-title">Pending Buy Requests</h1>
-    <p class="catgories-subtitle">All pending buy request for all items</p>
+<div class="card-container">
+
+  <div class="category-header">
+  <div class="header-left">
+    <h1 class="title">Pending Buy Requests</h1>
+    <p class="subtitle">Approve or Reject pending requests from here.</p>
   </div>
-  <span class="catgories-count-badge">
-    <span>{{ BuyRequestOfUser.length }}</span> Request
-  </span>
+  <p class="count-badge">
+    {{ BuyRequestOfUser.length }} Requests
+  </p>
 </div>
 
 @if (BuyRequestOfUser.length == 0) {
   <div class="no-buy-request">
-    <h1>No Pending Request yet</h1>
+    <img src="https://media.geeksforgeeks.org/auth-dashboard-uploads/not_found_mentor.svg" alt="No Buy Request">
+    <p>No pending requests.</p>
   </div>
 }
+@else {
+  <div class="table-section">
+    <p-table [value]="BuyRequestOfUser" stripedRows [responsiveLayout]="'scroll'" dataKey="id">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Name</th>
+          <th>Request Status</th>
+          <th>Requested On</th>
+          <th>Approve/Reject</th>
+        </tr>
+      </ng-template>
 
-<div class="card-container">
-  <div class="card" *ngFor="let req of BuyRequestOfUser">
-    <div class="card-header">
-      <div class="item-info">
-        <h1 class="item-name">{{ req.product.product.name }}</h1>
-        <p class="item-description">{{ req.product.product.description }}</p>
-        <p class="item-duration">Duration: {{ req.product.product.duration }} days</p>
-      </div>
-      <div class="badge pending">{{ req.buy_request.status | buyStatus }}</div>
-    </div>
-    <div class="card-footer">
-      <span class="request-date">Requested on {{ req.buy_request.created_at.split('T')[0] }}</span>
-
-      <div class="Buttons-group">
-        <Button (click)="handleAccept(req.buy_request.id)" class="accept-btn">
-          Approve Request
-        </Button>
-        <Button (click)="handleReject(req.buy_request.id)" class="accept-btn">
-          Reject Request
-        </Button>
-      </div>
-    </div>
+      <ng-template pTemplate="body" let-req>
+        <tr>
+          <td>{{ req.product.product.name }}</td>
+          <td>{{ req.buy_request.status | buyStatus }}</td>
+          <td>{{ req.buy_request.created_at.split('T')[0] }}</td>
+          <td>
+            <button pButton icon="pi pi-check" class="p-button-text p-button-sm p-button-success" (click)="handleAccept(req.buy_request.id)">Approve</button>
+            <button pButton icon="pi pi-times" class="p-button-text p-button-sm p-button-danger" (click)="handleReject(req.buy_request.id)">Reject</button>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
-
-  @if (isLoading) {
-    <div class="loading-overlay">
-      <app-loader [isLoading]="isLoading"></app-loader>
-    </div>
-  }
+}
 </div>
+
+@if (isLoading) {
+  <div class="loading-overlay">
+    <app-loader [isLoading]="isLoading"></app-loader>
+  </div>
+}

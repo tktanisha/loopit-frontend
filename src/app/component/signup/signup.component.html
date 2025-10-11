@@ -3,14 +3,14 @@
   <app-login *ngIf="isLoggedIn"></app-login>
 
   <div *ngIf="!isLoggedIn && !isLoading">
-    <div class="signup-title">Sign Up</div>
+    <div class="signup-title">Create an Account!</div>
     <div class="close-div">
       <i class="pi pi-times" (click)="handleOnClose()"></i>
     </div>
 
     <form class="signup-form" (ngSubmit)="onFormSubmitted(signupForm)" #signupForm="ngForm">
       <div class="form-name">
-        <label for="name">Full Name *</label>
+        <label for="name">Full Name <span>*</span></label>
 
         <input
           id="name"
@@ -19,23 +19,24 @@
           autocomplete="name"
           [(ngModel)]="user.fullname"
           required
+          placeholder="Eg. John Doe"
         />
       </div>
 
       <div class="form-email">
-        <label for="email">Email *</label>
+        <label for="email">Email <span>*</span></label>
 
-        <input id="email" type="email" name="email" required [(ngModel)]="user.email" />
+        <input id="email" type="email" name="email" required [(ngModel)]="user.email" placeholder="Eg. john@example.com" />
       </div>
 
       <div class="form-password">
-        <label for="password">Password *</label>
+        <label for="password">Password <span>*</span></label>
 
-        <input id="password" type="password" name="password" required [(ngModel)]="user.password" />
+        <input id="password" type="password" name="password" required [(ngModel)]="user.password" placeholder="Eg. ********" />
       </div>
 
       <div class="form-phoneNo">
-        <label for="number">Phone no. *</label>
+        <label for="number">Phone no. <span>*</span></label>
 
         <input
           id="number"
@@ -43,13 +44,16 @@
           name="phone_number"
           required
           [(ngModel)]="user.phone_number"
+          placeholder="Eg. 9876543210"
         />
       </div>
 
       <div class="form-address">
-        <label for="address">Address *</label>
+        <label for="address">Address <span>*</span></label>
 
-        <input id="address" name="address" required [(ngModel)]="user.address" />
+        <input id="address" name="address" required [(ngModel)]="user.address" 
+          placeholder="Eg. 123, Main Street, City"
+        />
       </div>
 
       <button type="submit" class="signup-btn" [disabled]="!signupForm.valid && isLoading">
@@ -57,8 +61,8 @@
       </button>
 
       <div class="signup-para-btn">
-        <p class="signup-para">Do not have an account yet?</p>
-        <button class="btn-signin" (click)="onClickSignIn()">Sign in</button>
+        <p class="signup-para">Already have an account?</p>
+        <span class="btn-signin" (click)="onClickSignIn()">Sign in</span>
       </div>
     </form>
   </div>

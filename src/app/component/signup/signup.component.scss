@@ -1,8 +1,4 @@
-@use 'mixin.scss';
-
-
-
-
+@use 'mixin.scss' as *;
 
 $color-card-background:#ffffff;
 $color-border: gray;
@@ -27,136 +23,108 @@ $color-neon-blue-hover: #00aacc;
 
 
 .signup-comp{
-    display: flex;
-    flex-direction: column;
-    background-color:#ffffff;
-    min-width: 70%;
-    margin:auto;
-    min-height: 75%;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem 4rem 2rem 4rem;
-    border-radius:1rem ;
-    position: relative;
-   
+    background-color: var(--layout-bg-color);
+    border-radius: 12px;
+    min-width: 400px;
 }
 
 
 .signup-title {
-  font-size: large;
-  color:black;
-  font-weight: bold;
+  @include typography(var(--font-primary), 24px, 600, 100%, normal);
+  color: var(--text-primary);
   text-align: center;
-  justify-content: center;
-  margin-bottom: 1rem;
+  padding: 24px;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .close-div {
   cursor: pointer;
-  color: $color-text-label;
+  color: #fff;
   transition: all 0.2s ease;
-  position: absolute;
-  top:1.5rem;
-  right:1.7rem;
+  position: fixed;
+  top: 24px;
+  right: 44px;
+  
 
   &:hover {
-    color: gray;
+    transform: scale(1.2);
   }
 
   .pi.pi-times {
-    font-size: 1rem;
+    font-size: 24px;
   }
 }
 
 .signup-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem; // A more modern way to handle space between form elements
+  @include flex($direction: column, $gap: 14px);
+  max-height: 450px;
+  overflow: auto;
+  padding: 12px 18px;
 }
 
-// Container for each label/input pair
 .form-name,
 .form-email,
 .form-password,
 .form-phoneNo,
 .form-address {
-  display: flex;
-  flex-direction: column;
-  gap:0.5rem;
-
+  @include flex($direction: column, $gap: 6px);
+  width: 100%;
 }
 
 label {
-  font-size: small;
-  color: $color-text-label;
+  @include typography(var(--font-primary), 14px, 400, 100%);
+  color: var(--text-secondary);
+  span {
+    color: var(--danger-bg-color);
+  }
 }
 
 input {
-  background-color: white;
-  border: 1px solid $color-border;
-  border-radius: 0.3rem;
-  color: black;
-  padding: 0.7rem;
-  font-size: medium;
-  outline: none;
-  width: 20rem;
-
-
-  &:focus {
-    border-color: $color-neon-blue;
-    box-shadow: 0 0 0 2px rgba($color-neon-blue, 0.5);
-  }
+    @include typography(var(--font-secondary), 14px, 400, 100%);
+    width: 100%;
+    color: var(--text-primary);
+    padding: 16px 12px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 8px;
+    background: transparent;
+    
+    &:focus {
+        border: 1.5px solid var(--active-border-color);
+        outline: none;
+    }
 }
 
-.email{
-  outline: none;
-}
-.password {
-  outline:none;
-}
 
 .signup-btn {
-  background-color: $color-neon-blue;
-  color: black;
-  font-size: 1rem;
-  font-weight: bold;
-  padding: 0.6rem 4rem 0.6rem 4rem;
-  border: none;
-  border-radius: 0.3rem;
-  cursor: pointer;
-
-  &:hover:not(:disabled) {
-    @include mixin.transition-hover-scale(300ms,ease-in-out,1.05);
-    background-color: #22d3ee;
-    
+  @include buttonStyle(var(--accent-color), #fff, 12px 24px, 30px);
+  width: 100%;
+  margin-top: 1rem;
+  
+  &:hover {
+    background-color: var(--accent-hover-color);
   }
 
   &:disabled {
+    opacity: 0.6;
     cursor: not-allowed;
-    opacity: 1;
   }
 }
 
 .signup-para-btn {
-  display: flex;
-  align-items: center;
+  @include flex(row, center, center, 6px);
+  margin-top: 12px;
   justify-content: center;
-  gap: 0.5rem;
-  font-size: small;
-  margin-top: 0.5rem;
 }
 
 .signup-para {
-  color: $color-text-label;
+  @include typography(var(--font-primary), 14px, 400, 100%);
+  color: var(--text-secondary);
 }
 
 .btn-signin {
-  color:$color-neon-blue-hover;
-  background: none;
-  border: none;
-  padding: 0;
+  @include typography(var(--font-primary), 14px, 500, 100%);
+  color: var(--accent-color);
   cursor: pointer;
-  transition: text-decoration 0.2s ease-in-out;
 
   &:hover {
     text-decoration: underline;

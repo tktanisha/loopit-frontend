@@ -13,10 +13,11 @@ import { ProductResponse } from '../../../models/product';
 import { FeedbackService } from '../../../service/feedback.service';
 import { LoaderComponent } from '../../loader/loader';
 import { ProductService } from '../../../service/product.service';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-browse-items',
-  imports: [ProductModalComponent, CommonModule, LoaderComponent, Toast],
+  imports: [ProductModalComponent, CommonModule, LoaderComponent, Toast, ButtonModule],
   templateUrl: './browse-items.component.html',
   styleUrl: './browse-items.component.scss',
 })

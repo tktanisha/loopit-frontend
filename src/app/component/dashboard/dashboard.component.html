@@ -1,18 +1,13 @@
 <p-toast />
 <div class="main-dashboard">
-  <app-sidebar
-    *ngIf="isSidebarOpen"
-    (closeEvent)="handleCloseSidebar()"
-    [isOpen]="isSidebarOpen"
-  ></app-sidebar>
-
+  <app-header></app-header>
+  
   <main class="main-content-container">
-    <div class="main-header">
-      <app-header
-        [isSidebarOpen]="isSidebarOpen"
-        (toggleSidebar)="handleToggleSidebar()"
-      ></app-header>
-    </div>
+    <app-sidebar
+      *ngIf="isSidebarOpen"
+      (closeEvent)="handleCloseSidebar()"
+      [isOpen]="isSidebarOpen"
+    ></app-sidebar>
     <div class="get-category-comp">
       <router-outlet></router-outlet>
     </div>
