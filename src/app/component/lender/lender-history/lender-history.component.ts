@@ -53,12 +53,8 @@ export class LenderHistoryComponent implements OnInit {
     this.isLoading = true;
     this.markOrderReturnedSubject = this.orderService.MarkOrderAsReturned(order_id).subscribe({
       next: (data: any) => {
-        console.log(data);
-        if (data && data.orders) {
-          this.GetOrders();
-        } else {
-          this.AllOrders = [];
-        }
+        this.GetOrders();
+
         this.isLoading = false;
         this.messageService.add({
           severity: 'success',

@@ -15,8 +15,13 @@ export class UserService {
     return this.http.patch(`${this.ApiUrl}/users/become-lender`, {});
   }
 
-  getAllUsers() {
-    return this.http.get<{ users: User[] }>(`${this.ApiUrl}/users`);
+  getAllUsers(params?: any) {
+    let query = '';
+    if (params) {
+      const queryParams = new URLSearchParams(params).toString();
+      query = `?${queryParams}`;
+    }
+    return this.http.get<{ users: User[] }>(`${this.ApiUrl}/users${query}`);
   }
 
   getUserById(id: number) {

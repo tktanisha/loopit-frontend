@@ -48,9 +48,14 @@ export class LoginComponent {
       next: data => {
         this.AuthService.handleAuthSuccess(data);
         this.isLoading = false;
-        this.closeEvent.emit(); // After success, ask parent to close
-        this.router.navigate(['/dashboard']);
+        this.closeEvent.emit();
+
+        const role = data.user.Role;
+        if (role === 'admin') this.router.navigate(['/dashboard']);
+        else if (role === 'lender') this.router.navigate(['/lender']);
+        else this.router.navigate(['/user']);
       },
+
       error: err => {
         this.isLoading = false;
         this.messageService.add({

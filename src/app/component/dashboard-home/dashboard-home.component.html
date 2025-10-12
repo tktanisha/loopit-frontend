@@ -1,18 +1,19 @@
-<p-toast />
+<p-toast></p-toast>
 
 <div class="dashboard-cards">
-  <div class="card card-users">
+  <div class="card card-users" (click)="navigateTo('users')">
     <div class="card-content">
       <div class="left">
         <h3 class="card-heading">Total Users</h3>
-        <span class="card-count">85</span>
+        <span class="card-count">{{ GetAllUsers.length }}</span>
       </div>
       <div class="right">
         <i class="pi pi-users"></i>
       </div>
     </div>
   </div>
-  <div class="card card-categories">
+
+  <div class="card card-categories" (click)="navigateTo('categories')">
     <div class="card-content">
       <div class="left">
         <h3 class="card-heading">Categories</h3>
@@ -23,7 +24,8 @@
       </div>
     </div>
   </div>
-  <div class="card card-societies">
+
+  <div class="card card-societies" (click)="navigateTo('societies')">
     <div class="card-content">
       <div class="left">
         <h3 class="card-heading">Societies</h3>
@@ -35,14 +37,14 @@
     </div>
   </div>
 
-  <div class="card card-lenders">
+  <div class="card card-lenders" (click)="navigateTo('users', 'lender')">
     <div class="card-content">
       <div class="left">
         <h3 class="card-heading">Lenders</h3>
-        <span class="card-count">4</span>
+        <span class="card-count">{{ GetAllLenders.length }}</span>
       </div>
       <div class="right">
-        <i class="pi pi-users"></i>
+        <i class="pi pi-user"></i>
       </div>
     </div>
   </div>

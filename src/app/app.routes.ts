@@ -19,53 +19,54 @@ import { AccessDeniedComponent } from './component/access-denied/access-denied.c
 import { UserComponent } from './component/admin/user/user.component';
 
 export const routes: Routes = [
-  {
-    path: '',
-    component: HomeComponent,
-  },
+  { path: '', component: HomeComponent },
+
   {
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: DashboardHomeComponent, canActivate: [UserManagementGuard] },
-      {
-        path: 'categories',
-        component: CategoryComponent,
-        canActivate: [UserManagementGuard],
-      },
-      {
-        path: 'societies',
-        component: SocietyComponent,
-        canActivate: [UserManagementGuard],
-      },
-      {
-        path: 'users',
-        component: UserComponent,
-        canActivate: [UserManagementGuard],
-      },
-      { path: 'all-products', component: GetAllProductComponent },
+      { path: 'categories', component: CategoryComponent, canActivate: [UserManagementGuard] },
+      { path: 'societies', component: SocietyComponent, canActivate: [UserManagementGuard] },
+      { path: 'users', component: UserComponent, canActivate: [UserManagementGuard] },
+    ],
+  },
+
+  {
+    path: 'lender',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    children: [
+      { path: '', redirectTo: 'create-products', pathMatch: 'full' },
       { path: 'create-products', component: CreateProductComponent },
-      { path: 'buy-requests', component: GetAllBuyRequestComponent },
+      { path: 'all-lend-requests', component: PendingBuyRequestComponent },
+      { path: 'orders/lender/history', component: LenderHistoryComponent },
+      { path: 'orders/approved-awaiting', component: ApprovedAwaitingOrdersComponent },
+      { path: 'all-products', component: GetAllProductComponent },
+      { path: 'lend-requests', component: GetAllBuyRequestComponent },
+      { path: 'orders/history', component: OrdersComponent },
+    ],
+  },
+
+  {
+    path: 'user',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    children: [
+      { path: '', redirectTo: 'all-products', pathMatch: 'full' },
+      { path: 'all-products', component: GetAllProductComponent },
+      { path: '-requests', component: GetAllBuyRequestComponent },
       { path: 'all-rentals', component: OrdersComponent },
       { path: 'return-requests', component: ReturnRequestComponent },
       { path: 'become-lender', component: HomeComponent },
-      {
-        path: 'all-pending-buy-requests',
-        component: PendingBuyRequestComponent,
-      },
-      { path: 'orders/history', component: OrdersComponent },
-      { path: 'orders/lender/history', component: LenderHistoryComponent },
-      {
-        path: 'orders/approved-awaiting',
-        component: ApprovedAwaitingOrdersComponent,
-      },
     ],
   },
+
   { path: 'access-denied', component: AccessDeniedComponent },
-  {
-    path: '**',
-    component: ErrorPageComponent,
-  },
+  { path: '**', component: ErrorPageComponent },
 ];

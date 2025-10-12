@@ -43,8 +43,14 @@
             <td>{{ order.product.category.name }}</td>
             <td>{{ order.product.user.full_name }}</td>
             <td>{{ order.order.start_date.split('T')[0] }}</td>
-            <td>{{ order.order.end_date.split('T')[0] }}</td>
-            <td>₹{{ order.order.total_amount }}/day</td>
+            <td>
+              {{
+                order.order.end_date.split('T')[0] === '0001-01-01'
+                  ? '-'
+                  : order.order.end_date.split('T')[0]
+              }}
+            </td>
+            <td>₹{{ order.order.total_amount }}</td>
             <td>{{ order.order.status | orderStatus }}</td>
             <td>
               <button

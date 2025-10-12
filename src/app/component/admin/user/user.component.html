@@ -1,4 +1,4 @@
-<p-toast />
+<!--<p-toast />
 <p-confirmDialog></p-confirmDialog>
 
 <div class="category-page">
@@ -39,6 +39,94 @@
               View
             </button>
 
+            <button
+              pButton
+              icon="pi pi-trash"
+              class="p-button-text p-button-danger p-button-sm"
+              (click)="confirmDeleteUser(user)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <div class="loading-overlay" *ngIf="isLoading">
+    <app-loader [isLoading]="isLoading"></app-loader>
+  </div>
+</div> -->
+
+<p-toast />
+<p-confirmDialog></p-confirmDialog>
+
+<div class="user-page">
+  <div class="header">
+    <h2>Users</h2>
+    <p>View or manage users with filters.</p>
+  </div>
+
+  <!-- 🔍 Filters -->
+  <div class="filters">
+    <input
+      pInputText
+      type="text"
+      placeholder="Search by name..."
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearchChange($event)"
+    />
+
+    <p-dropdown
+      [options]="societies"
+      optionLabel="name"
+      optionValue="id"
+      placeholder="Select Society"
+      [(ngModel)]="selectedSocietyId"
+      (onChange)="applyFilters()"
+    ></p-dropdown>
+
+    <p-dropdown
+      [options]="roles"
+      optionLabel="label"
+      optionValue="value"
+      placeholder="Select Role"
+      [(ngModel)]="selectedRole"
+      (onChange)="applyFilters()"
+    ></p-dropdown>
+
+    <button
+      pButton
+      type="button"
+      icon="pi pi-filter-slash"
+      label="Clear"
+      class="clear-btn"
+      (click)="clearFilters()"
+    ></button>
+  </div>
+
+  <!-- Table -->
+  <div class="table-section">
+    <p-table [value]="users" stripedRows [responsiveLayout]="'scroll'" dataKey="id">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Full Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Society</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-user>
+        <tr>
+          <td>{{ user.full_name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.phone_number }}</td>
+          <td>{{ user.society_id || 'N/A' }}</td>
+          <td>{{ user.role }}</td>
+          <td class="actions">
             <button
               pButton
               icon="pi pi-trash"
