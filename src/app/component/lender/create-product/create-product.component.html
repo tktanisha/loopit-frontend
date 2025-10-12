@@ -7,101 +7,87 @@
 }
 
 <div class="create-product-page">
-    <h2 class="product-title">Creating Product!</h2>
+  <h2 class="product-title">Creating Product!</h2>
 
-    <form
-      #productForm="ngForm"
-      (ngSubmit)="onClickCreate(productForm)"
-      class="product-form"
-    >
-
-      <div class="form-group">
-        <label for="name">Product Name <span>*</span></label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          [(ngModel)]="productData.name"
-          required
-          placeholder="Eg. Mixer Grinder"
-          #fName="ngModel"
-        />
-        <small class="control-error">
+  <form #productForm="ngForm" (ngSubmit)="onClickCreate(productForm)" class="product-form">
+    <div class="form-group">
+      <label for="name">Product Name <span>*</span></label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        [(ngModel)]="productData.name"
+        required
+        placeholder="Eg. Mixer Grinder"
+        #fName="ngModel"
+      />
+      <small class="control-error">
         @if (fName.touched && fName.invalid) {
-            * Product Name is a Required Field
-          }
-        </small>
-      </div>
+          * Product Name is a Required Field
+        }
+      </small>
+    </div>
 
-      
-      <div class="form-group">
-        <label for="category">Category <span>*</span></label>
-        <select
-          id="category"
-          name="category_id"
-          [(ngModel)]="productData.category_id"
-          required
-          (change)="onCategoryChange($event)"
-          #fCategory="ngModel"
-        >
-          <option *ngFor="let category of allCategory" [value]="category.id">
-            {{ category.name }}
-          </option>
-        </select>
-        <small class="control-error">
-        @if (fCategory.touched && fCategory.invalid) {
-            * Product Category is a Required Field
-          }
-        </small>
-      </div>
-
-     
-      <div class="form-group">
-        <label for="description">Description <span>*</span></label>
-        <textarea
-          id="description"
-          name="description"
-          [(ngModel)]="productData.description"
-          required
-          placeholder="Enter product description"
-          #fdescription="ngModel"
-          rows="4"
-        ></textarea>
-        <small class="control-error">
-        @if (fdescription.touched && fdescription.invalid) {
-            * Product Description is a Required Field
-          }
-        </small>
-      </div>
-
-
-     
-      <div class="form-group">
-        <label for="duration">Duration (in days) <span>*</span></label>
-        <input
-          type="number"
-          id="duration"
-          name="duration"
-          [(ngModel)]="productData.duration"
-          required
-          min="1"
-          #fduration="ngModel"
-          placeholder="Eg. 2 days"
-        />
-        <small class="control-error">
-        @if (fduration.touched && fduration.invalid) {
-            * Product Duration is a Required Field
-          }
-        </small>
-      </div>
-
-     
-      <button
-        type="submit"
-        class="product-btn"
-        [disabled]="productForm.invalid || isLoading"
+    <div class="form-group">
+      <label for="category">Category <span>*</span></label>
+      <select
+        id="category"
+        name="category_id"
+        [(ngModel)]="productData.category_id"
+        required
+        (change)="onCategoryChange($event)"
+        #fCategory="ngModel"
       >
-        Create Product
-      </button>
-    </form>
+        <option *ngFor="let category of allCategory" [value]="category.id">
+          {{ category.name }}
+        </option>
+      </select>
+      <small class="control-error">
+        @if (fCategory.touched && fCategory.invalid) {
+          * Product Category is a Required Field
+        }
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description <span>*</span></label>
+      <textarea
+        id="description"
+        name="description"
+        [(ngModel)]="productData.description"
+        required
+        placeholder="Enter product description"
+        #fdescription="ngModel"
+        rows="4"
+      ></textarea>
+      <small class="control-error">
+        @if (fdescription.touched && fdescription.invalid) {
+          * Product Description is a Required Field
+        }
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label for="duration">Duration (in days) <span>*</span></label>
+      <input
+        type="number"
+        id="duration"
+        name="duration"
+        [(ngModel)]="productData.duration"
+        required
+        min="1"
+        #fduration="ngModel"
+        placeholder="Eg. 2 days"
+      />
+      <small class="control-error">
+        @if (fduration.touched && fduration.invalid) {
+          * Product Duration is a Required Field
+        }
+      </small>
+    </div>
+
+    <button type="submit" class="product-btn" [disabled]="productForm.invalid || isLoading">
+      Create Product
+    </button>
+  </form>
 </div>

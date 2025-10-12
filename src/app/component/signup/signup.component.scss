@@ -1,40 +1,23 @@
 @use 'mixin.scss' as *;
 
-$color-card-background:#ffffff;
+$color-card-background: #ffffff;
 $color-border: gray;
-$color-text-label:black;
+$color-text-label: black;
 $color-neon-blue: #22d3ee;
-$color-neon-blue-hover: #00aacc; 
-
+$color-neon-blue-hover: #00aacc;
 
 .loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(5px);
-}
-
-
-.signup-comp{
-    background-color: var(--layout-bg-color);
-    border-radius: 12px;
-    min-width: 400px;
-}
-
-
-.signup-title {
-  @include typography(var(--font-primary), 24px, 600, 100%, normal);
-  color: var(--text-primary);
-  text-align: center;
-  padding: 24px;
-  border-bottom: 1px solid var(--border-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
 }
 
 .close-div {
@@ -44,7 +27,6 @@ $color-neon-blue-hover: #00aacc;
   position: fixed;
   top: 24px;
   right: 44px;
-  
 
   &:hover {
     transform: scale(1.2);
@@ -57,8 +39,6 @@ $color-neon-blue-hover: #00aacc;
 
 .signup-form {
   @include flex($direction: column, $gap: 14px);
-  max-height: 450px;
-  overflow: auto;
   padding: 12px 18px;
 }
 
@@ -66,9 +46,18 @@ $color-neon-blue-hover: #00aacc;
 .form-email,
 .form-password,
 .form-phoneNo,
-.form-address {
+.form-address,
+.form-group {
   @include flex($direction: column, $gap: 6px);
   width: 100%;
+}
+
+.form-group {
+  select {
+    option {
+      padding: 10px;
+    }
+  }
 }
 
 label {
@@ -80,26 +69,25 @@ label {
 }
 
 input {
-    @include typography(var(--font-secondary), 14px, 400, 100%);
-    width: 100%;
-    color: var(--text-primary);
-    padding: 16px 12px;
-    border: 1.5px solid var(--border-color);
-    border-radius: 8px;
-    background: transparent;
-    
-    &:focus {
-        border: 1.5px solid var(--active-border-color);
-        outline: none;
-    }
-}
+  @include typography(var(--font-secondary), 14px, 400, 100%);
+  width: 100%;
+  color: var(--text-primary);
+  padding: 16px 12px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 8px;
+  background: transparent;
 
+  &:focus {
+    border: 1.5px solid var(--active-border-color);
+    outline: none;
+  }
+}
 
 .signup-btn {
   @include buttonStyle(var(--accent-color), #fff, 12px 24px, 30px);
   width: 100%;
   margin-top: 1rem;
-  
+
   &:hover {
     background-color: var(--accent-hover-color);
   }

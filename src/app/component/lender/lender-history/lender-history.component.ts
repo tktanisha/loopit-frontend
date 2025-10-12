@@ -42,6 +42,8 @@ export class LenderHistoryComponent implements OnInit {
     this.GetOrders();
   }
 
+  handleMarkasReturned(order: any) {}
+
   GetOrders(): void {
     this.isLoading = true;
     this.orderService.GetLenderOrders().subscribe({
@@ -52,7 +54,6 @@ export class LenderHistoryComponent implements OnInit {
           this.AllOrders = [];
         }
         this.isLoading = false;
-       
       },
       error: err => {
         console.error('Error fetching lender orders:', err);

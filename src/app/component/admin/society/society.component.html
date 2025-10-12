@@ -35,8 +35,21 @@
           <td>{{ society.location }}</td>
           <td>{{ society.pincode }}</td>
           <td class="actions">
-            <button pButton icon="pi pi-pencil" class="p-button-text p-button-sm">Edit</button>
-            <button pButton icon="pi pi-trash" class="p-button-text p-button-danger p-button-sm">
+            <button
+              pButton
+              icon="pi pi-pencil"
+              class="p-button-text p-button-sm"
+              (click)="toggleModal(true, society)"
+            >
+              Edit
+            </button>
+
+            <button
+              pButton
+              icon="pi pi-trash"
+              class="p-button-text p-button-danger p-button-sm"
+              (click)="deleteSociety(society.id)"
+            >
               Delete
             </button>
           </td>
@@ -51,7 +64,9 @@
         <i class="pi pi-times"></i>
       </div>
 
-      <div class="create-society-title">Create society</div>
+      <div class="create-society-title">
+        {{ isEditMode ? 'Edit Society' : 'Create Society' }}
+      </div>
 
       <form
         #societyForm="ngForm"
@@ -97,12 +112,10 @@
         <div class="form-item">
           <label for="pincode">Pincode <span>*</span></label>
           <input
-            type="number"
+            type="text"
             id="pincode"
             name="pincode"
             required
-            min="100000"
-            max="999999"
             [(ngModel)]="society.pincode"
             placeholder="Enter pincode"
             #fpincode="ngModel"
@@ -119,7 +132,15 @@
           class="create-society-btn"
           [disabled]="societyForm.invalid || isLoading"
         >
-          {{ isLoading ? 'Creating...' : 'Create society' }}
+          {{
+            isLoading
+              ? isEditMode
+                ? 'Updating...'
+                : 'Creating...'
+              : isEditMode
+                ? 'Update Society'
+                : 'Create Society'
+          }}
         </button>
       </form>
     </div>

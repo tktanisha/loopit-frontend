@@ -10,6 +10,8 @@ import { MessageService } from 'primeng/api';
 
 import { SignUpRequest } from '../../models/signup';
 import { AuthService } from '../../service/auth.service';
+import { GetSocietyResponse } from '../../models/society';
+import { SocietyService } from '../../service/society.service';
 
 @Component({
   selector: 'app-signup',
@@ -20,24 +22,47 @@ import { AuthService } from '../../service/auth.service';
 })
 export class SignupComponent implements OnDestroy {
   private messageService = inject(MessageService);
+  private societyService = inject(SocietyService);
   private AuthService = inject(AuthService);
   private router = inject(Router);
 
-  @Output() switchToLogin = new EventEmitter<void>(); // tell parent to show login
   @Output() closeEvent = new EventEmitter<void>(); // tell parent to close overlay
 
   isLoading = false;
   signUpSubject?: Subscription;
+  societySubject!: Subscription;
   errorMessage?: string | null;
+
+  allSociety: GetSocietyResponse[] = [];
 
   user: SignUpRequest = {
     fullname: '',
     email: '',
     password: '',
     phone_number: '',
+    society_id: null,
     address: '',
   };
 
+  ngOnInit(): void {
+    this.isLoading = true;
+    this.societySubject = this.societyService.fetchAllSociety().subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.allSociety = data.societies;
+        this.isLoading = false;
+      },
+      error: err => {
+        console.log(err);
+        this.isLoading = false;
+      },
+    });
+  }
+
+  onSocietyChange(event: Event) {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    this.user.society_id = Number(selectedValue);
+  }
   handleOnClose() {
     this.closeEvent.emit();
   }
@@ -45,8 +70,8 @@ export class SignupComponent implements OnDestroy {
   onFormSubmitted(form: NgForm) {
     if (form.valid) {
       this.submitSignUpForm();
+      form.reset();
     }
-    form.reset();
   }
 
   submitSignUpForm() {
@@ -71,11 +96,8 @@ export class SignupComponent implements OnDestroy {
     });
   }
 
-  onClickSignIn() {
-    this.switchToLogin.emit();
-  }
-
   ngOnDestroy(): void {
-    this.signUpSubject?.unsubscribe();
+    if (this.signUpSubject) this.signUpSubject.unsubscribe();
+    if (this.societySubject) this.signUpSubject?.unsubscribe();
   }
 }

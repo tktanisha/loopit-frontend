@@ -29,6 +29,10 @@ export class HomeComponent implements OnInit {
   isLoading: boolean = false;
   isSignedUp!: boolean;
   isUserLoggedIn: boolean = false;
+  showAuthModal: { login: boolean; signup: boolean } = {
+    login: false,
+    signup: false,
+  };
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -39,12 +43,13 @@ export class HomeComponent implements OnInit {
   }
 
   handleOnClose() {
-    this.isSignedUp = false;
-    this.router.navigate(['/']);
+    this.showAuthModal.login = false;
+    this.showAuthModal.signup = false;
   }
 
   onClickChangeToSignupModal() {
-    this.isSignedUp = true;
+    this.showAuthModal.login = false;
+    this.showAuthModal.signup = true;
   }
 
   ngOnDestroy() {

@@ -25,7 +25,6 @@ export class LoginComponent {
 
   @Output() switchToSignup = new EventEmitter<void>();
   @Output() closeEvent = new EventEmitter<void>();
-  @Input() isLoggedIn?: boolean;
 
   isLoading = false;
   showPassword = false;
@@ -66,9 +65,5 @@ export class LoginComponent {
 
   onClose() {
     this.closeEvent.emit();
-  }
-
-  onSwitchToSignup() {
-    this.switchToSignup.emit();
   }
 }

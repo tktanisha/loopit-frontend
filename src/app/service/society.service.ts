@@ -12,10 +12,17 @@ export class SocietyService {
   router: Router = inject(Router);
 
   createSociety(data: SocietyPayload) {
-    return this.http.post<SocietyPayload>(`${this.ApiUrl}/societies`, data);
+    return this.http.post<SocietyPayload>(`${this.ApiUrl}/societies/`, data);
   }
 
   fetchAllSociety() {
-    return this.http.get<SocietyPayload[]>(`${this.ApiUrl}/societies`);
+    return this.http.get<SocietyPayload[]>(`${this.ApiUrl}/societies/`);
+  }
+  updateSociety(id: number, data: SocietyPayload) {
+    return this.http.put(`${this.ApiUrl}/societies/${id}`, data);
+  }
+
+  deleteSociety(id: number) {
+    return this.http.delete(`${this.ApiUrl}/societies/${id}`);
   }
 }

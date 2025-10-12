@@ -1,18 +1,29 @@
-<div class="auth-wrapper">
+<div class="auth-wrapper" *ngIf="showAuth?.login || showAuth?.signup">
   <div class="close-div">
-    <i class="pi pi-times" (closeEvent)="(onClose)"></i>
+    <i class="pi pi-times" (click)="onClose()"></i>
   </div>
 
-  <div *ngIf="isLoggin; else signup">
-    <app-login (switchToSignup)="onSwitchToSignup()"></app-login>
-  </div>
+  <div class="signup-comp">
+    <div>
+      <div class="signup-title">{{ showAuth?.login ? 'Welcome Back!' : 'Create an Account!' }}</div>
+      <div *ngIf="showAuth?.login">
+        <app-login (switchToSignup)="onSwitchToSignup()"></app-login>
+      </div>
 
-  <ng-template #signup>
-    <app-signup (switchToLogin)="onSwitchToLogin()"></app-signup>
-  </ng-template>
+      <div *ngIf="showAuth?.signup">
+        <app-signup (switchToLogin)="onSwitchToLogin()"></app-signup>
+      </div>
 
-  <div class="signup-para-btn">
-    <p class="signup-para">{{isLoggedIn ? Don't have an account yet : Already have an account?}}</p>
-    <span class="btn-signin" (click)="onClickSignIn()">{{isLoggedIn ? Sign up : signin}}</span>
+      <div class="signup-para-btn">
+        <p class="signup-para">
+          {{ showAuth?.login ? "Don't have an account yet" : 'Already have an account?' }}
+        </p>
+        <span
+          class="btn-signin"
+          (click)="showAuth?.login ? onSwitchToSignup() : onSwitchToLogin()"
+          >{{ showAuth?.login ? 'Sign up' : 'Log In' }}</span
+        >
+      </div>
+    </div>
   </div>
 </div>

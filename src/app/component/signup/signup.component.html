@@ -1,64 +1,60 @@
 <p-toast />
-<div class="signup-comp">
-  <app-login *ngIf="isLoggedIn"></app-login>
-  <div *ngIf="!isLoggedIn && !isLoading">
-    <div class="signup-title">Create an Account!</div>
 
-    <form class="signup-form" (ngSubmit)="onFormSubmitted(signupForm)" #signupForm="ngForm">
-      <div class="form-name">
-        <label for="name">Full Name <span>*</span></label>
+<form class="signup-form" (ngSubmit)="onFormSubmitted(signupForm)" #signupForm="ngForm">
+  <div class="form-name">
+    <label for="name">Full Name <span>*</span></label>
 
-        <input
-          id="name"
-          type="text"
-          name="fullname"
-          autocomplete="name"
-          [(ngModel)]="user.fullname"
-          required
-          placeholder="Eg. John Doe"
-        />
-      </div>
+    <input
+      id="name"
+      type="text"
+      name="fullname"
+      autocomplete="name"
+      [(ngModel)]="user.fullname"
+      required
+      placeholder="Eg. John Doe"
+    />
+  </div>
 
-      <div class="form-email">
-        <label for="email">Email <span>*</span></label>
+  <div class="form-email">
+    <label for="email">Email <span>*</span></label>
 
-        <input
-          id="email"
-          type="email"
-          name="email"
-          required
-          [(ngModel)]="user.email"
-          placeholder="Eg. john@example.com"
-        />
-      </div>
+    <input
+      id="email"
+      type="email"
+      name="email"
+      required
+      [(ngModel)]="user.email"
+      placeholder="Eg. john@example.com"
+    />
+  </div>
 
-      <div class="form-password">
-        <label for="password">Password <span>*</span></label>
+  <div class="form-password">
+    <label for="password">Password <span>*</span></label>
 
-        <input
-          id="password"
-          type="password"
-          name="password"
-          required
-          [(ngModel)]="user.password"
-          placeholder="Eg. ********"
-        />
-      </div>
+    <input
+      id="password"
+      type="password"
+      name="password"
+      required
+      [(ngModel)]="user.password"
+      placeholder="Eg. ********"
+    />
+  </div>
 
-      <div class="form-phoneNo">
-        <label for="number">Phone no. <span>*</span></label>
+  <div class="form-phoneNo">
+    <label for="number">Phone no. <span>*</span></label>
 
-        <input
-          id="number"
-          type="string"
-          name="phone_number"
-          required
-          [(ngModel)]="user.phone_number"
-          placeholder="Eg. 9876543210"
-        />
-      </div>
+    <input
+      id="number"
+      type="string"
+      name="phone_number"
+      required
+      [(ngModel)]="user.phone_number"
+      placeholder="Eg. 9876543210"
+    />
+  </div>
 
-      <div class="form-address">
+  <!-- <div class="form-address">
         <label for="address">Address <span>*</span></label>
 
         <input
@@ -68,14 +64,33 @@
           [(ngModel)]="user.address"
           placeholder="Eg. 123, Main Street, City"
         />
-      </div>
+      </div> -->
 
-      <button type="submit" class="signup-btn" [disabled]="!signupForm.valid && isLoading">
-        Sign Up
-      </button>
-    </form>
+  <div class="form-group">
+    <label for="society">Society <span>*</span></label>
+    <select
+      id="society"
+      name="society_id"
+      [(ngModel)]="user.society_id"
+      required
+      (change)="onSocietyChange($event)"
+      #fSociety="ngModel"
+    >
+      <option *ngFor="let society of allSociety" [value]="society.id">
+        {{ society.name }}
+      </option>
+    </select>
+    <small class="control-error">
+      @if (fSociety.touched && fSociety.invalid) {
+        * Product Society is a Required Field
+      }
+    </small>
   </div>
-</div>
+
+  <button type="submit" class="signup-btn" [disabled]="!signupForm.valid && isLoading">
+    Sign Up
+  </button>
+</form>
 
 @if (isLoading) {
   <div class="loading-overlay">

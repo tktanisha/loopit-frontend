@@ -6,13 +6,12 @@ export interface User {
   created_at: string | null;
   password_hash: string | null;
   address: string;
-  society_id: number;
-  role: Role
-  
+  // society_id: number | null;
+  role: Role;
 }
 
 export enum Role {
   admin = 'admin',
   user = 'user',
-  lender= 'lender'
+  lender = 'lender',
 }

@@ -7,10 +7,8 @@
       <button class="signup-btn" type="button" (click)="onClickedSignIn()">Sign In</button>
     </div>
 
-    </div>
-
     <div class="user" *ngIf="isUserLoggedIn">
-      <i class="pi pi-user" ></i>
+      <i class="pi pi-user"></i>
       <div class="user-name">{{ user?.name }}</div>
     </div>
 
@@ -20,7 +18,7 @@
   </div>
 </header>
 
- <app-auth [isLogin]="isLoggedIn"></app-auth>
+<app-auth [showAuth]="showAuthModal" (closeEvent)="handleLoginClose()"></app-auth>
 
 @if (isLoading) {
   <div class="loading-overlay">

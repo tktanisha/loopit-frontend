@@ -35,9 +35,9 @@ $color-neon-blue-hover: #00aacc;
 }
 
 .div-login {
-    background-color: var(--layout-bg-color);
-    border-radius: 12px;
-    min-width: 400px;
+  background-color: var(--layout-bg-color);
+  border-radius: 12px;
+  min-width: 400px;
 }
 
 .login.title {
@@ -48,28 +48,8 @@ $color-neon-blue-hover: #00aacc;
   border-bottom: 1px solid var(--border-color);
 }
 
-.close-div {
-  cursor: pointer;
-  color: #fff;
-  transition: all 0.2s ease;
-  position: fixed;
-  top: 24px;
-  right: 44px;
-  
-
-  &:hover {
-    transform: scale(1.2);
-  }
-
-  .pi.pi-times {
-    font-size: 24px;
-  }
-}
-
 .login-form {
   @include flex($direction: column);
-  max-height: 450px;
-  overflow: auto;
   padding: 12px 18px;
 }
 
@@ -89,18 +69,18 @@ label {
 }
 
 input {
-    @include typography(var(--font-secondary), 14px, 400, 100%);
-    width: 100%;
-    color: var(--text-primary);
-    padding: 16px 12px;
-    border: 1.5px solid var(--border-color);
-    border-radius: 8px;
-    background: transparent;
-    
-    &:focus {
-        border: 1.5px solid var(--active-border-color);
-        outline: none;
-    }
+  @include typography(var(--font-secondary), 14px, 400, 100%);
+  width: 100%;
+  color: var(--text-primary);
+  padding: 16px 12px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 8px;
+  background: transparent;
+
+  &:focus {
+    border: 1.5px solid var(--active-border-color);
+    outline: none;
+  }
 }
 
 .password-wrapper {
@@ -132,7 +112,7 @@ input {
   @include buttonStyle(var(--accent-color), #fff, 12px 24px, 30px);
   width: 100%;
   margin-top: 1rem;
-  
+
   &:hover {
     background-color: var(--accent-hover-color);
   }
@@ -170,12 +150,12 @@ input {
 }
 
 .control-error {
-    @include typography(var(--font-secondary), 12px, 400, 100%);
-    color: var(--danger-bg-color);
-    min-height: 14px;
-    text-align: right;
+  @include typography(var(--font-secondary), 12px, 400, 100%);
+  color: var(--danger-bg-color);
+  min-height: 14px;
+  text-align: right;
 }
 
 input.ng-invalid.ng-touched {
-    border: 1.5px solid var(--danger-bg-color); 
+  border: 1.5px solid var(--danger-bg-color);
 }

@@ -21,9 +21,12 @@ import { AuthComponent } from '../auth/auth.component';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  isLoggedIn: boolean = false;
   isUserLoggedIn: boolean = false;
   isLoading: boolean = false;
+  showAuthModal: { login: boolean; signup: boolean } = {
+    login: false,
+    signup: false,
+  };
 
   @Input() isSidebarOpen: boolean = false;
   @Output() toggleSidebar = new EventEmitter<void>();
@@ -46,11 +49,13 @@ export class HeaderComponent implements OnInit {
   }
 
   onClickedSignIn() {
-    this.isLoggedIn = true;
+    this.showAuthModal.login = true;
+    this.showAuthModal.signup = false;
   }
 
   handleLoginClose() {
-    this.isLoggedIn = false;
+    this.showAuthModal.login = false;
+    this.showAuthModal.signup = false;
   }
 
   toggelSidebar() {

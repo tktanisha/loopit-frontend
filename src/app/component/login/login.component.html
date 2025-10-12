@@ -1,70 +1,55 @@
 <p-toast />
-
-<div class="div-login">
-  <div>
-    <div class="login title">Sign In</div>
-
-    <form class="login-form" #authForm="ngForm" (ngSubmit)="onFormSubmitted(authForm)">
-      <div class="login-email">
-        <Label>Email <span>*</span></Label>
-        <input
-          type="email"
-          placeholder="Eg. user@example.com"
-          name="email"
-          [(ngModel)]="user.email"
-          required
-          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
-          #femail="ngModel"
-        />
-        <small class="control-error">
-          @if (femail.touched && femail.invalid) {
-            * Email is a Required Field
-          }
-        </small>
-      </div>
-      <div class="login-password">
-        <Label>Password <span>*</span></Label>
-        <div class="password-wrapper">
-          <input
-            [type]="showPassword ? 'text' : 'password'"
-            placeholder="Eg. ********"
-            name="password"
-            [(ngModel)]="user.password"
-            required
-            minlength="12"
-            #fpassword="ngModel"
-          />
-          <i
-            class="pi eye-icon"
-            [ngClass]="showPassword ? 'pi-eye-slash' : 'pi-eye'"
-            (click)="togglePasswordVisibility()"
-          ></i>
-        </div>
-        <small class="control-error">
-          @if (fpassword.touched && fpassword.invalid) {
-            * Password is required
-          }
-        </small>
-      </div>
-
-      <div class="div-btn">
-        <button class="login-btn" type="submit" [disabled]="authForm.invalid && isLoading">
-          Sign In
-        </button>
-      </div>
-    </form>
+<form class="login-form" #authForm="ngForm" (ngSubmit)="onFormSubmitted(authForm)">
+  <div class="login-email">
+    <Label>Email <span>*</span></Label>
+    <input
+      type="email"
+      placeholder="Eg. user@example.com"
+      name="email"
+      [(ngModel)]="user.email"
+      required
+      pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
+      #femail="ngModel"
+    />
+    <small class="control-error">
+      @if (femail.touched && femail.invalid) {
+        * Email is a Required Field
+      }
+    </small>
   </div>
-</div>
+  <div class="login-password">
+    <Label>Password <span>*</span></Label>
+    <div class="password-wrapper">
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        placeholder="Eg. ********"
+        name="password"
+        [(ngModel)]="user.password"
+        required
+        minlength="12"
+        #fpassword="ngModel"
+      />
+      <i
+        class="pi eye-icon"
+        [ngClass]="showPassword ? 'pi-eye-slash' : 'pi-eye'"
+        (click)="togglePasswordVisibility()"
+      ></i>
+    </div>
+    <small class="control-error">
+      @if (fpassword.touched && fpassword.invalid) {
+        * Password is required
+      }
+    </small>
+  </div>
+
+  <div class="div-btn">
+    <button class="login-btn" type="submit" [disabled]="authForm.invalid && isLoading">
+      Sign In
+    </button>
+  </div>
+</form>
 @if (isLoading) {
   <div class="loading-overlay">
     <app-loader [isLoading]="isLoading"></app-loader>
   </div>
 }
-
-<!--
-@if (!isLoggedIn) {
-  <div class="signup-overlay">
-     <app-signup></app-signup> 
-  </div>
-}
--->

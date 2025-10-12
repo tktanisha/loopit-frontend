@@ -1,21 +1,24 @@
 <p-toast />
 <div class="card-container">
-<div class="category-header">
-  <div class="header-left">
-    <h1 class="title">My Orders</h1>
-    <p class="subtitle">Here are all your orders.</p>
-  </div>
+  <div class="category-header">
+    <div class="header-left">
+      <h1 class="title">My Orders</h1>
+      <p class="subtitle">Here are all your orders.</p>
+    </div>
 
-<div *ngIf="AllOrders.length === 0" class="no-buy-request">
-  <img src="https://media.geeksforgeeks.org/auth-dashboard-uploads/not_found_mentor.svg" alt="No orders yet">
-  <h1>No orders yet.</h1>
-</div>
+    <div *ngIf="AllOrders.length === 0" class="no-buy-request">
+      <img
+        src="https://media.geeksforgeeks.org/auth-dashboard-uploads/not_found_mentor.svg"
+        alt="No orders yet"
+      />
+      <h1>No orders yet.</h1>
+    </div>
 
-  <div *ngIf="isLoading" class="loading-overlay">
-    <app-loader [isLoading]="isLoading"></app-loader>
-  </div>
+    <div *ngIf="isLoading" class="loading-overlay">
+      <app-loader [isLoading]="isLoading"></app-loader>
+    </div>
 
-<!-- <div *ngFor="let order of AllOrders">
+    <!-- <div *ngFor="let order of AllOrders">
     <div class="order-card">
       <div class="order-card-content">
         <div class="product-image-container">
@@ -66,87 +69,84 @@
       </div>
     </div>
   </div> -->
-<div *ngIf="AllOrders.length > 0" class="table-section">
-    <p-table [value]="AllOrders" stripedRows [responsiveLayout]="'scroll'"
-      dataKey="id">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>Product Name</th>
-          <th>Category</th>
-          <th>Status</th>
-          <th>Start Date</th>
-          <th>End Date</th>
-          <th>Tenant</th>
-          <th>Total Amount (per day)</th>
-          <th *ngIf="loggedInUser?.role === 'user'">Action</th>
-        </tr>
-      </ng-template>
+    <div *ngIf="AllOrders.length > 0" class="table-section">
+      <p-table [value]="AllOrders" stripedRows [responsiveLayout]="'scroll'" dataKey="id">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Product Name</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Tenant</th>
+            <th>Total Amount (per day)</th>
+            <th *ngIf="loggedInUser?.role === 'user'">Action</th>
+          </tr>
+        </ng-template>
 
-      <ng-template pTemplate="body" let-order>
-        <tr>
-          <td>{{ order.product.product.name }}</td>
-          <td><span class="product-category-badge">{{ order.product.category.name }}</span></td>
-          <td>{{ order.order.status | orderStatus }}</td>
-          <td>{{ order.order.start_date.split('T')[0] }}</td>
-          <td>{{ order.order.end_date.split('T')[0] }}</td>
-          <td>{{ order.product.user.full_name }}</td>
-          <td>₹{{ order.order.total_amount }}/day</td>
-          <td *ngIf="loggedInUser?.role === 'user'">
-            <button
-              *ngIf="order.order.status === 2"
-              class="feedback-btn"
-              (click)="showFeedbackDialog(order.order.id)"
-            >
-              Give Feedback
-            </button>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
+        <ng-template pTemplate="body" let-order>
+          <tr>
+            <td>{{ order.product.product.name }}</td>
+            <td>
+              <span class="product-category-badge">{{ order.product.category.name }}</span>
+            </td>
+            <td>{{ order.order.status | orderStatus }}</td>
+            <td>{{ order.order.start_date.split('T')[0] }}</td>
+            <td>{{ order.order.end_date.split('T')[0] }}</td>
+            <td>{{ order.product.user.full_name }}</td>
+            <td>₹{{ order.order.total_amount }}/day</td>
+            <td *ngIf="loggedInUser?.role === 'user'">
+              <button class="feedback-btn" (click)="showFeedbackDialog(order.order.id)">
+                Give Feedback
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
   </div>
-  
+
+  <!-- PrimeNG Feedback Dialog -->
+  <p-dialog
+    header="Give Feedback"
+    [(visible)]="displayFeedbackDialog"
+    [modal]="true"
+    [draggable]="false"
+    [resizable]="false"
+    [style]="{ width: '400px' }"
+    [styleClass]="'feedback-dialog-content'"
+  >
+    <form (ngSubmit)="submitFeedback()" class="feedback-form">
+      <div class="rating-section">
+        <label>Rating</label>
+        <p-rating
+          [(ngModel)]="feedbackData.rating"
+          required
+          name="ratingValue"
+          [stars]="5"
+          iconOnClass="pi pi-star-fill"
+          iconOffClass="pi pi-star"
+          class="custom-rating"
+        ></p-rating>
+      </div>
+
+      <div class="description-section">
+        <label>Message</label>
+        <textarea
+          [(ngModel)]="feedbackData.description"
+          name="description"
+          rows="5"
+          [maxlength]="150"
+          pTextarea
+          [autoResize]="true"
+          placeholder="Write your feedback here..."
+        ></textarea>
+        <small>{{ feedbackData.description.length || 0 }}/150</small>
+      </div>
+
+      <div class="submit-section">
+        <button label="Submit" type="submit" class="submit-btn">Submit</button>
+      </div>
+    </form>
+  </p-dialog>
 </div>
-
-<!-- PrimeNG Feedback Dialog -->
-<p-dialog
-  header="Give Feedback"
-  [(visible)]="displayFeedbackDialog"
-  [modal]="true"
-  [draggable]="false"
-  [resizable]="false"
-  [style]="{ width: '400px' }"
-  [styleClass]="'feedback-dialog-content'"
->
-  <form (ngSubmit)="submitFeedback()" class="feedback-form">
-    <div class="rating-section">
-      <label>Rating</label>
-      <p-rating
-        [(ngModel)]="feedbackData.rating"
-        required
-        name="ratingValue"
-        [stars]="5"
-        iconOnClass="pi pi-star-fill"
-        iconOffClass="pi pi-star"
-        class="custom-rating"
-      ></p-rating>
-    </div>  
-
-    <div class="description-section">
-      <label>Message</label>
-      <textarea
-        [(ngModel)]="feedbackData.description"
-        name="description"
-        rows="5"
-        [maxlength]="150"
-        pTextarea
-        [autoResize]="true"
-        placeholder="Write your feedback here..."
-      ></textarea>
-      <small>{{ feedbackData.description.length || 0 }}/150</small>
-    </div>
-
-    <div class="submit-section">
-      <button label="Submit" type="submit" class="submit-btn">Submit</button>
-    </div>
-  </form>
-</p-dialog>

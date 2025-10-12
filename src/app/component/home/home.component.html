@@ -50,10 +50,7 @@
       </p>
     </div>
   </div>
-
-  <div class="login-modal" *ngIf="isSignedUp">
-    <app-auth></app-auth>
-  </div>
+  <app-auth [showAuth]="showAuthModal" (closeEvent)="handleOnClose()"></app-auth>
 </main>
 
 @if (isLoading) {
