@@ -35,6 +35,7 @@ export class SidebarComponent implements OnInit {
   @Input() isOpen: boolean = true;
 
   isLoading: boolean = false;
+  isLenderOpen: boolean = false;
 
   loggedInUser!: LoggedInUser | null;
   loggedInUserRole: string = '';
@@ -47,9 +48,6 @@ export class SidebarComponent implements OnInit {
         switch (this.loggedInUser.role) {
           case 'admin':
             this.currentMenuItems = this.menuItemsAdmin;
-            break;
-          case 'lender':
-            this.currentMenuItems = this.menuItemsLender;
             break;
           default:
             this.currentMenuItems = this.menuItemsUser;
@@ -69,9 +67,9 @@ export class SidebarComponent implements OnInit {
   menuItemsUser = [
     { label: 'Browse Items', icon: 'pi pi-search', route: 'all-products' },
     {
-      label: 'My Buy Requests',
+      label: 'My Lend Requests',
       icon: 'pi pi-shopping-cart',
-      route: 'buy-requests',
+      route: 'lend-requests',
       // badge: 3
     },
     { label: 'My Orders', icon: 'pi pi-box', route: 'all-rentals' },
@@ -79,6 +77,7 @@ export class SidebarComponent implements OnInit {
       label: 'All Return Requests',
       icon: 'pi pi-check-circle',
       route: 'return-requests',
+      
     },
   ];
 
@@ -89,9 +88,9 @@ export class SidebarComponent implements OnInit {
       route: 'create-products',
     },
     {
-      label: 'Buy Requests',
+      label: 'Lend Requests',
       icon: 'pi pi-cart-arrow-down',
-      route: 'all-pending-buy-requests',
+      route: 'all-lend-requests',
       // badge: 3,
     },
     {
@@ -99,19 +98,6 @@ export class SidebarComponent implements OnInit {
       icon: 'pi pi-download',
       route: 'orders/lender/history',
     },
-    // {
-    //   label: "Mark as Returned",
-    //   icon: "pi pi-refresh",
-    //   route: "orders/approved-awaiting",
-    // },
-    { label: 'Browse Products', icon: 'pi pi-globe', route: 'all-products' },
-    {
-      label: 'Your Buy Requests',
-      icon: 'pi pi-shopping-cart',
-      route: 'buy-requests',
-      // badge: 2
-    },
-    { label: 'Orders', icon: 'pi pi-shopping-cart', route: 'orders/history' },
   ];
 
   closeSidebar() {
@@ -143,6 +129,10 @@ export class SidebarComponent implements OnInit {
         });
       },
     });
+  }
+
+  toggleLenderMenu() {
+    this.isLenderOpen = !this.isLenderOpen;
   }
 
   ngOnDestroy(): void {

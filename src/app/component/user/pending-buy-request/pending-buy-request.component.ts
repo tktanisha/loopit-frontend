@@ -50,7 +50,7 @@ export class PendingBuyRequestComponent {
 
   getAllRequest() {
     this.isLoading = true;
-    this.BuyRequestService.GetAllRequest("Pending").subscribe({
+    this.BuyRequestService.GetAllRequest().subscribe({
       next: (res: any) => {
         this.allBuyRequests = res.requests ?? [];
         console.log("response of all buy requests", this.allBuyRequests);

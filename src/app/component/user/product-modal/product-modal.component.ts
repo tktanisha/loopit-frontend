@@ -60,6 +60,7 @@ handleBuyRequest(productId: number | null){
           summary: 'Success',
           detail: 'Buy request created successfully!',
         });
+      this.closeEvent.emit()
     },
     error:(err:Error)=>{
       console.log(err);

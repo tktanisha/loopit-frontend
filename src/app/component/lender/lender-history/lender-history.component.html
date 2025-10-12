@@ -23,7 +23,13 @@
     </div>
   } @else {
     <div class="table-section">
-      <p-table [value]="AllOrders" stripedRows [responsiveLayout]="'scroll'" dataKey="id">
+      <p-table
+        [value]="AllOrders"
+        showGridlines
+        stripedRows
+        [responsiveLayout]="'scroll'"
+        dataKey="id"
+      >
         <ng-template pTemplate="header">
           <tr>
             <th>Product Name</th>
@@ -40,18 +46,25 @@
         <ng-template pTemplate="body" let-order>
           <tr>
             <td>{{ order.product.product.name }}</td>
-            <td>{{ order.product.category.name }}</td>
+            <td class="label category">
+              <span>{{ order.product.category.name }}</span>
+            </td>
             <td>{{ order.product.user.full_name }}</td>
             <td>{{ order.order.start_date.split('T')[0] }}</td>
-            <td>
-              {{
-                order.order.end_date.split('T')[0] === '0001-01-01'
-                  ? '-'
-                  : order.order.end_date.split('T')[0]
-              }}
+            <td>{{ order.order.end_date.split('T')[0] }}</td>
+            <td>₹{{ order.order.total_amount }}/day</td>
+            <td
+              class="label"
+              [ngClass]="{
+                'in-use': order.order.status == 0,
+                'return-requested': order.order.status == 1,
+                returned: order.order.status == 2,
+              }"
+            >
+              <span>
+                {{ order.order.status | orderStatus }}
+              </span>
             </td>
-            <td>₹{{ order.order.total_amount }}</td>
-            <td>{{ order.order.status | orderStatus }}</td>
             <td>
               <button
                 pButton
@@ -62,6 +75,7 @@
                 Request Return
               </button>
               <button
+                style="margin-top: 5px"
                 pButton
                 class="lending-btn p-button-sm"
                 (click)="markOrderAsReturn(order.order.id)"

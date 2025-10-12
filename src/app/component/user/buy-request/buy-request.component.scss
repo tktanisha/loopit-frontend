@@ -69,6 +69,39 @@
     td {
         text-align: center;
     }
+
+  .label {
+    background: transparent;
+    span {
+      @include typography(var(--font-secondary), 12px, 500, 100%);
+      padding: 4px 8px;
+      border-radius: 30px;
+      font-style: italic !important;
+      min-width: 100px;
+      white-space: nowrap;
+    }
+    &.pending {
+      background: transparent;
+      span {
+        background-color: rgba(0, 123, 255, 0.15);
+        color: #0a4fa3;
+      }
+    }
+    &.accepted {
+      background: transparent;
+      span {
+        background-color: rgba(40, 167, 69, 0.15);
+        color: #1c6e34;
+      }
+    }
+    &.rejected {
+      background: transparent;
+      span {
+        background-color: rgba(220, 53, 69, 0.15);
+        color: #842029;
+      }
+    }
+  }
 }
 
 .loading-overlay {

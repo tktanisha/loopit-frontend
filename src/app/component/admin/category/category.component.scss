@@ -173,7 +173,7 @@ input {
     @include typography(var(--font-secondary), 12px, 400, 100%);
     color: var(--danger-bg-color);
     min-height: 14px;
-    text-align: right;
+    text-align: left;
 }
 
 input.ng-invalid.ng-touched {

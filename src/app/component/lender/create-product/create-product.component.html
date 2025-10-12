@@ -93,7 +93,7 @@
         <ng-template pTemplate="body" let-product>
           <tr>
             <td>{{ product.product.name }}</td>
-            <td>{{ product.category.name }}</td>
+            <td class="label category"><span>{{ product.category.name }}</span></td>
             <td>{{ product.product.duration }} days</td>
             <!-- <td>{{ product.product.is_available ? 'Yes' : 'No' }}</td> -->
             <td class="actions">
@@ -145,7 +145,7 @@
           />
           <small class="control-error">
             @if (fname.touched && fname.invalid) {
-              * Product Name is required
+              Name is required.
             }
           </small>
         </div>
@@ -166,7 +166,7 @@
           </select>
           <small class="control-error">
             @if (fcategory.touched && fcategory.invalid) {
-              * Category is required
+              Category is required.
             }
           </small>
         </div>
@@ -185,7 +185,7 @@
           />
           <small class="control-error">
             @if (fduration.touched && fduration.invalid) {
-              * Duration is required
+              Duration is required
             }
           </small>
         </div>
@@ -203,7 +203,7 @@
           ></textarea>
           <small class="control-error">
             @if (fdesc.touched && fdesc.invalid) {
-              * Description is required
+              Description is required
             }
           </small>
         </div>

@@ -65,9 +65,15 @@
 
       <ng-template pTemplate="body" let-req>
         <tr>
-          <td>{{ req.order.product.name }}</td>
+          <td>{{ req.id }}</td>
           <td>{{ req.order.id }}</td>
-          <td>{{ req.status | returnStatus }}</td>
+          <td class="label"
+              [ngClass]="{
+                'pending': req.status == 0,
+                'approved': req.status == 1,
+                'rejected': req.status == 2
+              }"
+          ><span>{{ req.status | returnStatus }}</span></td>
           <td>{{ req.created_at.split('T')[0] }}</td>
           <td>
             <button pButton icon="pi pi-check" class="p-button-text p-button-sm p-button-success" (click)="handleAccept(req.id)">Approve</button>

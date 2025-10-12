@@ -56,6 +56,24 @@
     text-align: center;
   }
 
+  .label {
+    background: transparent;
+    span {
+      @include typography(var(--font-secondary), 12px, 500, 100%);
+      padding: 4px 8px;
+      border-radius: 30px;
+      font-style: italic !important;
+      min-width: 100px;
+      white-space: nowrap;
+    }
+    &.category {
+      span {
+        background-color: var(--icon-bg);
+        color: var(--accent-color);
+      }
+    }
+  }
+
   .actions {
     @include flex(row, center, center, 8px);
 
@@ -210,7 +228,7 @@
   @include typography(var(--font-secondary), 12px, 400, 100%);
   color: var(--danger-bg-color);
   min-height: 14px;
-  text-align: right;
+  text-align: left;
 }
 
 /* invalid input visible state */

@@ -4,8 +4,8 @@
 
   <div class="category-header">
   <div class="header-left">
-    <h1 class="title">Pending Buy Requests</h1>
-    <p class="subtitle">Approve or Reject pending requests from here.</p>
+    <h1 class="title">All Buy Requests</h1>
+    <p class="subtitle">Approve or Reject all requests from here.</p>
   </div>
   <p class="count-badge">
     {{ BuyRequestOfUser.length }} Requests
@@ -15,7 +15,7 @@
 @if (BuyRequestOfUser.length == 0) {
   <div class="no-buy-request">
     <img src="https://media.geeksforgeeks.org/auth-dashboard-uploads/not_found_mentor.svg" alt="No Buy Request">
-    <p>No pending requests.</p>
+    <p>No requests.</p>
   </div>
 }
 @else {
@@ -33,7 +33,13 @@
       <ng-template pTemplate="body" let-req>
         <tr>
           <td>{{ req.product.product.name }}</td>
-          <td>{{ req.buy_request.status | buyStatus }}</td>
+          <td class="label"
+              [ngClass]="{
+                'pending': req.buy_request.status == 0,
+                'accepted': req.buy_request.status == 1,
+                'rejected': req.buy_request.status == 2
+              }"
+          ><span>{{ req.buy_request.status | buyStatus }}</span></td>
           <td>{{ req.buy_request.created_at.split('T')[0] }}</td>
           <td>
             <button pButton icon="pi pi-check" class="p-button-text p-button-sm p-button-success" (click)="handleAccept(req.buy_request.id)">Approve</button>

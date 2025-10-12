@@ -37,32 +37,69 @@
     background: var(--icon-bg);
     border-radius: 30px;
   }
+}
 
-  .table-section {
-    margin-top: 16px;
-    border: 1px solid var(--border-color);
-    .table-loading {
-      height: 250px;
-      border-radius: 6px;
-      @include shimmer-effect;
+.table-section {
+  margin-top: 16px;
+  border: 1px solid var(--border-color);
+
+  th,
+  td {
+    text-align: center;
+  }
+
+  button {
+    @include typography(var(--font-secondary), 12px, 500, 100%);
+    white-space: nowrap;
+    background: var(--accent-color);
+    border: none;
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
     }
+  }
 
-    th,
-    td {
-      text-align: center;
-    }
-
-    button {
+  .label {
+    background: transparent;
+    span {
       @include typography(var(--font-secondary), 12px, 500, 100%);
+      padding: 4px 8px;
+      border-radius: 30px;
+      font-style: italic !important;
+      min-width: 100px;
       white-space: nowrap;
-      background: var(--accent-color);
-      border: none;
-      &:disabled {
-        cursor: not-allowed;
-        opacity: 0.6;
+    }
+    &.category {
+      background: transparent;
+      span {
+        background-color: var(--icon-bg);
+        color: var(--accent-color);
+      }
+    }
+    &.in-use {
+      background: transparent;
+      span {
+        background-color: rgba(0, 123, 255, 0.15);
+        color: #0a4fa3;
+      }
+    }
+  
+    &.return-requested {
+      background: transparent;
+      span {
+        background-color: rgba(255, 193, 7, 0.15);
+        color: #9a6a00;
+      }
+    }
+  
+    &.returned {
+      span {
+        background-color: rgba(40, 167, 69, 0.15);
+        color: #1c6e34;
       }
     }
   }
+
 }
 
 .no-buy-request {
@@ -80,7 +117,7 @@
   }
 }
 
-lender-btn {
+.lender-btn {
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;

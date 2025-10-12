@@ -4,7 +4,7 @@
 
   <div class="category-header">
   <div class="header-left">
-    <h1 class="title">My Buy Requests</h1>
+    <h1 class="title">My Lend Requests</h1>
     <p class="subtitle">All request you have made for products</p>
   </div>
   <p class="count-badge">
@@ -14,8 +14,8 @@
 
 @if (BuyRequestOfUser.length == 0) {
   <div class="no-buy-request">
-    <img src="https://media.geeksforgeeks.org/auth-dashboard-uploads/not_found_mentor.svg" alt="No Buy Request">
-    <p>No pending requests.</p>
+    <img src="https://media.geeksforgeeks.org/auth-dashboard-uploads/not_found_mentor.svg" alt="No Lend Request">
+    <p>No requests.</p>
   </div>
 }
 @else {
@@ -32,7 +32,13 @@
       <ng-template pTemplate="body" let-req>
         <tr>
           <td>{{ req.product.product.name }}</td>
-          <td>{{ req.buy_request.status | buyStatus }}</td>
+          <td class="label"
+              [ngClass]="{
+                'pending': req.buy_request.status == 0,
+                'accepted': req.buy_request.status == 1,
+                'rejected': req.buy_request.status == 2
+              }"
+          ><span>{{ req.buy_request.status | buyStatus }}</span></td>
           <td>{{ req.buy_request.created_at.split('T')[0] }}</td>
         </tr>
       </ng-template>
