@@ -1,31 +1,24 @@
-import {
-  Component,
-  OnInit,
-  inject,
-  Input,
-  Output,
-  EventEmitter,
-} from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { Router } from "@angular/router";
+import { Component, OnInit, inject, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
-import { MessageService } from "primeng/api";
-import { Subscription } from "rxjs";
-import { Toast } from "primeng/toast";
+import { MessageService } from 'primeng/api';
+import { Subscription } from 'rxjs';
+import { Toast } from 'primeng/toast';
 
-import { LoggedInUser } from "../../models/logged-in-user";
+import { LoggedInUser } from '../../models/logged-in-user';
 
-import { AuthService } from "../../service/auth.service";
+import { AuthService } from '../../service/auth.service';
 
-import { LoginComponent } from "../login/login.component";
-import { LoaderComponent } from "../loader/loader";
+import { LoaderComponent } from '../loader/loader';
+import { AuthComponent } from '../auth/auth.component';
 
 @Component({
-  selector: "app-header",
+  selector: 'app-header',
   standalone: true,
-  imports: [LoginComponent, CommonModule, LoaderComponent, Toast],
-  templateUrl: "./header.component.html",
-  styleUrls: ["./header.component.scss"],
+  imports: [AuthComponent, CommonModule, LoaderComponent, Toast],
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = false;
@@ -45,12 +38,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.userSubject = this.AuthService.user.subscribe(
-      (user: LoggedInUser | null) => {
-        this.isUserLoggedIn = user ? true : false;
-        this.user = user;
-      }
-    );
+    this.userSubject = this.AuthService.user.subscribe((user: LoggedInUser | null) => {
+      this.isUserLoggedIn = user ? true : false;
+      this.user = user;
+    });
     this.isLoading = false;
   }
 
@@ -70,11 +61,11 @@ export class HeaderComponent implements OnInit {
     this.AuthService.logout().subscribe({
       next: () => {
         this.AuthService.handleLogout();
-        this.router.navigate(["/"]);
+        this.router.navigate(['/']);
       },
-      error: (err) => {
-        console.error("Logout failed", err);
-        this.router.navigate(["/"]);
+      error: err => {
+        console.error('Logout failed', err);
+        this.router.navigate(['/']);
       },
     });
   }

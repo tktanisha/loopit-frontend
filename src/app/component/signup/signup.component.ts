@@ -1,37 +1,34 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Output, inject, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
-import { MessageService } from 'primeng/api';
 import { Toast } from 'primeng/toast';
+import { LoaderComponent } from '../loader/loader';
+import { MessageService } from 'primeng/api';
 
 import { SignUpRequest } from '../../models/signup';
-
 import { AuthService } from '../../service/auth.service';
-import { LoaderComponent } from '../loader/loader';
-import { LoginComponent } from '../login/login.component';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
-  imports: [FormsModule, LoaderComponent, CommonModule, LoginComponent, Toast],
+  standalone: true,
+  imports: [Toast, LoaderComponent, CommonModule, FormsModule],
   templateUrl: './signup.component.html',
-  styleUrl: './signup.component.scss',
+  styleUrls: ['./signup.component.scss'],
 })
-export class SignupComponent {
-  messageService = inject(MessageService);
-  AuthService = inject(AuthService);
+export class SignupComponent implements OnDestroy {
+  private messageService = inject(MessageService);
+  private AuthService = inject(AuthService);
   private router = inject(Router);
 
-  @Output() clickEvent = new EventEmitter<void>();
+  @Output() switchToLogin = new EventEmitter<void>(); // tell parent to show login
+  @Output() closeEvent = new EventEmitter<void>(); // tell parent to close overlay
 
-  isLoading: boolean = false;
-  isLoggedIn: boolean = false;
-
-  signUpSubject!: Subscription;
-
-  errorMessage!: string | null;
+  isLoading = false;
+  signUpSubject?: Subscription;
+  errorMessage?: string | null;
 
   user: SignUpRequest = {
     fullname: '',
@@ -42,33 +39,32 @@ export class SignupComponent {
   };
 
   handleOnClose() {
-    this.clickEvent.emit();
+    this.closeEvent.emit();
   }
 
   onFormSubmitted(form: NgForm) {
-    console.log(form);
-
     if (form.valid) {
-      this.sumbitSignUpForm();
+      this.submitSignUpForm();
     }
     form.reset();
   }
 
-  sumbitSignUpForm() {
+  submitSignUpForm() {
     this.isLoading = true;
     this.signUpSubject = this.AuthService.signup(this.user).subscribe({
       next: data => {
         this.AuthService.handleAuthSuccess(data);
         this.isLoading = false;
+        this.closeEvent.emit();
         this.router.navigate(['/dashboard']);
       },
       error: err => {
-        console.log(err.error.details);
-        this.errorMessage = err.error.details;
+        this.isLoading = false;
+        this.errorMessage = err?.error?.details ?? 'Failed to sign up';
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'Failed to sign up, do again! ',
+          detail: 'Failed to sign up, try again!',
           life: 3000,
         });
       },
@@ -76,10 +72,10 @@ export class SignupComponent {
   }
 
   onClickSignIn() {
-    this.isLoggedIn = true;
+    this.switchToLogin.emit();
   }
 
   ngOnDestroy(): void {
-    this.signUpSubject.unsubscribe();
+    this.signUpSubject?.unsubscribe();
   }
 }

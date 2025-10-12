@@ -1,0 +1,18 @@
+<div class="auth-wrapper">
+  <div class="close-div">
+    <i class="pi pi-times" (closeEvent)="(onClose)"></i>
+  </div>
+
+  <div *ngIf="isLoggin; else signup">
+    <app-login (switchToSignup)="onSwitchToSignup()"></app-login>
+  </div>
+
+  <ng-template #signup>
+    <app-signup (switchToLogin)="onSwitchToLogin()"></app-signup>
+  </ng-template>
+
+  <div class="signup-para-btn">
+    <p class="signup-para">{{isLoggedIn ? Don't have an account yet : Already have an account?}}</p>
+    <span class="btn-signin" (click)="onClickSignIn()">{{isLoggedIn ? Sign up : signin}}</span>
+  </div>
+</div>

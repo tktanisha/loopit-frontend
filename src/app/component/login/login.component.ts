@@ -5,20 +5,18 @@ import { Router } from '@angular/router';
 
 import { DialogModule } from 'primeng/dialog';
 import { Toast } from 'primeng/toast';
-
-import { LoginRequest } from '../../models/login';
-
-import { AuthService } from '../../service/auth.service';
-import { SignupComponent } from '../signup/signup.component';
 import { LoaderComponent } from '../loader/loader';
 import { MessageService } from 'primeng/api';
+
+import { LoginRequest } from '../../models/login';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule, LoaderComponent, DialogModule, SignupComponent, Toast],
+  imports: [FormsModule, CommonModule, LoaderComponent, DialogModule, Toast],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
   private router = inject(Router);
@@ -27,33 +25,22 @@ export class LoginComponent {
 
   @Output() switchToSignup = new EventEmitter<void>();
   @Output() closeEvent = new EventEmitter<void>();
-  @Input() isLoggedIn!: boolean;
+  @Input() isLoggedIn?: boolean;
 
-  isLoading: boolean = false;
-  showPassword: boolean = false;
+  isLoading = false;
+  showPassword = false;
 
-  user: LoginRequest = {
-    email: '',
-    password: '',
-  };
+  user: LoginRequest = { email: '', password: '' };
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
 
   onFormSubmitted(form: NgForm) {
-    console.log(form);
-
     if (form.valid) {
       this.callLoginService();
-      this.closeEvent.emit();
     }
     form.reset();
-  }
-
-  onCloseAuthForm() {
-    this.closeEvent.emit();
-    this.router.navigate(['/']);
   }
 
   callLoginService() {
@@ -62,20 +49,23 @@ export class LoginComponent {
       next: data => {
         this.AuthService.handleAuthSuccess(data);
         this.isLoading = false;
-       
+        this.closeEvent.emit(); // After success, ask parent to close
         this.router.navigate(['/dashboard']);
       },
       error: err => {
-        console.log(err);
         this.isLoading = false;
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'Logged in failed ',
+          detail: 'Login failed',
           life: 3000,
         });
       },
     });
+  }
+
+  onClose() {
+    this.closeEvent.emit();
   }
 
   onSwitchToSignup() {

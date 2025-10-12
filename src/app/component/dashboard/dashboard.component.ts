@@ -9,6 +9,7 @@ import { Toast } from 'primeng/toast';
 import { AuthService } from '../../service/auth.service';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { HeaderComponent } from '../header/header.component';
+import { AuthComponent } from '../auth/auth.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,17 +25,17 @@ export class DashboardComponent implements OnInit {
   isSidebarOpen: boolean = true;
 
   ngOnInit(): void {
-    const user = this.authService.user.getValue();
-    if (user) {
-      if (user.role === 'admin') {
-        this.router.navigate(['/dashboard/home']);
-      } else if (user.role === 'lender' || user.role === 'user') {
-        this.router.navigate(['/dashboard/all-products']);
-      }
-    } else {
-      // user is not logged in
-      this.router.navigate(['/']);
-    }
+    // const user = this.authService.user.getValue();
+    // if (user) {
+    //   if (user.role === 'admin') {
+    //     this.router.navigate(['/dashboard/home']);
+    //   } else if (user.role === 'lender' || user.role === 'user') {
+    //     this.router.navigate(['/dashboard/all-products']);
+    //   }
+    // } else {
+    //   // user is not logged in
+    //   this.router.navigate(['/']);
+    // }
   }
 
   handleToggleSidebar() {

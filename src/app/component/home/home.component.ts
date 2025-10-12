@@ -11,11 +11,11 @@ import { LoggedInUser } from '../../models/logged-in-user';
 import { AuthService } from '../../service/auth.service';
 import { HeaderComponent } from '../header/header.component';
 import { LoaderComponent } from '../loader/loader';
-import { SignupComponent } from '../signup/signup.component';
+import { AuthComponent } from '../auth/auth.component';
 
 @Component({
   selector: 'app-home',
-  imports: [SignupComponent, CommonModule, HeaderComponent, LoaderComponent, Toast],
+  imports: [AuthComponent, CommonModule, HeaderComponent, LoaderComponent, Toast],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

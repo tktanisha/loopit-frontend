@@ -3,9 +3,7 @@
 <div class="div-login">
   <div>
     <div class="login title">Sign In</div>
-    <div class="close-div">
-      <i class="pi pi-times" (click)="onCloseAuthForm()"></i>
-    </div>
+
     <form class="login-form" #authForm="ngForm" (ngSubmit)="onFormSubmitted(authForm)">
       <div class="login-email">
         <Label>Email <span>*</span></Label>
@@ -19,7 +17,7 @@
           #femail="ngModel"
         />
         <small class="control-error">
-        @if (femail.touched && femail.invalid) {
+          @if (femail.touched && femail.invalid) {
             * Email is a Required Field
           }
         </small>
@@ -43,7 +41,7 @@
           ></i>
         </div>
         <small class="control-error">
-        @if (fpassword.touched && fpassword.invalid) {
+          @if (fpassword.touched && fpassword.invalid) {
             * Password is required
           }
         </small>
@@ -54,10 +52,6 @@
           Sign In
         </button>
       </div>
-      <div class="login-para-btn">
-        <p class="login-para">Don't have an account yet?</p>
-        <span class="btn-signup" (click)="onSwitchToSignup()">Sign up</span>
-      </div>
     </form>
   </div>
 </div>
@@ -67,8 +61,10 @@
   </div>
 }
 
+<!--
 @if (!isLoggedIn) {
   <div class="signup-overlay">
-    <app-signup></app-signup>
+     <app-signup></app-signup> 
   </div>
 }
+-->
