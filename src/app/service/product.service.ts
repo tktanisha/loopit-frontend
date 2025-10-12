@@ -14,8 +14,8 @@ export class ProductService{
  private ApiUrl:string="http://localhost:8080"
 
 
-  FetchAllProduct(){
-    return this.http.get<ProductResponse[]>(`${this.ApiUrl}/products`)
+  FetchAllProduct(params?: any) {
+    return this.http.get<ProductResponse[]>(`${this.ApiUrl}/products`, { params });
   }
 
   CreateProduct(product:Product){
@@ -25,4 +25,13 @@ export class ProductService{
   GetProductById(id:number){
     return this.http.get<ProductResponse>(`${this.ApiUrl}/product/${id}`)
   }
+
+  UpdateProduct(id:number,product:Product){
+    return this.http.put(`${this.ApiUrl}/products/${id}/update`,product)
+  }
+  
+  DeleteProduct(id:number){
+    return this.http.delete(`${this.ApiUrl}/products/${id}/delete`)
+  }
+  
 }

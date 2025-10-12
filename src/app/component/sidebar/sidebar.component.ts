@@ -61,8 +61,9 @@ export class SidebarComponent implements OnInit {
 
   menuItemsAdmin = [
     { label: 'Home', icon: 'pi pi-home', route: 'home' },
-    { label: 'Categories', icon: 'pi pi-list-check', route: 'category' },
-    { label: 'Societies', icon: 'pi pi-globe', route: 'society' },
+    { label: 'Categories', icon: 'pi pi-list-check', route: 'categories' },
+    { label: 'Societies', icon: 'pi pi-globe', route: 'societies' },
+    { label: 'Users', icon: 'pi pi-user', route: 'users' },
   ];
 
   menuItemsUser = [

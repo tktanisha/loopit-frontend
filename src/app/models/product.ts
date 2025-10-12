@@ -16,4 +16,5 @@ export interface Product {
   duration: number | null;
   is_available: boolean;
   created_at: string | null;
+  image_url?: string | null;
 }

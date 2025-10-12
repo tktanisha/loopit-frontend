@@ -6,7 +6,7 @@ export interface User {
   created_at: string | null;
   password_hash: string | null;
   address: string;
-  // society_id: number | null;
+  society_id: number | null;
   role: Role;
 }
 

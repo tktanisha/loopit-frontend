@@ -8,15 +8,14 @@
     ></app-product-modal>
   </div>
 }
-  @if (isLoading) {
-    <div class="loading-overlay">
-      <app-loader [isLoading]="isLoading"></app-loader>
-    </div>
-  }
-  
+
+@if (isLoading) {
+  <div class="loading-overlay">
+    <app-loader [isLoading]="isLoading"></app-loader>
+  </div>
+}
 
 <div class="browse-items">
- 
   <div class="category-header">
     <div class="header-left">
       <h1 class="title">Browse Products</h1>
@@ -24,40 +23,67 @@
     </div>
   </div>
 
+  <!-- Filters -->
+  <div class="filters">
+    <input
+      pInputText
+      type="text"
+      placeholder="Search by name..."
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearchChange($event)"
+    />
+
+    <p-dropdown
+      [options]="allCategory"
+      optionLabel="name"
+      optionValue="id"
+      placeholder="Select Category"
+      [(ngModel)]="selectedCategoryId"
+      (onChange)="applyFilters()"
+    ></p-dropdown>
+
+    <button
+      pButton
+      type="button"
+      icon="pi pi-filter-slash"
+      label="Clear"
+      class="clear-btn"
+      (click)="clearFilters()"
+    ></button>
+  </div>
+
   <div class="products-grid">
-
-  @for (prod of allProduct; track prod.product.id) {
-    <div class="product-card" (click)="handleOpenModal(prod)">
-      <div class="product-image-container">
-        <img
-          src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-madebymath-90946.jpg&fm=jpg"
-          alt="[product name]"
-          class="product-image"
-          loading="lazy"
+    @for (prod of allProduct; track prod.product.id) {
+      <div class="product-card" (click)="handleOpenModal(prod)">
+        <div class="product-image-container">
+          <img
+            src="{{ prod.product.image_url }}"
+            alt="{{ prod.product.name }}"
+            class="product-image"
+            loading="lazy"
           />
-          <span class="category-badge secondary">{{ prod.category.name }}</span>
-
-        <!-- <div class="not-available-overlay" *ngIf="!prod.product.is_available">
-          <span class="availability-badge destructive">Not Available</span>
-        </div> -->
-      </div>
-
-      <div class="product-info">
-        <div class="product-header">
-          <h3 class="product-name">{{ prod.product.name }}</h3>
+          <span class="category-badge secondary">
+            {{ prod.category.name }}
+          </span>
         </div>
 
-        <p class="product-description">
-          {{ prod.product.description }}
-        </p>
+        <div class="product-info">
+          <div class="product-header">
+            <h3 class="product-name">{{ prod.product.name }}</h3>
+          </div>
 
-        <div class="product-details-row">
-          <p class="product-price">₹{{ prod.category.price }}<span>/day</span></p>
-          <!-- <span class="product-availability available">Available</span> -->
-          <button type="button" label="View" class="view-btn">View</button>
+          <p class="product-description">
+            {{ prod.product.description }}
+          </p>
+
+          <div class="product-details-row">
+            <p class="product-price">
+              ₹{{ prod.category.price }}<span>/day</span>
+            </p>
+            <button type="button" label="View" class="view-btn">View</button>
+          </div>
         </div>
       </div>
-    </div>
-  }
+    }
   </div>
 </div>

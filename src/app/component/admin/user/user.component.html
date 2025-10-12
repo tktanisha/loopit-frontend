@@ -1,1 +1,59 @@
-<p>user works!</p>
+<p-toast />
+<p-confirmDialog></p-confirmDialog>
+
+<div class="category-page">
+  <div class="category-header">
+    <div class="header-left">
+      <h2 class="title">Users</h2>
+      <p class="subtitle">View or manage users from here.</p>
+    </div>
+  </div>
+
+  <div class="table-section">
+    <p-table [value]="users" stripedRows [responsiveLayout]="'scroll'" dataKey="id">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Full Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Society</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-user>
+        <tr>
+          <td>{{ user.full_name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.phone_number }}</td>
+          <td>{{ user.society_id }}</td>
+          <td>{{ user.role }}</td>
+          <td class="actions">
+            <button
+              pButton
+              icon="pi pi-eye"
+              class="p-button-text p-button-sm"
+              (click)="viewUser(user)"
+            >
+              View
+            </button>
+
+            <button
+              pButton
+              icon="pi pi-trash"
+              class="p-button-text p-button-danger p-button-sm"
+              (click)="confirmDeleteUser(user)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <div class="loading-overlay" *ngIf="isLoading">
+    <app-loader [isLoading]="isLoading"></app-loader>
+  </div>
+</div>

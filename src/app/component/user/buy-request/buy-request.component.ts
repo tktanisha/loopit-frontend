@@ -40,12 +40,12 @@ export class GetAllBuyRequestComponent {
     this.isLoading = true;
     this.requestSubject = this.BuyRequestService.GetAllRequest().subscribe({
       next: (res: any) => {
-        // this.allBuyRequests = res.requests;
-        // if (this.loggedInUser) {
-        //   this.BuyRequestOfUser = this.allBuyRequests?.filter((request: any) => {
-        //     return request.buy_request.requested_by === this.loggedInUser?.user_id;
-        //   });
-        // }
+        this.allBuyRequests = res.requests;
+        if (this.loggedInUser) {
+          this.BuyRequestOfUser = this.allBuyRequests?.filter((request: any) => {
+            return request.buy_request.requested_by === this.loggedInUser?.user_id;
+          });
+        }
         this.isLoading = false;
       },
       error: err => {

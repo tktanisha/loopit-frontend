@@ -240,3 +240,22 @@
     }
   }
 }
+
+.filters {
+  @include flex(row, center, flex-start, 12px);
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+
+  input,
+  .p-dropdown {
+    min-width: 200px;
+  }
+
+  .clear-btn {
+    @include buttonStyle(var(--danger-bg-color), #fff, 8px 18px, 8px);
+
+    &:hover {
+      background: var(--danger-bg-color-darker);
+    }
+  }
+}

@@ -16,6 +16,7 @@ import { SocietyComponent } from './component/admin/society/society.component';
 import { AuthGuard } from './service/auth.guard';
 import { UserManagementGuard } from './service/access-denied.guard';
 import { AccessDeniedComponent } from './component/access-denied/access-denied.component';
+import { UserComponent } from './component/admin/user/user.component';
 
 export const routes: Routes = [
   {
@@ -30,13 +31,18 @@ export const routes: Routes = [
     children: [
       { path: 'home', component: DashboardHomeComponent, canActivate: [UserManagementGuard] },
       {
-        path: 'category',
+        path: 'categories',
         component: CategoryComponent,
         canActivate: [UserManagementGuard],
       },
       {
-        path: 'society',
+        path: 'societies',
         component: SocietyComponent,
+        canActivate: [UserManagementGuard],
+      },
+      {
+        path: 'users',
+        component: UserComponent,
         canActivate: [UserManagementGuard],
       },
       { path: 'all-products', component: GetAllProductComponent },

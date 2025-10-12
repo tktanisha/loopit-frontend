@@ -1,4 +1,4 @@
-import { ProductResponse } from "./product";
+import { ProductResponse } from './product';
 
 export interface Order {
   id: number;
@@ -13,18 +13,15 @@ export interface Order {
 }
 
 export interface OrderResponse {
-    order: Order;
-    product:ProductResponse
+  order: Order;
+  product: ProductResponse;
 }
-
 
 export enum OrderStatus {
-    InUse='In Use',
-	ReturnRequested='Return Requested',
-	Returned = 'Returned'
-
+  InUse = 'In Use',
+  ReturnRequested = 'Return Requested',
+  Returned = 'Returned',
 }
-
 
 export function mapOrderStatus(statusCode: number): OrderStatus | undefined {
   const statusMap: { [key: number]: OrderStatus } = {
