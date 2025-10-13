@@ -1,54 +1,73 @@
 <p-toast />
 
 <div class="card-container">
-
   <div class="category-header">
-  <div class="header-left">
-    <h1 class="title">All Buy Requests</h1>
-    <p class="subtitle">Approve or Reject all requests from here.</p>
+    <div class="header-left">
+      <h1 class="title">All Buy Requests</h1>
+      <p class="subtitle">Approve or Reject all requests from here.</p>
+    </div>
+    <p class="count-badge">{{ BuyRequestOfUser.length }} Requests</p>
   </div>
-  <p class="count-badge">
-    {{ BuyRequestOfUser.length }} Requests
-  </p>
-</div>
 
-@if (BuyRequestOfUser.length == 0) {
-  <div class="no-buy-request">
-    <img src="https://media.geeksforgeeks.org/auth-dashboard-uploads/not_found_mentor.svg" alt="No Buy Request">
-    <p>No requests.</p>
-  </div>
-}
-@else {
-  <div class="table-section">
-    <p-table [value]="BuyRequestOfUser" stripedRows [responsiveLayout]="'scroll'" dataKey="id">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>Name</th>
-          <th>Request Status</th>
-          <th>Requested On</th>
-          <th>Approve/Reject</th>
-        </tr>
-      </ng-template>
+  @if (BuyRequestOfUser.length == 0) {
+    <div class="no-buy-request">
+      <img
+        src="https://media.geeksforgeeks.org/auth-dashboard-uploads/not_found_mentor.svg"
+        alt="No Buy Request"
+      />
+      <p>No requests.</p>
+    </div>
+  } @else {
+    <div class="table-section">
+      <p-table [value]="BuyRequestOfUser" stripedRows [responsiveLayout]="'scroll'" dataKey="id">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Name</th>
+            <th>Request Status</th>
+            <th>Requested On</th>
+            <th>Approve/Reject</th>
+          </tr>
+        </ng-template>
 
-      <ng-template pTemplate="body" let-req>
-        <tr>
-          <td>{{ req.product.product.name }}</td>
-          <td class="label"
+        <ng-template pTemplate="body" let-req>
+          <tr>
+            <td>{{ req.product.product.name }}</td>
+            <td
+              class="label"
               [ngClass]="{
-                'pending': req.buy_request.status == 0,
-                'accepted': req.buy_request.status == 1,
-                'rejected': req.buy_request.status == 2
+                pending: req.buy_request.status == 0,
+                accepted: req.buy_request.status == 1,
+                rejected: req.buy_request.status == 2,
               }"
-          ><span>{{ req.buy_request.status | buyStatus }}</span></td>
-          <td>{{ req.buy_request.created_at.split('T')[0] }}</td>
-          <td>
-            <button pButton icon="pi pi-check" class="p-button-text p-button-sm p-button-success" (click)="handleAccept(req.buy_request.id)">Approve</button>
-            <button pButton icon="pi pi-times" class="p-button-text p-button-sm p-button-danger" (click)="handleReject(req.buy_request.id)">Reject</button>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
-}
+            >
+              <span>{{ req.buy_request.status | buyStatus }}</span>
+            </td>
+            <td>{{ req.buy_request.created_at.split('T')[0] }}</td>
+            <td>
+              <button
+                pButton
+                icon="pi pi-check"
+                class="p-button-text p-button-sm p-button-success"
+                (click)="handleAccept(req.buy_request.id)"
+                [disabled]="req.buy_request.status != 1"
+              >
+                Approve
+              </button>
+              <button
+                pButton
+                icon="pi pi-times"
+                class="p-button-text p-button-sm p-button-danger"
+                (click)="handleReject(req.buy_request.id)"
+                [disabled]="req.buy_request.status != 1"
+              >
+                Reject
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  }
 </div>
 
 @if (isLoading) {

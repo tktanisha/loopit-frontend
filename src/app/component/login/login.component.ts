@@ -52,8 +52,7 @@ export class LoginComponent {
 
         const role = data.user.Role;
         if (role === 'admin') this.router.navigate(['/dashboard']);
-        else if (role === 'lender') this.router.navigate(['/lender']);
-        else this.router.navigate(['/user']);
+        else this.router.navigate(['/all-products']);
       },
 
       error: err => {

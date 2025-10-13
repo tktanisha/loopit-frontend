@@ -111,24 +111,26 @@ import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { TableModule } from 'primeng/table';
 import { Toast } from 'primeng/toast';
 import { LoaderComponent } from '../../loader/loader';
 import { SocietyService } from '../../../service/society.service';
 import { SocietyPayload } from '../../../models/society';
+import { ConfirmDialog } from "primeng/confirmdialog";
 
 @Component({
   selector: 'app-society',
   standalone: true,
-  imports: [CommonModule, FormsModule, LoaderComponent, Toast, TableModule, ButtonModule],
+  imports: [CommonModule, FormsModule, LoaderComponent, Toast, TableModule, ButtonModule, ConfirmDialog],
   templateUrl: './society.component.html',
   styleUrls: ['./society.component.scss'],
-  providers: [MessageService],
+  providers: [MessageService, ConfirmationService],
 })
 export class SocietyComponent implements OnInit, OnDestroy {
   private societyService = inject(SocietyService);
+  private confirmationService = inject(ConfirmationService);
   messageService = inject(MessageService);
 
   societySubject!: Subscription;
@@ -249,8 +251,17 @@ export class SocietyComponent implements OnInit, OnDestroy {
   }
 
   deleteSociety(id: number): void {
-    if (!confirm('Are you sure you want to delete this society?')) return;
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this society?',
+      header: 'Confirm Deletion',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.confirmDelete(id);
+      },
+    });
+  }
 
+  private confirmDelete(id: number): void {
     this.isLoading = true;
     this.societySubject = this.societyService.deleteSociety(id).subscribe({
       next: () => {

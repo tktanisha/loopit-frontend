@@ -36,7 +36,7 @@ export const routes: Routes = [
   },
 
   {
-    path: 'lender',
+    path: '',
     component: DashboardComponent,
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
@@ -45,24 +45,20 @@ export const routes: Routes = [
       { path: 'create-products', component: CreateProductComponent },
       { path: 'all-lend-requests', component: PendingBuyRequestComponent },
       { path: 'orders/lender/history', component: LenderHistoryComponent },
-      { path: 'orders/approved-awaiting', component: ApprovedAwaitingOrdersComponent },
-      { path: 'all-products', component: GetAllProductComponent },
-      { path: 'lend-requests', component: GetAllBuyRequestComponent },
-      { path: 'orders/history', component: OrdersComponent },
     ],
   },
 
   {
-    path: 'user',
+    path: '',
     component: DashboardComponent,
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
       { path: '', redirectTo: 'all-products', pathMatch: 'full' },
       { path: 'all-products', component: GetAllProductComponent },
-      { path: '-requests', component: GetAllBuyRequestComponent },
-      { path: 'all-rentals', component: OrdersComponent },
-      { path: 'return-requests', component: ReturnRequestComponent },
+      { path: 'lend-requests', component: GetAllBuyRequestComponent },
+      { path: 'all-orders', component: OrdersComponent },
+      { path: 'my-return-requests', component: ReturnRequestComponent },
       { path: 'become-lender', component: HomeComponent },
     ],
   },

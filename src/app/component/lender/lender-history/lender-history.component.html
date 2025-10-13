@@ -37,7 +37,7 @@
             <th>Tenant</th>
             <th>Start Date</th>
             <th>End Date</th>
-            <th>Total Amount</th>
+            <th>Total Amount (per day)</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -51,8 +51,14 @@
             </td>
             <td>{{ order.product.user.full_name }}</td>
             <td>{{ order.order.start_date.split('T')[0] }}</td>
-            <td>{{ order.order.end_date.split('T')[0] }}</td>
-            <td>₹{{ order.order.total_amount }}/day</td>
+            <td>
+              {{
+                order.order.end_date.split('T')[0] === '0001-01-01'
+                  ? 'N/A'
+                  : order.order.end_date.split('T')[0]
+              }}
+            </td>
+            <td>₹{{ order.order.total_amount }}</td>
             <td
               class="label"
               [ngClass]="{
@@ -65,7 +71,7 @@
                 {{ order.order.status | orderStatus }}
               </span>
             </td>
-            <td>
+            <td class="action-buttons">
               <button
                 pButton
                 class="lending-btn p-button-sm"
@@ -75,7 +81,6 @@
                 Request Return
               </button>
               <button
-                style="margin-top: 5px"
                 pButton
                 class="lending-btn p-button-sm"
                 (click)="markOrderAsReturn(order.order.id)"

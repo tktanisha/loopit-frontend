@@ -1,6 +1,7 @@
 @use 'mixin.scss' as *;
 .dashboard-cards {
-  @include flex($justify: space-between, $gap: 20px);
+  @include flex($align:center);
+  column-gap: 20px;
   flex-wrap: wrap;
   padding: 20px;
   min-height: calc(100vh - var(--header-height));
@@ -14,7 +15,13 @@
   background-color: var(--card-bg);
   border-radius: 8px;
   border: 1px solid var(--border-color);
-  max-height: 200px;
+  height: 200px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
 
   .card-content {
     @include flex($justify: space-between, $align: center, $gap: 15px);

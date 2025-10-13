@@ -70,14 +70,12 @@ export class SidebarComponent implements OnInit {
       label: 'My Lend Requests',
       icon: 'pi pi-shopping-cart',
       route: 'lend-requests',
-      // badge: 3
     },
-    { label: 'My Orders', icon: 'pi pi-box', route: 'all-rentals' },
+    { label: 'My Orders', icon: 'pi pi-box', route: 'all-orders' },
     {
       label: 'All Return Requests',
       icon: 'pi pi-check-circle',
-      route: 'return-requests',
-      
+      route: 'my-return-requests',
     },
   ];
 
@@ -91,7 +89,6 @@ export class SidebarComponent implements OnInit {
       label: 'Lend Requests',
       icon: 'pi pi-cart-arrow-down',
       route: 'all-lend-requests',
-      // badge: 3,
     },
     {
       label: 'Orders Received',
@@ -116,7 +113,8 @@ export class SidebarComponent implements OnInit {
           detail: 'You are now a lender, now login again!',
           life: 4000,
         });
-        this.AuthService.logout();
+        this.AuthService.handleLogout();
+        this.router.navigate(['/']);
       },
       error: err => {
         console.log(err);

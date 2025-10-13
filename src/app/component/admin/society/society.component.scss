@@ -23,6 +23,7 @@
     background: var(--card-bg);
     border-radius: 12px;
     margin: 10px;
+    min-height: calc(100vh - var(--header-height) - 30px);
 }
 
 .society-header {
@@ -56,6 +57,7 @@
 }
 
 .table-section {
+    border: 1px solid var(--border-color);
     .table-loading {
         height: 250px;
         border-radius: 6px;

@@ -1,4 +1,5 @@
 <p-toast />
+<p-confirmDialog></p-confirmDialog>
 <div class="society-page">
   <div class="society-header">
     <div class="header-left">
@@ -148,7 +149,7 @@
 </div>
 
 @if (isLoading) {
-  <div class="loader-overlay">
+  <div class="loading-overlay">
     <app-loader [isLoading]="isLoading"></app-loader>
   </div>
 }

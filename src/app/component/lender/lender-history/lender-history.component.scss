@@ -48,6 +48,10 @@
     text-align: center;
   }
 
+  .action-buttons {
+    @include flex($gap:8px);
+  }
+
   button {
     @include typography(var(--font-secondary), 12px, 500, 100%);
     white-space: nowrap;
