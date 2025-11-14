@@ -83,11 +83,9 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     this.currentLenderId = this.authService.getUser()?.user_id;
     this.fetchAllCategories();
     this.fetchAllProducts();
-    this.searchSubject
-      .pipe(debounceTime(500), distinctUntilChanged())
-      .subscribe(() => {
-        this.fetchAllProducts();
-      });
+    this.searchSubject.pipe(debounceTime(500), distinctUntilChanged()).subscribe(() => {
+      this.fetchAllProducts();
+    });
   }
 
   fetchAllProducts() {
@@ -98,8 +96,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
 
     if (this.searchTerm) params.search = this.searchTerm;
     if (this.selectedCategoryId) params.category_id = this.selectedCategoryId;
-    if (this.selectedAvailability)
-      params.is_available = this.selectedAvailability;
+    if (this.selectedAvailability) params.is_available = this.selectedAvailability;
 
     this.productSubject = this.productService.FetchAllProduct(params).subscribe({
       next: (res: any) => {
@@ -163,8 +160,6 @@ export class CreateProductComponent implements OnInit, OnDestroy {
 
   onSubmitProduct(form: NgForm) {
     if (form.valid) {
-      // this.product.lender_id = this.currentLenderId;
-
       if (this.isEditMode && this.selectedProductId !== null) {
         this.updateProduct(this.selectedProductId, this.product);
       } else {
@@ -268,7 +263,8 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     this.first = event.first;
     this.rows = event.rows;
   }
-    onSearchChange(value: string) {
+
+  onSearchChange(value: string) {
     this.searchTerm = value;
     this.searchSubject.next(value);
   }

@@ -21,6 +21,7 @@ import { UserComponent } from './component/admin/user/user.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
 
+  //admin routes
   {
     path: 'dashboard',
     component: DashboardComponent,
@@ -41,7 +42,6 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
-      { path: '', redirectTo: 'create-products', pathMatch: 'full' },
       { path: 'create-products', component: CreateProductComponent },
       { path: 'all-lend-requests', component: PendingBuyRequestComponent },
       { path: 'orders/lender/history', component: LenderHistoryComponent },

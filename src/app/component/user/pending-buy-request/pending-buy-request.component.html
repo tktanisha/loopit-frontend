@@ -49,7 +49,7 @@
                 icon="pi pi-check"
                 class="p-button-text p-button-sm p-button-success"
                 (click)="handleAccept(req.buy_request.id)"
-                [disabled]="req.buy_request.status != 1"
+                [disabled]="req.buy_request.status != 0"
               >
                 Approve
               </button>
@@ -58,7 +58,7 @@
                 icon="pi pi-times"
                 class="p-button-text p-button-sm p-button-danger"
                 (click)="handleReject(req.buy_request.id)"
-                [disabled]="req.buy_request.status != 1"
+                [disabled]="req.buy_request.status != 0"
               >
                 Reject
               </button>

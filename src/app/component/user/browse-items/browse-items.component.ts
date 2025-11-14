@@ -61,7 +61,6 @@ export class GetAllProductComponent implements OnInit, OnDestroy {
     this.fetchAllCategories();
     this.fetchAllProducts();
 
-    // search debounce
     this.searchSubject
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe(() => this.fetchAllProducts());

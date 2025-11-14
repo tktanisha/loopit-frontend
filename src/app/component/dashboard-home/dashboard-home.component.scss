@@ -1,6 +1,6 @@
 @use 'mixin.scss' as *;
 .dashboard-cards {
-  @include flex($align:center);
+  @include flex($align: center);
   column-gap: 20px;
   flex-wrap: wrap;
   padding: 20px;
@@ -9,6 +9,7 @@
 
 .card {
   min-width: 320px;
+  min-height: 300px;
   flex: 1 1 500px;
   width: 100%;
   padding: 20px;
@@ -26,21 +27,20 @@
   .card-content {
     @include flex($justify: space-between, $align: center, $gap: 15px);
   }
-  
+
   .left {
     @include flex($direction: column, $gap: 20px);
     .card-heading {
       @include typography(var(--font-primary), 14px, 400, 100%);
       color: var(--text-secondary);
     }
-    
+
     .card-count {
       @include typography(var(--font-primary), 44px, 700, 100%);
       color: var(--accent-color);
     }
   }
 }
-
 
 .right {
   i {
