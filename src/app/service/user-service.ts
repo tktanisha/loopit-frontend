@@ -7,7 +7,7 @@ import { User } from '../models/user';
   providedIn: 'root',
 })
 export class UserService {
-  private ApiUrl = 'http://localhost:8080';
+  private ApiUrl = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v1';
   http: HttpClient = inject(HttpClient);
   router: Router = inject(Router);
 

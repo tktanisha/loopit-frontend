@@ -11,7 +11,7 @@ export class CategoryService {
     private router: Router,
     private http: HttpClient,
   ) {}
-  private ApiUrl = 'http://localhost:8080';
+  private ApiUrl = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v1';
 
   createCategory(data: CategoryRequest) {
     return this.http.post<CategoryRequest>(`${this.ApiUrl}/categories`, data);

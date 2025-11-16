@@ -7,7 +7,7 @@ import { Feedback, FeedbackRequest } from '../models/feedback';
 })
 export class FeedbackService {
   http = inject(HttpClient);
-  private ApiUrl: string = 'http://localhost:8080';
+  private ApiUrl: string = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v1';
 
   GiveFeedback(request: FeedbackRequest) {
     return this.http.post<any>(`${this.ApiUrl}/feedbacks`, request);
