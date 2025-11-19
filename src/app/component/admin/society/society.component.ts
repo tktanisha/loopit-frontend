@@ -120,7 +120,7 @@ export class SocietyComponent implements OnInit, OnDestroy {
     });
   }
 
-  updateSociety(id: number, society: SocietyPayload): void {
+  updateSociety(id: string, society: SocietyPayload): void {
     this.isLoading = true;
     this.societySubject = this.societyService.updateSociety(id, society).subscribe({
       next: () => {
@@ -147,7 +147,7 @@ export class SocietyComponent implements OnInit, OnDestroy {
     });
   }
 
-  deleteSociety(id: number): void {
+  deleteSociety(id: string): void {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this society?',
       header: 'Confirm Deletion',
@@ -158,7 +158,7 @@ export class SocietyComponent implements OnInit, OnDestroy {
     });
   }
 
-  private confirmDelete(id: number): void {
+  private confirmDelete(id: string): void {
     this.isLoading = true;
     this.societySubject = this.societyService.deleteSociety(id).subscribe({
       next: () => {

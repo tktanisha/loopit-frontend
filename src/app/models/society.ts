@@ -5,7 +5,7 @@ export interface SocietyPayload {
 }
 
 export interface GetSocietyResponse {
-  id: number;
+  id: string;
   name: string;
   price: number;
   security: number;

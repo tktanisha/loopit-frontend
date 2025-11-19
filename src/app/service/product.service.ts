@@ -22,17 +22,17 @@ export class ProductService {
     return this.http.post(`${this.ApiUrl}/products/create`, product);
   }
 
-  GetProductById(id: number) {
+  GetProductById(id: string) {
     return this.http
       .get<{ data: ProductResponse }>(`${this.ApiUrl}/product/${id}`)
       .pipe(map(res => res.data));
   }
 
-  UpdateProduct(id: number, product: Product) {
+  UpdateProduct(id: string, product: Product) {
     return this.http.put(`${this.ApiUrl}/products/${id}/update`, product);
   }
 
-  DeleteProduct(id: number) {
+  DeleteProduct(id: string) {
     return this.http.delete(`${this.ApiUrl}/products/${id}/delete`);
   }
 }

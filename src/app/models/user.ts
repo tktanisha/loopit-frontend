@@ -1,12 +1,12 @@
 export interface User {
-  id: number;
+  id: string;
   full_name: string;
   email: string;
   phone_number: string;
   created_at: string | null;
   password_hash: string | null;
   address: string;
-  society_id: number | null;
+  society_id: string | null;
   role: Role;
 }
 

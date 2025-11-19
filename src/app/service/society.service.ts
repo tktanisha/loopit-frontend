@@ -21,11 +21,11 @@ export class SocietyService {
       .get<{ data: SocietyPayload[] }>(`${this.ApiUrl}/societies/`)
       .pipe(map(res => res.data));
   }
-  updateSociety(id: number, data: SocietyPayload) {
+  updateSociety(id: string, data: SocietyPayload) {
     return this.http.put(`${this.ApiUrl}/societies/${id}`, data);
   }
 
-  deleteSociety(id: number) {
+  deleteSociety(id: string) {
     return this.http.delete(`${this.ApiUrl}/societies/${id}`);
   }
 }

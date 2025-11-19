@@ -58,7 +58,7 @@ export class ApprovedAwaitingOrdersComponent {
       },
     });
   }
-  markOrderAsReturn(order_id: number) {
+  markOrderAsReturn(order_id: string) {
     this.isLoading = true;
     this.markOrderReturnedSubject = this.orderService.MarkOrderAsReturned(order_id).subscribe({
       next: (data: any) => {

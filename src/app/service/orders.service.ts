@@ -14,7 +14,7 @@ export class OrderService {
     return this.http.get<{ data: OrderResponse[] }>(`${this.ApiUrl}/orders/history`);
   }
 
-  MarkOrderAsReturned(orderId: number) {
+  MarkOrderAsReturned(orderId: string) {
     return this.http.patch<any>(`${this.ApiUrl}/orders/${orderId}/return`, {});
   }
 

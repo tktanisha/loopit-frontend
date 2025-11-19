@@ -74,9 +74,9 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     created_at: null,
   };
 
-  selectedProductId: number | null = null;
+  selectedProductId: string | null = null;
 
-  currentLenderId!: number | undefined;
+  currentLenderId!: string | undefined;
   private searchSubject = new Subject<string>();
 
   ngOnInit(): void {
@@ -196,7 +196,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     });
   }
 
-  updateProduct(id: number, product: Product) {
+  updateProduct(id: string, product: Product) {
     this.isLoading = true;
     this.productSubject = this.productService.UpdateProduct(id, product).subscribe({
       next: () => {
@@ -232,7 +232,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     });
   }
 
-  deleteProduct(id: number | null) {
+  deleteProduct(id: string | null) {
     if (id === null) return;
     this.isLoading = true;
     this.productSubject = this.productService.DeleteProduct(id).subscribe({

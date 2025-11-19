@@ -1,9 +1,9 @@
 import { ProductResponse } from './product';
 
 export interface Order {
-  id: number;
-  product_id: number;
-  user_id: number;
+  id: string;
+  product_id: string;
+  user_id: string;
   start_date: string;
   end_date: string;
   total_amount: number;

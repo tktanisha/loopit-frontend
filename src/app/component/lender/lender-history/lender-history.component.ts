@@ -48,7 +48,7 @@ export class LenderHistoryComponent implements OnInit {
     this.GetOrders();
   }
 
-  markOrderAsReturn(order_id: number) {
+  markOrderAsReturn(order_id: string) {
     console.log('ordre id =', order_id);
     this.isLoading = true;
     this.markOrderReturnedSubject = this.orderService.MarkOrderAsReturned(order_id).subscribe({

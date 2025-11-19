@@ -5,7 +5,7 @@ export interface CategoryRequest {
 }
 
 export interface GetCategoryResponse {
-  id: number;
+  id: string;
   name: string;
   price: number;
   security: number;

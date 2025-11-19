@@ -27,13 +27,13 @@ export class UserService {
       .pipe(map(res => res.data.users));
   }
 
-  getUserById(id: number) {
+  getUserById(id: string) {
     return this.http
       .get<{ data: { user: User } }>(`${this.ApiUrl}/users/${id}`)
       .pipe(map(res => res.data.user));
   }
 
-  deleteUser(id: number) {
+  deleteUser(id: string) {
     return this.http.delete(`${this.ApiUrl}/users/${id}`);
   }
 }

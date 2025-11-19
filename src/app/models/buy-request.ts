@@ -1,7 +1,7 @@
 import {  ProductResponse } from "./product"
 
 export interface BuyRequestPayload{
-    product_id:number
+    product_id:string
 }
 
 export interface BuyRequestResponse{
@@ -10,9 +10,9 @@ export interface BuyRequestResponse{
 }
 
 export interface BuyRequest{
-    id:number
-    product_id:number
-    requested_by:number
+    id:string
+    product_id:string
+    requested_by:string
     status:number
     created_at:string
 }

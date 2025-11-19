@@ -26,11 +26,11 @@ export class CategoryService {
       .pipe(map(res => res.data));
   }
 
-  updateCategory(categoryId: number, payload: CategoryRequest) {
+  updateCategory(categoryId: string, payload: CategoryRequest) {
     return this.http.put(`${this.ApiUrl}/categories/${categoryId}`, payload);
   }
 
-  deleteCategory(categoryId: number) {
+  deleteCategory(categoryId: string) {
     return this.http.delete(`${this.ApiUrl}/categories/${categoryId}`);
   }
 }

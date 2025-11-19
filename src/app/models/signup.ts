@@ -3,6 +3,6 @@ export interface SignUpRequest {
   email: string;
   password: string;
   phone_number: string;
-  society_id: number | null;
+  society_id: string | null;
   address: string;
 }

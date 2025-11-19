@@ -47,7 +47,7 @@ export class CategoryComponent implements OnDestroy {
     security: null,
   };
 
-  selectedCategoryId: number | null = null;
+  selectedCategoryId: string | null = null;
 
   ngOnInit(): void {
     this.fetchAllCategories();
@@ -132,7 +132,7 @@ export class CategoryComponent implements OnDestroy {
     });
   }
 
-  updateCategory(id: number, category: CategoryRequest): void {
+  updateCategory(id: string, category: CategoryRequest): void {
     this.isLoading = true;
 
     this.categorySubject = this.categoryService.updateCategory(id, category).subscribe({
@@ -169,7 +169,7 @@ export class CategoryComponent implements OnDestroy {
     });
   }
 
-  deleteCategory(id: number): void {
+  deleteCategory(id: string): void {
     this.isLoading = true;
     this.categorySubject = this.categoryService.deleteCategory(id).subscribe({
       next: () => {

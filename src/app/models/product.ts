@@ -8,9 +8,9 @@ export interface ProductResponse {
 }
 
 export interface Product {
-  id: number | null;
-  lender_id: number | null;
-  category_id: number | null;
+  id: string | null;
+  lender_id: string | null;
+  category_id: string | null;
   name: string;
   description: string;
   duration: number | null;

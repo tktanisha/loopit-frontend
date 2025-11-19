@@ -34,7 +34,7 @@ handleOnClose(){
 }
 
 
-handleBuyRequest(productId: number | null){
+handleBuyRequest(productId: string | null){
   console.log("clcik on create buy request")
   if (productId === null) {
     this.messageService.add({

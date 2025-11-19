@@ -19,7 +19,7 @@ export class ReturnRequestService {
     return this.http.get<ReturnRequestResponse[]>(`${this.ApiUrl}/return-requests`);
   }
 
-  UpdateReturnRequestStatus(requestId: number, status: string) {
+  UpdateReturnRequestStatus(requestId: string, status: string) {
     //user
     const payload = { status: status };
     return this.http.patch(`${this.ApiUrl}/return-requests/${requestId}/update`, payload);

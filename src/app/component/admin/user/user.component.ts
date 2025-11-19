@@ -428,7 +428,7 @@ export class UserComponent implements OnInit, OnDestroy {
     });
   }
 
-  deleteUser(id: number): void {
+  deleteUser(id: string): void {
     this.isLoading = true;
     this.userSub = this.userService.deleteUser(id).subscribe({
       next: () => {

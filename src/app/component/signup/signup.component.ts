@@ -61,7 +61,7 @@ export class SignupComponent implements OnDestroy {
 
   onSocietyChange(event: Event) {
     const selectedValue = (event.target as HTMLSelectElement).value;
-    this.user.society_id = Number(selectedValue);
+    this.user.society_id = selectedValue;
   }
   handleOnClose() {
     this.closeEvent.emit();

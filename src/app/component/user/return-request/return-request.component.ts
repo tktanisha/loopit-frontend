@@ -67,7 +67,7 @@ export class ReturnRequestComponent {
       });
   }
 
-  handleReject(reqId: number) {
+  handleReject(reqId: string) {
     this.isLoading = true;
     console.log("request id = ", reqId);
     this.updateRequestSubject = this.returnRequestService
@@ -85,7 +85,7 @@ export class ReturnRequestComponent {
       });
   }
 
-  handleAccept(reqId: number) {
+  handleAccept(reqId: string) {
     this.isLoading = true;
     this.allRequestSubject = this.returnRequestService
       .UpdateReturnRequestStatus(reqId, "Approved")

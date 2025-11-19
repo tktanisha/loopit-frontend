@@ -60,7 +60,7 @@ export class OrdersComponent {
   displayFeedbackDialog: boolean = false;
 
   loggedInUser!: LoggedInUser | null;
-  currentOrderId!: number;
+  currentOrderId!: string;
 
   feedbackData = {
     rating: 0,
@@ -72,7 +72,7 @@ export class OrdersComponent {
     this.GetOrders();
   }
 
-  showFeedbackDialog(orderId: number): void {
+  showFeedbackDialog(orderId: string): void {
     this.currentOrderId = orderId;
     this.displayFeedbackDialog = true;
     this.feedbackData = { rating: 0, description: '' };
