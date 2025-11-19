@@ -24,7 +24,7 @@ export class UserService {
     }
     return this.http
       .get<{ data: { users: User[] } }>(`${this.ApiUrl}/users${query}`)
-      .pipe(map(res => res.data.users));
+      .pipe(map(res => res.data));
   }
 
   getUserById(id: string) {

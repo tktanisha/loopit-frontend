@@ -6,7 +6,7 @@ export interface LoginRequest  {
 export interface LoginResponse {
     token:string;
     user:{
-        ID:string;
+        id:string;
         Name:string;
         Role:string;
     }

@@ -39,8 +39,8 @@ export class SignupComponent implements OnDestroy {
     fullname: '',
     email: '',
     password: '',
-    phone_number: '',
-    society_id: null,
+    phoneNumber: '',
+    societyId: null,
     address: '',
   };
 
@@ -61,7 +61,7 @@ export class SignupComponent implements OnDestroy {
 
   onSocietyChange(event: Event) {
     const selectedValue = (event.target as HTMLSelectElement).value;
-    this.user.society_id = selectedValue;
+    this.user.societyId = selectedValue;
   }
   handleOnClose() {
     this.closeEvent.emit();
@@ -81,7 +81,7 @@ export class SignupComponent implements OnDestroy {
         this.AuthService.handleAuthSuccess(data);
         this.isLoading = false;
         this.closeEvent.emit();
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/all-products']);
       },
       error: err => {
         this.isLoading = false;

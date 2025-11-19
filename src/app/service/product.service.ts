@@ -14,8 +14,8 @@ export class ProductService {
 
   FetchAllProduct(params?: any) {
     return this.http
-      .get<{ data: ProductResponse[] }>(`${this.ApiUrl}/products`, { params })
-      .pipe(map(res => res.data));
+      .get<{ data: { products: ProductResponse[] } }>(`${this.ApiUrl}/products`, { params })
+      .pipe(map(res => res.data ));
   }
 
   CreateProduct(product: Product) {

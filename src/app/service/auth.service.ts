@@ -47,13 +47,13 @@ export class AuthService {
     const decodedToken = jwtDecode<DecodedToken>(res.token);
     const expiresIn = decodedToken.exp ? new Date(decodedToken.exp * 1000) : new Date();
 
-    const userObj = new LoggedInUser(res.user.Name, res.user.ID, res.user.Role, expiresIn);
+    const userObj = new LoggedInUser(res.user.Name, res.user.id, res.user.Role, expiresIn);
     this.user.next(userObj);
 
     localStorage.setItem(
       this.userkey,
       JSON.stringify({
-        ID: res.user.ID,
+        ID: res.user.id,
         Name: res.user.Name,
         Role: res.user.Role,
       }),

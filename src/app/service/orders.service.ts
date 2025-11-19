@@ -26,7 +26,7 @@ export class OrderService {
 
   GetLenderOrders() {
     return this.http
-      .get<{ data: OrderResponse[] }>(`${this.ApiUrl}/orders/lender`)
-      .pipe(map(res => res.data));
+      .get<{ orders: OrderResponse[] }>(`${this.ApiUrl}/orders/lender`)
+      .pipe(map(res => res));
   }
 }
