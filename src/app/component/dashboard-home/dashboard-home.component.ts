@@ -90,7 +90,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.userSub = this.userService.getAllUsers().subscribe({
       next: (res: any) => {
-        this.GetAllUsers = res || [];
+        this.GetAllUsers = res.users || [];
         this.isLoading = false;
       },
       error: err => {
