@@ -7,7 +7,7 @@ import { ReturnRequestPayload, ReturnRequestResponse } from '../models/return-re
 })
 export class ReturnRequestService {
   http = inject(HttpClient);
-  private ApiUrl: string = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v1';
+  private ApiUrl: string = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v3';
 
   CreateReturnRequest(payload: ReturnRequestPayload) {
     //lender

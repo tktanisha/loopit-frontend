@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { inject, Injectable } from '@angular/core';
 import { Product, ProductResponse } from '../models/product';
+import { map } from 'rxjs/internal/operators/map';
 
 @Injectable({
   providedIn: 'root',
@@ -9,10 +10,12 @@ import { Product, ProductResponse } from '../models/product';
 export class ProductService {
   router: Router = inject(Router);
   http: HttpClient = inject(HttpClient);
-  private ApiUrl: string = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v1';
+  private ApiUrl: string = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v3';
 
   FetchAllProduct(params?: any) {
-    return this.http.get<ProductResponse[]>(`${this.ApiUrl}/products`, { params });
+    return this.http
+      .get<{ data: ProductResponse[] }>(`${this.ApiUrl}/products`, { params })
+      .pipe(map(res => res.data));
   }
 
   CreateProduct(product: Product) {
@@ -20,7 +23,9 @@ export class ProductService {
   }
 
   GetProductById(id: number) {
-    return this.http.get<ProductResponse>(`${this.ApiUrl}/product/${id}`);
+    return this.http
+      .get<{ data: ProductResponse }>(`${this.ApiUrl}/product/${id}`)
+      .pipe(map(res => res.data));
   }
 
   UpdateProduct(id: number, product: Product) {

@@ -63,16 +63,8 @@ export class HeaderComponent implements OnInit {
   }
 
   handleLogout() {
-    this.AuthService.logout().subscribe({
-      next: () => {
-        this.AuthService.handleLogout();
-        this.router.navigate(['/']);
-      },
-      error: err => {
-        console.error('Logout failed', err);
-        this.router.navigate(['/']);
-      },
-    });
+    this.AuthService.handleLogout();
+    this.router.navigate(['/']);
   }
 
   ngOnDestroy() {

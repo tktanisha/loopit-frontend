@@ -5,7 +5,7 @@ import { jwtDecode } from 'jwt-decode';
 import { LoginRequest, LoginResponse } from '../models/login';
 import { LoggedInUser } from '../models/logged-in-user';
 import { SignUpRequest } from '../models/signup';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, map, tap } from 'rxjs';
 
 interface DecodedToken {
   exp?: number;
@@ -14,7 +14,7 @@ interface DecodedToken {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private ApiUrl = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v1';
+  private ApiUrl = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v3';
   private jwtKey = 'auth_token';
   private userkey = 'auth_user';
 
@@ -25,15 +25,17 @@ export class AuthService {
   error: string | null = null;
 
   signup(data: SignUpRequest) {
-    return this.http
-      .post<LoginResponse>(`${this.ApiUrl}/auth/register`, data)
-      .pipe(tap(res => this.handleAuthSuccess(res)));
+    return this.http.post<{ data: LoginResponse }>(`${this.ApiUrl}/auth/register`, data).pipe(
+      map(res => res.data),
+      tap(res => this.handleAuthSuccess(res)),
+    );
   }
 
   login(data: LoginRequest) {
-    return this.http
-      .post<LoginResponse>(`${this.ApiUrl}/auth/login`, data)
-      .pipe(tap(res => this.handleAuthSuccess(res)));
+    return this.http.post<{ data: LoginResponse }>(`${this.ApiUrl}/auth/login`, data).pipe(
+      map(res => res.data),
+      tap(res => this.handleAuthSuccess(res)),
+    );
   }
   logout() {
     return this.http.post(`${this.ApiUrl}/auth/logout`, {});
