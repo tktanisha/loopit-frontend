@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule, NgForm, NgModel } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, Subject, Subscription } from 'rxjs';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -63,12 +63,18 @@ export class CreateProductComponent implements OnInit, OnDestroy {
   first = 0;
   totalRecords = 0;
 
+  selectedImage!: File;
+  imagePreview: string | null = null;
+  maxFileSize = 1 * 1024 * 1024;
+  safeFileName: string = ' ';
+
   product: Product = {
     id: null,
     lender_id: null,
     category_id: null,
     name: '',
     description: '',
+    image_url: '',
     duration: null,
     is_available: true,
     created_at: null,
@@ -159,14 +165,49 @@ export class CreateProductComponent implements OnInit, OnDestroy {
   }
 
   onSubmitProduct(form: NgForm) {
-    if (form.valid) {
-      if (this.isEditMode && this.selectedProductId !== null) {
-        this.updateProduct(this.selectedProductId, this.product);
-      } else {
-        this.createProduct(this.product);
-      }
-      form.reset();
+    if (!form.valid) {
+      alert('Please fill all required fields.');
+      return;
     }
+
+    if (!this.selectedImage) {
+      alert('Please upload an image.');
+      return;
+    }
+
+    this.isLoading = true;
+
+    this.productService.getPresignedUrl(this.safeFileName).subscribe({
+      next: res => {
+        console.log('hello');
+        this.productService.uploadImageToS3(res.uploadUrl, this.selectedImage).subscribe({
+          next: res1 => {
+            console.log(res1);
+            console.log('after returning from uplaod to s3');
+            this.product.image_url = res.fileUrl;
+
+            if (this.isEditMode && this.selectedProductId !== null) {
+              this.updateProduct(this.selectedProductId, this.product);
+            } else {
+              console.log('before calling create product');
+              this.createProduct(this.product);
+              console.log('after callling');
+            }
+            this.imagePreview = null;
+            form.reset();
+          },
+          error: err => {
+            this.isLoading = false;
+            console.error('Error uploading image:', err);
+          },
+        });
+      },
+      error: err => {
+        this.isLoading = false;
+        console.error('Error getting presigned URL:', err);
+        alert('Failed to get upload URL.');
+      },
+    });
   }
 
   createProduct(product: Product) {
@@ -257,6 +298,29 @@ export class CreateProductComponent implements OnInit, OnDestroy {
         });
       },
     });
+  }
+
+  onImageSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+
+      if (file.size > this.maxFileSize) {
+        alert('File size exceeds 1MB. Please upload a smaller image.');
+        input.value = '';
+        this.imagePreview = null;
+        return;
+      }
+
+      this.selectedImage = file;
+      this.safeFileName = this.selectedImage.name.replace(/\s+/g, '_');
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   onPageChange(event: any) {

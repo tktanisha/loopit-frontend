@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { inject, Injectable } from '@angular/core';
 import { Product, ProductResponse } from '../models/product';
 import { map } from 'rxjs/internal/operators/map';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class ProductService {
   FetchAllProduct(params?: any) {
     return this.http
       .get<{ data: { products: ProductResponse[] } }>(`${this.ApiUrl}/products`, { params })
-      .pipe(map(res => res.data ));
+      .pipe(map(res => res.data));
   }
 
   CreateProduct(product: Product) {
@@ -34,5 +35,18 @@ export class ProductService {
 
   DeleteProduct(id: string) {
     return this.http.delete(`${this.ApiUrl}/products/${id}/delete`);
+  }
+
+  getPresignedUrl(fileName: string) {
+    return this.http.get<{ uploadUrl: string; fileUrl: string }>(
+      `${this.ApiUrl}/images/presigned-url/${fileName}`,
+    );
+  }
+
+  uploadImageToS3(presignedUrl: string, file: File) {
+    console.log('hello from uplaod');
+    return this.http.put(presignedUrl, file, {
+      headers: new HttpHeaders({ 'Content-Type': file.type }),
+    });
   }
 }
