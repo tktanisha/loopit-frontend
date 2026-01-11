@@ -201,17 +201,13 @@
             id="image"
             name="image"
             accept="image/*"
-            required
+
             (change)="onImageSelected($event)"
           />
-          <small class="control-error">
-            @if (!selectedImage) {
-              Image is required.
-            }
-          </small>
+         
 
           <!-- Preview -->
-          <div *ngIf="selectedImage" style="margin-top: 10px">
+          <div *ngIf="imagePreview" style="margin-top: 10px">
             <img
               [src]="imagePreview"
               alt="Preview"
