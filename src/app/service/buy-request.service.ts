@@ -9,7 +9,7 @@ import { map } from 'rxjs/internal/operators/map';
 })
 export class BuyRequestService {
   http: HttpClient = inject(HttpClient);
-  private ApiUrl: string = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v3';
+  private ApiUrl: string = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v6';
 
   createRequest(request: BuyRequestPayload) {
     return this.http.post<any>(`${this.ApiUrl}/buyer-requests`, request);

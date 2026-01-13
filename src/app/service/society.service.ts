@@ -8,7 +8,7 @@ import { map } from 'rxjs/internal/operators/map';
   providedIn: 'root',
 })
 export class SocietyService {
-  private ApiUrl = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v3';
+  private ApiUrl = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v6';
   http: HttpClient = inject(HttpClient);
   router: Router = inject(Router);
 

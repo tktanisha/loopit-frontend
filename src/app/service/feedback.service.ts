@@ -8,7 +8,7 @@ import { map } from 'rxjs/internal/operators/map';
 })
 export class FeedbackService {
   http = inject(HttpClient);
-  private ApiUrl: string = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v3';
+  private ApiUrl: string = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v6';
 
   GiveFeedback(request: FeedbackRequest) {
     return this.http.post<any>(`${this.ApiUrl}/feedbacks`, request);

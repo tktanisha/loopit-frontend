@@ -8,7 +8,7 @@ import { map } from 'rxjs/internal/operators/map';
 })
 export class OrderService {
   http: HttpClient = inject(HttpClient);
-  private ApiUrl = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v3';
+  private ApiUrl = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v6';
 
   GetOrderHistory() {
     return this.http.get<{ data: OrderResponse[] }>(`${this.ApiUrl}/orders/history`);

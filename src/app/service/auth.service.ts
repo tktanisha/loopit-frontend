@@ -14,7 +14,7 @@ interface DecodedToken {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private ApiUrl = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v3';
+  private ApiUrl = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v6';
   private jwtKey = 'auth_token';
   private userkey = 'auth_user';
 

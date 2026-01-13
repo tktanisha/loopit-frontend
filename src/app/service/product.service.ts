@@ -11,7 +11,7 @@ import { HttpHeaders } from '@angular/common/http';
 export class ProductService {
   router: Router = inject(Router);
   http: HttpClient = inject(HttpClient);
-  private ApiUrl: string = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v3';
+  private ApiUrl: string = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v6';
 
   FetchAllProduct(params?: any) {
     return this.http

@@ -12,7 +12,7 @@ export class CategoryService {
     private router: Router,
     private http: HttpClient,
   ) {}
-  private ApiUrl = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v3';
+  private ApiUrl = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v6';
 
   createCategory(data: CategoryRequest) {
     return this.http
