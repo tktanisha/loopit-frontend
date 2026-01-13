@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { Toast } from 'primeng/toast';
 
-import { BuyStatusPipe } from '../../../custom-pipes/buy-request-status.pipe';
+// import { BuyStatusPipe } from '../../../custom-pipes/buy-request-status.pipe';
 
 import { BuyRequestResponse } from '../../../models/buy-request';
 import { LoggedInUser } from '../../../models/logged-in-user';
@@ -17,7 +17,7 @@ import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-buy-request',
-  imports: [CommonModule, LoaderComponent, BuyStatusPipe, Toast, TableModule],
+  imports: [CommonModule, LoaderComponent, Toast, TableModule],
   templateUrl: './buy-request.component.html',
   styleUrl: './buy-request.component.scss',
 })
@@ -40,7 +40,7 @@ export class GetAllBuyRequestComponent {
     this.isLoading = true;
     this.requestSubject = this.BuyRequestService.GetAllRequest().subscribe({
       next: (res: any) => {
-        this.allBuyRequests = res.requests;
+        this.allBuyRequests = res;
         if (this.loggedInUser) {
           this.BuyRequestOfUser = this.allBuyRequests?.filter((request: any) => {
             return request.buy_request.requested_by === this.loggedInUser?.user_id;

@@ -48,7 +48,7 @@ export class SignupComponent implements OnDestroy {
     this.isLoading = true;
     this.societySubject = this.societyService.fetchAllSociety().subscribe({
       next: (data: any) => {
-        console.log(data);
+        console.log('societies==', data);
         this.allSociety = data.societies;
         this.isLoading = false;
       },

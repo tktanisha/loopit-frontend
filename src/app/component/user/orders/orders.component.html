@@ -19,57 +19,6 @@
       <app-loader [isLoading]="isLoading"></app-loader>
     </div>
 
-    <!-- <div * stripedRows [responsiveLayout]="'scroll'" dataKey="id"ngFor="let order of AllOrders">
-    <div class="order-card">
-      <div class="order-card-content">
-        <div class="product-image-container">
-          <img
-            src="https://tse2.mm.bing.net/th/id/OIP.Yu0XkK0uGjoZ_1oQ7zZnsQHaFl?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3"
-            alt="Product Name"
-            class="product-image"
-          />
-          <div>
-            <h3 class="product-title">{{ order.product.product.name }}</h3>
-            <span class="product-category-badge">{{ order.product.category.name }}</span>
-          </div>
-
-          <span>{{ order.order.status | orderStatus }}</span>
-        </div>
-
-        <p class="product-description">
-          {{ order.product.product.description }}
-        </p>
-
-        <div class="order-info-grid">
-          <div class="order-info-item">
-            <i class="pi pi-calendar"></i>
-            <span>Start: {{ order.order.start_date.split('T')[0] }}</span>
-          </div>
-          <div class="order-info-item">
-            <i class="pi pi-calendar"></i>
-            <span>End: {{ order.order.end_date.split('T')[0] }}</span>
-          </div>
-          <div class="order-info-item">
-            <i class="pi pi-users"></i>
-            <span>Tenant: {{ order.product.user.full_name }}</span>
-          </div>
-          <div class="order-info-item">
-            <i class="pi pi-indian-rupee"></i>
-            <span>Total: ₹{{ order.order.total_amount }}/day</span>
-          </div>
-        </div>
-      </div>
-      <div class="action-buttons">
-        <button
-          *ngIf="loggedInUser?.role === 'user' && order.order.status === 2"
-          class="feedback-btn"
-          (click)="showFeedbackDialog(order.order.id)"
-        >
-          Give Feedback
-        </button>
-      </div>
-    </div>
-  </div> -->
     <div *ngIf="AllOrders.length > 0" class="table-section">
       <p-table [value]="AllOrders" stripedRows [responsiveLayout]="'scroll'" dataKey="id">
         <ng-template pTemplate="header">
@@ -94,11 +43,11 @@
             <td 
               class="label"
               [ngClass]="{
-                'in-use': order.order.status == 0,
-                'return-requested': order.order.status == 1,
-                'returned': order.order.status == 2,
+                'in-use': order.order.status === 'In Use',
+                'return-requested': order.order.status === 'Returned Requested',
+                'returned': order.order.status === 'Returned',
               }"
-            ><span>{{ order.order.status | orderStatus }}</span></td>
+            ><span>{{ order.order.status }}</span></td>
             <td>{{ order.order.start_date.split('T')[0] }}</td>
             <td>{{ order.order.end_date.split('T')[0] === "0001-01-01" ? "N/A" : order.order.end_date.split('T')[0] }}</td>
             <td>{{ order.product.user.full_name }}</td>

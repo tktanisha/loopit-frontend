@@ -5,8 +5,6 @@ import { Toast } from 'primeng/toast';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
 
-import { OrderStatusPipe } from '../../../custom-pipes/order-status-pipe';
-
 import { LoaderComponent } from '../../loader/loader';
 import { OrderResponse } from '../../../models/orders';
 import { TableModule } from 'primeng/table';
@@ -14,7 +12,7 @@ import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-approved-awaiting-orders',
-  imports: [OrderStatusPipe, LoaderComponent, CommonModule, Toast, TableModule, ButtonModule],
+  imports: [LoaderComponent, CommonModule, Toast, TableModule, ButtonModule],
   templateUrl: './approved-awaiting-orders.component.html',
   styleUrl: './approved-awaiting-orders.component.scss',
 })
@@ -44,7 +42,6 @@ export class ApprovedAwaitingOrdersComponent {
           this.AllOrders = [];
         }
         this.isLoading = false;
-      
       },
       error: err => {
         console.log(err);

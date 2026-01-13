@@ -32,13 +32,16 @@
       <ng-template pTemplate="body" let-req>
         <tr>
           <td>{{ req.product.product.name }}</td>
+          
           <td class="label"
               [ngClass]="{
-                'pending': req.buy_request.status == 0,
-                'accepted': req.buy_request.status == 1,
-                'rejected': req.buy_request.status == 2
-              }"
-          ><span>{{ req.buy_request.status | buyStatus }}</span></td>
+                'pending': req.buy_request.status === 'Pending',
+                'accepted': req.buy_request.status === 'Approved',
+                'rejected': req.buy_request.status === 'Rejected'
+              }">
+            <span>{{ req.buy_request.status }}</span>
+          </td>
+
           <td>{{ req.buy_request.created_at.split('T')[0] }}</td>
         </tr>
       </ng-template>

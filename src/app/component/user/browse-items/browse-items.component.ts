@@ -75,7 +75,8 @@ export class GetAllProductComponent implements OnInit, OnDestroy {
 
     this.productSubject = this.productService.FetchAllProduct(params).subscribe({
       next: (res: any) => {
-        this.allProduct = res.products || [];
+        console.log('res=', res);
+        this.allProduct = res || [];
         this.isLoading = false;
       },
       error: err => {

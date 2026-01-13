@@ -57,7 +57,8 @@ export class CategoryComponent implements OnDestroy {
     this.isLoading = true;
     this.categorySubject = this.categoryService.getAllCategory().subscribe({
       next: (res: any) => {
-        this.categories = res.categories;
+        console.log('res====', res);
+        this.categories = res;
         this.isLoading = false;
       },
       error: err => {

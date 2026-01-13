@@ -43,7 +43,7 @@
           <td>{{ order.order.start_date.split('T')[0] }}</td>
           <td>{{ order.order.end_date.split('T')[0] }}</td>
           <td>₹{{ order.order.total_amount }}</td>
-          <td>{{ order.order.status | orderStatus }}</td>
+          <td>{{ order.order.status  }}</td>
           <td>
             <button pButton class="p-button-sm" (click)="markOrderAsReturn(order.order.id)">Mark Returned</button>
           </td>

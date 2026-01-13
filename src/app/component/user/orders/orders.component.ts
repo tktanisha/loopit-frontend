@@ -16,8 +16,6 @@ import { FeedbackRequest } from '../../../models/feedback';
 import { LoggedInUser } from '../../../models/logged-in-user';
 import { OrderResponse } from '../../../models/orders';
 
-import { OrderStatusPipe } from '../../../custom-pipes/order-status-pipe';
-
 import { OrderService } from '../../../service/orders.service';
 import { AuthService } from '../../../service/auth.service';
 import { LoaderComponent } from '../../loader/loader';
@@ -29,7 +27,6 @@ import { TableModule } from 'primeng/table';
   imports: [
     CommonModule,
     LoaderComponent,
-    OrderStatusPipe,
     FormsModule,
     DialogModule,
     RatingModule,
@@ -122,8 +119,9 @@ export class OrdersComponent {
     this.isLoading = true;
     this.orderSubject = this.orderService.GetOrderHistory().subscribe({
       next: (data: any) => {
-        if (data && data.orders) {
-          this.AllOrders = data.orders;
+        console.log(data.data);
+        if (data.data) {
+          this.AllOrders = data.data;
         } else {
           this.AllOrders = [];
         }

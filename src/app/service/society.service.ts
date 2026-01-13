@@ -8,17 +8,17 @@ import { map } from 'rxjs/internal/operators/map';
   providedIn: 'root',
 })
 export class SocietyService {
-  private ApiUrl = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v3';
+  private ApiUrl = 'http://127.0.0.1:8000';
   http: HttpClient = inject(HttpClient);
   router: Router = inject(Router);
 
   createSociety(data: SocietyPayload) {
-    return this.http.post<SocietyPayload>(`${this.ApiUrl}/societies/`, data);
+    return this.http.post<SocietyPayload>(`${this.ApiUrl}/societies`, data);
   }
 
   fetchAllSociety() {
     return this.http
-      .get<{ data: SocietyPayload[] }>(`${this.ApiUrl}/societies/`)
+      .get<{ data: SocietyPayload[] }>(`${this.ApiUrl}/societies`)
       .pipe(map(res => res.data));
   }
   updateSociety(id: string, data: SocietyPayload) {

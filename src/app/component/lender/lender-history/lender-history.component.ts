@@ -5,8 +5,6 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Toast } from 'primeng/toast';
 
-import { OrderStatusPipe } from '../../../custom-pipes/order-status-pipe';
-
 import { LoggedInUser } from '../../../models/logged-in-user';
 import { OrderResponse } from '../../../models/orders';
 import { LoaderComponent } from '../../loader/loader';
@@ -21,7 +19,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-lender-history',
-  imports: [CommonModule, OrderStatusPipe, LoaderComponent, Toast, TableModule, ButtonModule],
+  imports: [CommonModule, LoaderComponent, Toast, TableModule, ButtonModule],
   templateUrl: './lender-history.component.html',
   styleUrl: './lender-history.component.scss',
 })
@@ -62,6 +60,7 @@ export class LenderHistoryComponent implements OnInit {
           detail: 'Successfully mark as return  ',
           life: 3000,
         });
+        this.GetOrders();
       },
       error: err => {
         this.isLoading = false;
@@ -79,8 +78,9 @@ export class LenderHistoryComponent implements OnInit {
     this.isLoading = true;
     this.getOrdersSubject = this.orderService.GetLenderOrders().subscribe({
       next: (data: any) => {
-        if (data && data.orders) {
-          this.AllOrders = data.orders;
+        console.log('data', data);
+        if (data) {
+          this.AllOrders = data.data;
         } else {
           this.AllOrders = [];
         }
@@ -114,6 +114,7 @@ export class LenderHistoryComponent implements OnInit {
             detail: 'return request created successfully ',
             life: 3000,
           });
+          this.GetOrders();
         },
         error: err => {
           console.error('Error creating return request:', err);

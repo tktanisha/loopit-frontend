@@ -46,6 +46,7 @@ export class LoginComponent {
     this.isLoading = true;
     this.AuthService.login(this.user).subscribe({
       next: data => {
+        console.log('data===', data);
         this.AuthService.handleAuthSuccess(data);
         this.isLoading = false;
         this.closeEvent.emit();
@@ -56,6 +57,7 @@ export class LoginComponent {
       },
 
       error: err => {
+        console.log(err);
         this.isLoading = false;
         this.messageService.add({
           severity: 'error',

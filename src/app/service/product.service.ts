@@ -11,7 +11,7 @@ import { HttpHeaders } from '@angular/common/http';
 export class ProductService {
   router: Router = inject(Router);
   http: HttpClient = inject(HttpClient);
-  private ApiUrl: string = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v3';
+  private ApiUrl: string = 'http://loopit-backend-242104569.ap-south-1.elb.amazonaws.com';
 
   FetchAllProduct(params?: any) {
     return this.http
@@ -37,16 +37,12 @@ export class ProductService {
     return this.http.delete(`${this.ApiUrl}/products/${id}/delete`);
   }
 
-  getPresignedUrl(fileName: string) {
-    return this.http.get<{ uploadUrl: string; fileUrl: string }>(
-      `${this.ApiUrl}/images/presigned-url/${fileName}`,
-    );
-  }
-
-  uploadImageToS3(presignedUrl: string, file: File) {
-    console.log('hello from uplaod');
-    return this.http.put(presignedUrl, file, {
-      headers: new HttpHeaders({ 'Content-Type': file.type }),
-    });
+  UploadImage(fileName: string, fileType: string, base64Content: string) {
+    const payload = {
+      fileName,
+      fileType,
+      fileContent: base64Content, // base64 string WITHOUT data URL prefix
+    };
+    return this.http.post<{ fileUrl: string }>(`${this.ApiUrl}/images/upload`, payload);
   }
 }

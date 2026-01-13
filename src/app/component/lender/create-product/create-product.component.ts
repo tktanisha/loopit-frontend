@@ -67,6 +67,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
   imagePreview: string | null = null;
   maxFileSize = 1 * 1024 * 1024;
   safeFileName: string = ' ';
+  base64String: string = '';
 
   product: Product = {
     id: null,
@@ -106,7 +107,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
 
     this.productSubject = this.productService.FetchAllProduct(params).subscribe({
       next: (res: any) => {
-        this.allProducts = res.products || [];
+        this.allProducts = res || [];
         this.totalRecords = this.allProducts.length;
         this.isLoading = false;
       },
@@ -125,7 +126,8 @@ export class CreateProductComponent implements OnInit, OnDestroy {
 
   fetchAllCategories() {
     this.categorySubject = this.categoryService.getAllCategory().subscribe({
-      next: (res: any) => (this.allCategory = res.categories),
+      next: (res: any) => ((this.allCategory = res), console.log('catgeory==', this.allCategory)),
+
       error: err => console.error('Error fetching categories:', err),
     });
   }
@@ -141,6 +143,28 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     this.fetchAllProducts();
   }
 
+  // toggleModal(open: boolean, product?: ProductResponse) {
+  //   this.showModal = open;
+
+  //   if (open && product) {
+  //     this.isEditMode = true;
+  //     this.selectedProductId = product.product.id;
+  //     this.product = { ...product.product };
+  //   } else if (open && !product) {
+  //     this.isEditMode = false;
+  //     this.selectedProductId = null;
+  //     this.product = {
+  //       id: null,
+  //       lender_id: null,
+  //       category_id: null,
+  //       name: '',
+  //       description: '',
+  //       duration: null,
+  //       is_available: true,
+  //       created_at: null,
+  //     };
+  //   }
+  // }
   toggleModal(open: boolean, product?: ProductResponse) {
     this.showModal = open;
 
@@ -148,9 +172,16 @@ export class CreateProductComponent implements OnInit, OnDestroy {
       this.isEditMode = true;
       this.selectedProductId = product.product.id;
       this.product = { ...product.product };
+
+      this.imagePreview = product.product.image_url ?? null;
+
+      this.selectedImage = null as any;
+
+      this.base64String = '';
     } else if (open && !product) {
       this.isEditMode = false;
       this.selectedProductId = null;
+
       this.product = {
         id: null,
         lender_id: null,
@@ -161,8 +192,49 @@ export class CreateProductComponent implements OnInit, OnDestroy {
         is_available: true,
         created_at: null,
       };
+
+      this.imagePreview = null;
+      this.selectedImage = undefined as any;
+      this.base64String = '';
     }
   }
+
+  // onSubmitProduct(form: NgForm) {
+  //   if (!form.valid) {
+  //     alert('Please fill all required fields.');
+  //     return;
+  //   }
+
+  //   if (!this.imagePreview) {
+  //     alert('Please upload an image.');
+  //     return;
+  //   }
+
+  //   this.isLoading = true;
+
+  //   this.productService
+  //     .UploadImage(this.safeFileName, this.selectedImage.type, this.base64String)
+  //     .subscribe({
+  //       next: res => {
+  //         this.product.image_url = res.fileUrl;
+
+  //         if (this.isEditMode && this.selectedProductId !== null) {
+  //           this.updateProduct(this.selectedProductId, this.product);
+  //         } else {
+  //           console.log('before calling create product');
+  //           this.createProduct(this.product);
+  //           console.log('after callling');
+  //         }
+  //         this.imagePreview = null;
+  //         this.base64String = '';
+  //         form.reset();
+  //       },
+  //       error: err => {
+  //         this.isLoading = false;
+  //         console.error('Error uploading image:', err);
+  //       },
+  //     });
+  // }
 
   onSubmitProduct(form: NgForm) {
     if (!form.valid) {
@@ -170,44 +242,42 @@ export class CreateProductComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (!this.selectedImage) {
-      alert('Please upload an image.');
+    this.isLoading = true;
+
+    if (this.isEditMode && !this.selectedImage) {
+      if (this.selectedProductId !== null) {
+        this.updateProduct(this.selectedProductId, this.product);
+      }
       return;
     }
 
-    this.isLoading = true;
+    if (!this.selectedImage) {
+      alert('Please upload an image.');
+      this.isLoading = false;
+      return;
+    }
 
-    this.productService.getPresignedUrl(this.safeFileName).subscribe({
-      next: res => {
-        console.log('hello');
-        this.productService.uploadImageToS3(res.uploadUrl, this.selectedImage).subscribe({
-          next: res1 => {
-            console.log(res1);
-            console.log('after returning from uplaod to s3');
-            this.product.image_url = res.fileUrl;
+    this.productService
+      .UploadImage(this.safeFileName, this.selectedImage.type, this.base64String)
+      .subscribe({
+        next: res => {
+          this.product.image_url = res.fileUrl;
 
-            if (this.isEditMode && this.selectedProductId !== null) {
-              this.updateProduct(this.selectedProductId, this.product);
-            } else {
-              console.log('before calling create product');
-              this.createProduct(this.product);
-              console.log('after callling');
-            }
-            this.imagePreview = null;
-            form.reset();
-          },
-          error: err => {
-            this.isLoading = false;
-            console.error('Error uploading image:', err);
-          },
-        });
-      },
-      error: err => {
-        this.isLoading = false;
-        console.error('Error getting presigned URL:', err);
-        alert('Failed to get upload URL.');
-      },
-    });
+          if (this.isEditMode && this.selectedProductId !== null) {
+            this.updateProduct(this.selectedProductId, this.product);
+          } else {
+            this.createProduct(this.product);
+          }
+
+          this.imagePreview = null;
+          this.base64String = '';
+          form.reset();
+        },
+        error: err => {
+          this.isLoading = false;
+          console.error('Error uploading image:', err);
+        },
+      });
   }
 
   createProduct(product: Product) {
@@ -300,25 +370,84 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     });
   }
 
+  // onImageSelected(event: Event) {
+  //   const input = event.target as HTMLInputElement;
+  //   if (input.files && input.files.length > 0) {
+  //     const file = input.files[0];
+
+  //     if (file.size > this.maxFileSize) {
+  //       alert('File size exceeds 1MB. Please upload a smaller image.');
+  //       input.value = '';
+  //       this.imagePreview = null;
+  //       return;
+  //     }
+
+  //     this.selectedImage = file;
+  //     this.safeFileName = this.selectedImage.name.replace(/\s+/g, '_');
+
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       this.imagePreview = reader.result as string;
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // }
+
   onImageSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
 
+      // size check (1 MB max)
       if (file.size > this.maxFileSize) {
         alert('File size exceeds 1MB. Please upload a smaller image.');
         input.value = '';
         this.imagePreview = null;
+        this.base64String = ''; // clear previous base64
+        return;
+      }
+
+      // optional: ensure it's an image
+      if (!file.type.startsWith('image/')) {
+        alert('Please select a valid image file.');
+        input.value = '';
+        this.imagePreview = null;
+        this.base64String = '';
         return;
       }
 
       this.selectedImage = file;
-      this.safeFileName = this.selectedImage.name.replace(/\s+/g, '_');
+      // sanitize filename (keep extension)
+      const dot = file.name.lastIndexOf('.');
+      const base = dot >= 0 ? file.name.slice(0, dot) : file.name;
+      const ext = dot >= 0 ? file.name.slice(dot) : '';
+      this.safeFileName =
+        base
+          .trim()
+          .replace(/\s+/g, '_')
+          .replace(/[^a-zA-Z0-9_-]/g, '') + ext;
 
       const reader = new FileReader();
       reader.onload = () => {
-        this.imagePreview = reader.result as string;
+        const dataUrl = reader.result as string;
+        this.imagePreview = dataUrl; // for <img [src] preview
+
+        // Extract only the Base64 payload (after the comma)
+        // dataUrl looks like: "data:image/png;base64,iVBORw0KGgoAAA..."
+        const commaIndex = dataUrl.indexOf(',');
+        this.base64String = commaIndex >= 0 ? dataUrl.substring(commaIndex + 1) : '';
+
+        if (!this.base64String) {
+          alert('Failed to convert image to Base64.');
+        }
       };
+      reader.onerror = err => {
+        console.error('FileReader error:', err);
+        alert('Failed to read the image file.');
+        this.imagePreview = null;
+        this.base64String = '';
+      };
+
       reader.readAsDataURL(file);
     }
   }

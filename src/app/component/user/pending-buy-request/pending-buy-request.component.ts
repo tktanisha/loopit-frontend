@@ -8,8 +8,6 @@ import { Toast } from 'primeng/toast';
 import { BuyRequestResponse } from '../../../models/buy-request';
 import { LoggedInUser } from '../../../models/logged-in-user';
 
-import { BuyStatusPipe } from '../../../custom-pipes/buy-request-status.pipe';
-
 import { AuthService } from '../../../service/auth.service';
 import { BuyRequestService } from '../../../service/buy-request.service';
 import { LoaderComponent } from '../../loader/loader';
@@ -18,7 +16,7 @@ import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-buy-request',
-  imports: [CommonModule, LoaderComponent, BuyStatusPipe, Toast, TableModule, ButtonModule],
+  imports: [CommonModule, LoaderComponent, Toast, TableModule, ButtonModule],
   templateUrl: './pending-buy-request.component.html',
   styleUrl: './pending-buy-request.component.scss',
 })
@@ -45,8 +43,7 @@ export class PendingBuyRequestComponent {
     this.isLoading = true;
     this.BuyRequestService.GetAllRequest().subscribe({
       next: (res: any) => {
-        this.allBuyRequests = res.requests ?? [];
-        console.log('response of all buy requests', this.allBuyRequests);
+        this.allBuyRequests = res ?? [];
         this.BuyRequestOfUser = this.allBuyRequests.filter((res: any) => {
           return res.product.product.lender_id == this.loggedInUser?.user_id;
         });
@@ -100,13 +97,14 @@ export class PendingBuyRequestComponent {
       next: (res: any) => {
         console.log(res);
         this.isLoading = false;
-        this.getAllRequest();
+
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
           detail: 'Successfully approved the Buy Request ',
           life: 5000,
         });
+        this.getAllRequest();
       },
       error: err => {
         console.log(err);

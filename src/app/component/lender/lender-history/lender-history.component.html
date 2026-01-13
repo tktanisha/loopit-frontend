@@ -62,13 +62,13 @@
             <td
               class="label"
               [ngClass]="{
-                'in-use': order.order.status == 0,
-                'return-requested': order.order.status == 1,
-                returned: order.order.status == 2,
+                'in-use': order.order.status === 'In Use',
+                'return-requested': order.order.status === 'Return Requested',
+                returned: order.order.status === 'Returned',
               }"
             >
               <span>
-                {{ order.order.status | orderStatus }}
+                {{ order.order.status }}
               </span>
             </td>
             <td class="action-buttons">
@@ -76,7 +76,7 @@
                 pButton
                 class="lending-btn p-button-sm"
                 (click)="handleCreateReturnRequest(order)"
-                [disabled]="order.order.status != 0"
+                [disabled]="order.order.status != 'In Use'"
               >
                 Request Return
               </button>
@@ -84,7 +84,7 @@
                 pButton
                 class="lending-btn p-button-sm"
                 (click)="markOrderAsReturn(order.order.id)"
-                [disabled]="order.order.status == 2"
+                [disabled]="order.order.status == 'Returned'"
               >
                 Mark as Returned
               </button>

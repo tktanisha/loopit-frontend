@@ -14,7 +14,7 @@ interface DecodedToken {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private ApiUrl = 'https://ybfvidgjik.execute-api.ap-south-1.amazonaws.com/v3';
+  private ApiUrl = 'http://loopit-backend-242104569.ap-south-1.elb.amazonaws.com';
   private jwtKey = 'auth_token';
   private userkey = 'auth_user';
 
@@ -32,19 +32,21 @@ export class AuthService {
   }
 
   login(data: LoginRequest) {
-    return this.http.post<{ data: LoginResponse }>(`${this.ApiUrl}/auth/login`, data).pipe(
-      map(res => res.data),
-      tap(res => this.handleAuthSuccess(res)),
-    );
+    return this.http
+      .post<LoginResponse>(`${this.ApiUrl}/auth/login`, data)
+      .pipe(tap(res => this.handleAuthSuccess(res)));
   }
+
   logout() {
     return this.http.post(`${this.ApiUrl}/auth/logout`, {});
   }
 
   handleAuthSuccess(res: LoginResponse) {
+    console.log('res=', res);
     localStorage.setItem(this.jwtKey, res.token);
 
     const decodedToken = jwtDecode<DecodedToken>(res.token);
+    console.log(decodedToken);
     const expiresIn = decodedToken.exp ? new Date(decodedToken.exp * 1000) : new Date();
 
     const userObj = new LoggedInUser(res.user.Name, res.user.id, res.user.Role, expiresIn);
