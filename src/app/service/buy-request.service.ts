@@ -23,7 +23,6 @@ export class BuyRequestService {
     return this.http
       .get<{ data: BuyRequestResponse[] }>(`${this.ApiUrl}/buyer-requests`, { params })
       .pipe(
-        // Use the RxJS map operator to return ONLY the array you need
         map(response => response.data),
       );
   }

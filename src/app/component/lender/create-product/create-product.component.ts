@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm, NgModel } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize, Subject, Subscription } from 'rxjs';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { Toast } from 'primeng/toast';
@@ -143,28 +143,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     this.fetchAllProducts();
   }
 
-  // toggleModal(open: boolean, product?: ProductResponse) {
-  //   this.showModal = open;
-
-  //   if (open && product) {
-  //     this.isEditMode = true;
-  //     this.selectedProductId = product.product.id;
-  //     this.product = { ...product.product };
-  //   } else if (open && !product) {
-  //     this.isEditMode = false;
-  //     this.selectedProductId = null;
-  //     this.product = {
-  //       id: null,
-  //       lender_id: null,
-  //       category_id: null,
-  //       name: '',
-  //       description: '',
-  //       duration: null,
-  //       is_available: true,
-  //       created_at: null,
-  //     };
-  //   }
-  // }
+ 
   toggleModal(open: boolean, product?: ProductResponse) {
     this.showModal = open;
 
@@ -199,42 +178,6 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     }
   }
 
-  // onSubmitProduct(form: NgForm) {
-  //   if (!form.valid) {
-  //     alert('Please fill all required fields.');
-  //     return;
-  //   }
-
-  //   if (!this.imagePreview) {
-  //     alert('Please upload an image.');
-  //     return;
-  //   }
-
-  //   this.isLoading = true;
-
-  //   this.productService
-  //     .UploadImage(this.safeFileName, this.selectedImage.type, this.base64String)
-  //     .subscribe({
-  //       next: res => {
-  //         this.product.image_url = res.fileUrl;
-
-  //         if (this.isEditMode && this.selectedProductId !== null) {
-  //           this.updateProduct(this.selectedProductId, this.product);
-  //         } else {
-  //           console.log('before calling create product');
-  //           this.createProduct(this.product);
-  //           console.log('after callling');
-  //         }
-  //         this.imagePreview = null;
-  //         this.base64String = '';
-  //         form.reset();
-  //       },
-  //       error: err => {
-  //         this.isLoading = false;
-  //         console.error('Error uploading image:', err);
-  //       },
-  //     });
-  // }
 
   onSubmitProduct(form: NgForm) {
     if (!form.valid) {
@@ -307,33 +250,65 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     });
   }
 
+  // updateProduct(id: string, product: Product) {
+  //   this.isLoading = true;
+  //   this.productSubject = this.productService.UpdateProduct(id, product).subscribe({
+  //     next: () => {
+  //       this.isLoading = false;
+  //       this.toggleModal(false);
+  //       this.fetchAllProducts();
+  //       this.messageService.add({
+  //         severity: 'success',
+  //         summary: 'Updated',
+  //         detail: 'Product updated successfully',
+  //         life: 3000,
+  //       });
+  //     },
+  //     error: err => {
+  //       console.error('Error updating product:', err);
+  //       this.isLoading = false;
+  //       this.messageService.add({
+  //         severity: 'error',
+  //         summary: 'Error',
+  //         detail: 'Error updating product',
+  //         life: 3000,
+  //       });
+  //     },
+  //   });
+  // }
+
   updateProduct(id: string, product: Product) {
     this.isLoading = true;
-    this.productSubject = this.productService.UpdateProduct(id, product).subscribe({
-      next: () => {
-        this.isLoading = false;
-        this.toggleModal(false);
-        this.fetchAllProducts();
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Updated',
-          detail: 'Product updated successfully',
-          life: 3000,
-        });
-      },
-      error: err => {
-        console.error('Error updating product:', err);
-        this.isLoading = false;
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Error updating product',
-          life: 3000,
-        });
-      },
-    });
-  }
-
+    this.productSubject = this.productService
+      .UpdateProduct(id, product)
+      .pipe(
+        finalize(() => {
+          // always executed, success or error
+          this.isLoading = false;
+          this.toggleModal(false); // <-- close the modal no matter what
+        })
+      )
+      .subscribe({
+        next: () => {
+          this.fetchAllProducts();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Updated',
+            detail: 'Product updated successfully',
+            life: 3000,
+          });
+        },
+        error: err => {
+          console.error('Error updating product:', err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: err?.error?.detail ?? err?.error?.message ?? 'Error updating product',
+            life: 3000,
+          });
+        },
+      });
+}
   confirmDeleteProduct(product: ProductResponse) {
     this.confirmationService.confirm({
       message: `Are you sure you want to delete "${product.product.name}"?`,

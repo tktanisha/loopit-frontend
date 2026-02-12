@@ -218,19 +218,26 @@
 
         <div class="form-item">
           <label for="description">Description <span>*</span></label>
+
           <textarea
-            id="description"
             name="description"
-            rows="3"
-            required
             [(ngModel)]="product.description"
-            placeholder="Enter product description"
-            #fdesc="ngModel"
+            required
+            maxlength="500"
+            #fDesc="ngModel"
+            placeholder="Max 500 characters"
           ></textarea>
-          <small class="control-error">
-            @if (fdesc.touched && fdesc.invalid) {
-              Description is required
-            }
+
+          <!-- Required error -->
+          <small class="control-error"
+                *ngIf="productForm.submitted && fDesc.errors?.['required']">
+            Description is required.
+          </small>
+
+          <!-- Max length LIVE error -->
+          <small class="control-error"
+                *ngIf="fDesc.errors?.['maxlength']">
+            Max 500 characters allowed.
           </small>
         </div>
 

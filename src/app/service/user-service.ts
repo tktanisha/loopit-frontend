@@ -8,7 +8,7 @@ import { map } from 'rxjs/internal/operators/map';
   providedIn: 'root',
 })
 export class UserService {
-  private ApiUrl = 'http://127.0.0.1:8000';
+  private ApiUrl = 'http://loopit-backend-242104569.ap-south-1.elb.amazonaws.com';
   http: HttpClient = inject(HttpClient);
   router: Router = inject(Router);
 

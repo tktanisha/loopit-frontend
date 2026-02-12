@@ -9,4 +9,5 @@ export interface GetSocietyResponse {
   name: string;
   price: number;
   security: number;
+  cratedAt: string;
 }

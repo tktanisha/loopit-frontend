@@ -3,12 +3,13 @@ import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { SocietyPayload } from '../models/society';
 import { map } from 'rxjs/internal/operators/map';
+import { GetSocietyResponse } from '../models/society';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SocietyService {
-  private ApiUrl = 'http://127.0.0.1:8000';
+  private ApiUrl = 'http://loopit-backend-242104569.ap-south-1.elb.amazonaws.com';
   http: HttpClient = inject(HttpClient);
   router: Router = inject(Router);
 
@@ -16,11 +17,11 @@ export class SocietyService {
     return this.http.post<SocietyPayload>(`${this.ApiUrl}/societies`, data);
   }
 
-  fetchAllSociety() {
-    return this.http
-      .get<{ data: SocietyPayload[] }>(`${this.ApiUrl}/societies`)
-      .pipe(map(res => res.data));
-  }
+fetchAllSociety() {
+  return this.http
+    .get<{ status: boolean; data: GetSocietyResponse[] }>(`${this.ApiUrl}/societies`)
+    .pipe(map(res => res.data));
+}
   updateSociety(id: string, data: SocietyPayload) {
     return this.http.put(`${this.ApiUrl}/societies/${id}`, data);
   }

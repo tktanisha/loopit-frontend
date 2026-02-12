@@ -92,12 +92,16 @@ export class GetAllProductComponent implements OnInit, OnDestroy {
     });
   }
 
-  fetchAllCategories() {
-    this.categorySubject = this.categoryService.getAllCategory().subscribe({
-      next: (res: any) => (this.allCategory = res.categories),
-      error: err => console.error('Error fetching categories:', err),
-    });
-  }
+
+fetchAllCategories() {
+  this.categorySubject = this.categoryService.getAllCategory().subscribe({
+    next: (data: GetCategoryResponse[]) => {
+      this.allCategory = data;
+      console.log('categories==', data);
+    },
+    error: err => console.error('Error fetching categories:', err),
+  });
+}
 
   onSearchChange(value: string) {
     this.searchTerm = value;
