@@ -22,12 +22,14 @@ export class CategoryService {
 
   getAllCategory() {
     return this.http
-      .get<{ data: GetCategoryResponse[] }>(`${this.ApiUrl}/categories`)
-      .pipe(map(res => {
-        console.log('categories==', res.data);
-        return res.data;
-      }));
-  } 
+      .get<{ status: boolean; data: GetCategoryResponse[] }>(`${this.ApiUrl}/categories`)
+      .pipe(
+        map(res => {
+          console.log('categories==', res.data);
+          return res.data; 
+        })
+      );
+}
 
   updateCategory(categoryId: string, payload: CategoryRequest) {
     return this.http.put(`${this.ApiUrl}/categories/${categoryId}`, payload);

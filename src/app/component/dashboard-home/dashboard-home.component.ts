@@ -57,76 +57,75 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   }
 
   fetchAllSocieties() {
-    this.societySub = this.societyService.fetchAllSociety().subscribe({
-      next: (res: any) => (this.GetAllSocieties = res.societies || []),
-      error: err => {
-        console.error(err);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Failed to fetch societies',
-          life: 3000,
-        });
-      },
-    });
-  }
+  this.societySub = this.societyService.fetchAllSociety().subscribe({
+    next: (societies: any[]) => (this.GetAllSocieties = societies || []), // <-- array
+    error: err => {
+      console.error(err);
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Failed to fetch societies',
+        life: 3000,
+      });
+    },
+  });
+}
 
-  fetchAllCategories() {
-    this.categorySub = this.categoryService.getAllCategory().subscribe({
-      next: (res: any) => (this.GetAllCategories = res.categories || []),
-      error: err => {
-        console.error(err);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Failed to fetch categories',
-          life: 3000,
-        });
-      },
-    });
-  }
+fetchAllCategories() {
+  this.categorySub = this.categoryService.getAllCategory().subscribe({
+    next: (categories: GetCategoryResponse[]) => (this.GetAllCategories = categories || []), // <-- array
+    error: err => {
+      console.error(err);
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Failed to fetch categories',
+        life: 3000,
+      });
+    },
+  });
+}
 
-  fetchAllUsers() {
-    this.isLoading = true;
-    this.userSub = this.userService.getAllUsers().subscribe({
-      next: (res: any) => {
-        this.GetAllUsers = res.users || [];
-        this.isLoading = false;
-      },
-      error: err => {
-        console.error(err);
-        this.isLoading = false;
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Failed to fetch users',
-          life: 3000,
-        });
-      },
-    });
-  }
+fetchAllUsers() {
+  this.isLoading = true;
+  this.userSub = this.userService.getAllUsers().subscribe({
+    next: (users: User[]) => {
+      this.GetAllUsers = users || []; // <-- array
+      this.isLoading = false;
+    },
+    error: err => {
+      console.error(err);
+      this.isLoading = false;
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Failed to fetch users',
+        life: 3000,
+      });
+    },
+  });
+}
 
-  fetchAllLenders() {
-    this.isLoading = true;
-    const params = { role: 'lender' };
-
-    this.lenderSub = this.userService.getAllUsers(params).subscribe({
-      next: (res: any) => {
-        this.GetAllLenders = res.users || [];
-        this.isLoading = false;
-      },
-      error: err => {
-        console.error(err);
-        this.isLoading = false;
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Failed to fetch lenders',
-          life: 3000,
-        });
-      },
-    });
-  }
+fetchAllLenders() {
+  this.isLoading = true;
+  const params = { role: 'lender' };
+  this.lenderSub = this.userService.getAllUsers(params).subscribe({
+    next: (users: User[]) => {
+      this.GetAllLenders = users || []; // <-- array
+      this.isLoading = false;
+    },
+    error: err => {
+      console.error(err);
+      this.isLoading = false;
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Failed to fetch lenders',
+        life: 3000,
+      });
+    },
+  });
+}
 
   ngOnDestroy(): void {
     this.societySub?.unsubscribe();

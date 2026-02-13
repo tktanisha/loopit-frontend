@@ -54,7 +54,7 @@ export class SocietyComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.societySubject = this.societyService.fetchAllSociety().subscribe({
       next: (res: any) => {
-        this.societies = res.data;
+        this.societies = res || [];
         this.isLoading = false;
       },
       error: err => {

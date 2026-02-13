@@ -109,7 +109,7 @@ export class UserComponent implements OnInit, OnDestroy {
   fetchAllSocieties() {
     this.societySub = this.societyService.fetchAllSociety().subscribe({
       next: (res: any) => {
-        this.societies = res.societies || [];
+        this.societies = res|| [];
       },
       error: err => console.error('Error fetching societies:', err),
     });

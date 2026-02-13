@@ -16,15 +16,19 @@ export class UserService {
     return this.http.patch(`${this.ApiUrl}/users/become-lender`, {});
   }
 
-  getAllUsers(params?: any) {
-    let query = '';
-    if (params) {
-      const queryParams = new URLSearchParams(params).toString();
-      query = `?${queryParams}`;
-    }
-    return this.http
-      .get<{ data: { users: User[] } }>(`${this.ApiUrl}/users${query}`)
-      .pipe(map(res => res.data));
+ getAllUsers(params?: any) {
+  let query = '';
+  if (params) {
+    const queryParams = new URLSearchParams(params).toString();
+    query = `?${queryParams}`;
+  }
+
+  return this.http
+    .get<{ status: boolean; data: User[] }>(`${this.ApiUrl}/users${query}`)
+    .pipe(map(res => {
+      console.log('users==', res.data);
+      return res.data; // <-- return array
+    }));
   }
 
   getUserById(id: string) {

@@ -82,7 +82,7 @@ describe('UserService', () => {
     // Act
     service.getAllUsers().subscribe(data => {
       // Assert
-      expect(data.users).toEqual([mockUser]);
+      expect(data).toEqual([mockUser]);
     });
 
     // Assert - verify HTTP request

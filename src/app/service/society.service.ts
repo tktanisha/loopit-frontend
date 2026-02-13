@@ -17,11 +17,15 @@ export class SocietyService {
     return this.http.post<SocietyPayload>(`${this.ApiUrl}/societies`, data);
   }
 
-fetchAllSociety() {
-  return this.http
-    .get<{ status: boolean; data: GetSocietyResponse[] }>(`${this.ApiUrl}/societies`)
-    .pipe(map(res => res.data));
-}
+  fetchAllSociety() {
+    return this.http
+      .get<{ status: boolean; data: GetSocietyResponse[] }>(`${this.ApiUrl}/societies`)
+      .pipe(map(res => {
+        console.log('societies==', res.data);
+        return res.data;
+  })); // <-- returns array
+  }
+
   updateSociety(id: string, data: SocietyPayload) {
     return this.http.put(`${this.ApiUrl}/societies/${id}`, data);
   }
